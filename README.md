@@ -10,6 +10,7 @@ Console.WriteLine($"{length} bytes loaded to {startAddress}.");
 ```
 
 ##Create machine code programs
+A C64 program that makes the border purple.
 ```C#
 m.Clear();
 m.SetBytePointer(4096); //Start address
@@ -20,7 +21,7 @@ m.SetWord(53280); //Border color
 m.SetByte(96); //RTS
 ```
 
-#Save .prg files
+##Save .prg files
 ```C#
 m.Save(@"C:\Temp\ChangeCol.prg", out startAddress, out length);
 Console.WriteLine($"{length} bytes saved from {startAddress}.");
@@ -37,4 +38,14 @@ Output:
 . 04096 $1000 A9 04    LDA #$04     ; Load Accumulator (Immediate)
 . 04098 $1002 8D 20 D0 STA $D020    ; Store Accumulator (Absolute)
 . 04101 $1005 60       RTS          ; Return from Subroutine
+```
+
+##Bookmarks and locations
+A C64 program that makes the border purple.
+```C#
+m.Clear();
+m.SetBytePointer(4096); //Start address
+m.SetBytes(new MemoryBookmark(4096), 169, 4, 141); //LDA Purple STA
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.BorderColor).StartAddress);
+m.SetByte(96); //RTS
 ```
