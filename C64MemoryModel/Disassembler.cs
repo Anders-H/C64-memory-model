@@ -208,7 +208,7 @@ namespace C64MemoryModel
                 case 95: //5F
                     writeNoArg("???", "Unknown"); break;
                 case 96: //60
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("RTS", "Return from Subroutine"); break;
                 case 97: //61
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 98: //62
@@ -272,7 +272,7 @@ namespace C64MemoryModel
                 case 131: //83
                     writeNoArg("???", "Unknown"); break;
                 case 132: //84
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("STY", "Store Y Register"); break;
                 case 133: //85
                     writeZeroPage("STA", "Store Accumulator"); break;
                 case 134: //86
@@ -288,7 +288,7 @@ namespace C64MemoryModel
                 case 139: //8B
                     writeNoArg("???", "Unknown"); break;
                 case 140: //8C
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("STY", "Store Y Register"); break;
                 case 141: //8D
                     writeAbsolute("STA", "Store Accumulator"); break;
                 case 142: //8E
@@ -303,7 +303,7 @@ namespace C64MemoryModel
                 case 147: //93
                     writeNoArg("???", "Unknown"); break;
                 case 148: //94
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("STY", "Store Y Register"); break;
                 case 149: //95
                     writeZeroPageX("STA", "Store Accumulator"); break;
                 case 150: //96
