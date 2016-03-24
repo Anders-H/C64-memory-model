@@ -23,12 +23,6 @@ namespace C64MemoryModel
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BorderColor, 53280));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BackgroundColor, 53281));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ColdRestExecutionAddress, 65532, 65533));
-
-            //Just for the fun of it. Shall remove.
-            var rnd = new Random();
-            for (int i = 0; i < 2000; i++)
-                SetByte((byte)rnd.Next(256));
-            SetBytePointer(0);
         }
         public void Load(string filename, out int startAddress, out int length)
         {

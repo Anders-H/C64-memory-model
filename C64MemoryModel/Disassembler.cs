@@ -110,7 +110,7 @@ namespace C64MemoryModel
                 case 41: //29
                     writeImmediate("AND", "Bitwise AND with Accumulator"); break;
                 case 42: //2A
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("ROL", "Rotate Left"); break;
                 case 43: //2B
                     writeNoArg("???", "Unknown"); break;
                 case 44: //2C
@@ -118,7 +118,7 @@ namespace C64MemoryModel
                 case 45: //2D
                     writeAbsolute("AND", "Bitwise AND with Accumulator"); break;
                 case 46: //2E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("ROL", "Rotate Left"); break;
                 case 47: //2F
                     writeNoArg("???", "Unknown"); break;
                 case 48: //30
@@ -132,7 +132,7 @@ namespace C64MemoryModel
                 case 53: //35
                     writeZeroPageX("AND", "Bitwise AND with Accumulator"); break;
                 case 54: //36
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("ROL", "Rotate Left"); break;
                 case 55: //37
                     writeNoArg("???", "Unknown"); break;
                 case 56: //38
@@ -146,7 +146,7 @@ namespace C64MemoryModel
                 case 61: //3D
                     writeAbsoluteX("AND", "Bitwise AND with Accumulator"); break;
                 case 62: //3E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("ROL", "Rotate Left"); break;
                 case 63: //3F
                     writeNoArg("???", "Unknown"); break;
                 case 64: //40
@@ -218,7 +218,7 @@ namespace C64MemoryModel
                 case 101: //65
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 102: //66
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("ROR", "Rotate Right"); break;
                 case 103: //67
                     writeNoArg("???", "Unknown"); break;
                 case 104: //68
@@ -226,7 +226,7 @@ namespace C64MemoryModel
                 case 105: //69
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 106: //6A
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("ROR", "Rotate Right"); break;
                 case 107: //6B
                     writeNoArg("???", "Unknown"); break;
                 case 108: //6C
@@ -234,7 +234,7 @@ namespace C64MemoryModel
                 case 109: //6D
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 110: //6E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("ROR", "Rotate Right"); break;
                 case 111: //6F
                     writeNoArg("???", "Unknown"); break;
                 case 112: //70
@@ -248,7 +248,7 @@ namespace C64MemoryModel
                 case 117: //75
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 118: //76
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("ROR", "Rotate Right"); break;
                 case 119: //77
                     writeNoArg("???", "Unknown"); break;
                 case 120: //78
@@ -262,7 +262,7 @@ namespace C64MemoryModel
                 case 125: //7D
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 126: //7E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("ROR", "Rotate Right"); break;
                 case 127: //7F
                 case 128: //80
                     writeNoArg("???", "Unknown"); break;
