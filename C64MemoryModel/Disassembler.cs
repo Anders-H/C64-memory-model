@@ -106,9 +106,9 @@ namespace C64MemoryModel
                 case 39: //27
                     writeNoArg("???", "Unknown"); break;
                 case 40: //28
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("PLP", "Pull Processor Status"); break;
                 case 41: //29
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("AND", "Bitwise AND with Accumulator"); break;
                 case 42: //2A
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 43: //2B
@@ -116,7 +116,7 @@ namespace C64MemoryModel
                 case 44: //2C
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 45: //2D
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("AND", "Bitwise AND with Accumulator"); break;
                 case 46: //2E
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 47: //2F
@@ -124,13 +124,13 @@ namespace C64MemoryModel
                 case 48: //30
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 49: //31
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektY("AND", "Bitwise AND with Accumulator"); break;
                 case 50: //32
                 case 51: //33
                 case 52: //34
                     writeNoArg("???", "Unknown"); break;
                 case 53: //35
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("AND", "Bitwise AND with Accumulator"); break;
                 case 54: //36
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 55: //37
@@ -138,13 +138,13 @@ namespace C64MemoryModel
                 case 56: //38
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 57: //39
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteY("AND", "Bitwise AND with Accumulator"); break;
                 case 58: //3A
                 case 59: //3B
                 case 60: //3C
                     writeNoArg("???", "Unknown"); break;
                 case 61: //3D
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("AND", "Bitwise AND with Accumulator"); break;
                 case 62: //3E
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 63: //3F
