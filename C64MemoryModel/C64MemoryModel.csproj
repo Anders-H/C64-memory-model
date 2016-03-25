@@ -40,13 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Character.cs" />
+    <Compile Include="CharacterSetList.cs" />
     <Compile Include="Disassembler.cs" />
+    <Compile Include="CharacterSetBase.cs" />
     <Compile Include="MemoryBookmark.cs" />
     <Compile Include="IMemoryLocation.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="MemoryModelLocation.cs" />
     <Compile Include="MemoryModelLocationName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleUppercaseCharacterSet.cs" />
     <Compile Include="TextAdapter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

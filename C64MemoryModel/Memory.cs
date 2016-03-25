@@ -12,8 +12,10 @@ namespace C64MemoryModel
         private byte[] Bytes { get; } = new byte[ushort.MaxValue];
         public MemoryModelLocationList Locations { get; } = new MemoryModelLocationList();
         public MemoryBookmarkList Bookmarks { get; } = new MemoryBookmarkList();
+        public CharacterSetList CharacterSets { get; } = new CharacterSetList();
         public Memory()
         {
+            CharacterSets.Add(new SimpleUppercaseCharacterSet());
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ZeroPage, 0));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ProcessorPort, 1));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicAreaPointer, 43,44));
@@ -169,6 +171,41 @@ namespace C64MemoryModel
             var high = bytes[1];
             SetByte(address, low);
             SetByte(high);
+        }
+        public void SetString(CharacterSetBase characterSet, string text)
+        {
+            if (characterSet == null)
+                throw new SystemException("Character set must not be null.");
+            if (text == null || text.Length <= 0)
+                return;
+            var bytes = characterSet.TranslateString(text);
+            foreach (var b in bytes)
+                SetByte(b);
+        }
+        public void SetString(string characterSet, string text)
+        {
+            var set = CharacterSets.GetCharacterSet(characterSet);
+            if (set == null)
+                throw new SystemException($"Character set {characterSet} not found.");
+            SetString(set, text);
+        }
+        public string GetString(CharacterSetBase characterSet, int length)
+        {
+            if (characterSet == null)
+                throw new SystemException("Character set must not be null.");
+            if (length <= 0)
+                throw new SystemException("Length must be > 0.");
+            var bytes = new byte[length];
+            for (var i = 0; i < length; i++)
+                bytes[i] = GetByte();
+            return characterSet.TranslateString(bytes);
+        }
+        public string GetString(string characterSet, int length)
+        {
+            var set = CharacterSets.GetCharacterSet(characterSet);
+            if (set == null)
+                throw new SystemException($"Character set {characterSet} not found.");
+            return GetString(set, length);
         }
         public void AddBookmark(string name, ushort address) => Bookmarks.Add(new MemoryBookmark(name, address));
         public void AddBookmark(string name, ushort startAddress, ushort endAddress) => Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));

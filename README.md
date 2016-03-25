@@ -49,3 +49,16 @@ m.SetBytes(new MemoryBookmark(4096), 169, 4, 141); //LDA Purple STA
 m.SetWord(m.GetModelLocation(MemoryModelLocationName.BorderColor).StartAddress);
 m.SetByte(96); //RTS
 ```
+
+##String support
+```C#
+m.SetBytePointer(8192);
+m.SetString("simpleUppercase", "Hello, Computer!");
+m.SetBytePointer(8192);
+Console.WriteLine(m.GetString("simpleUppercase", 16));
+```
+
+Output:
+```
+HELLO, COMPUTER!
+```
