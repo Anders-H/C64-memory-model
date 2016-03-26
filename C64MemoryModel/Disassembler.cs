@@ -12,10 +12,13 @@ namespace C64MemoryModel
             var b = m.GetByte();
             s.Append($"{b:X2} ");
             byte b2 = 0, b3 = 0;
+            var signedByte = 0;
             Action write0 = () => s.Append($"      ");
             // ReSharper disable once AccessToModifiedClosure
             Action write1 = () => s.Append($"{b2:X2}    ");
             // ReSharper disable once AccessToModifiedClosure
+            byte low, high;
+            byte[] bytes;
             Action write2 = () => s.Append($"{b2:X2} {b3:X2} ");
             Action<string, string> writeNoArg = (operation, description) => { write0(); s.Append($"{operation}{(withDescription ? $"          ; {description}" : "")}"); };
             Action<string, string> writeAbsolute = (operation, description) => { b2 = m.GetByte(); b3 = m.GetByte(); write2(); s.Append($"{operation} ${b3:X2}{b2:X2}{(withDescription ? $"    ; {description} (Absolute)" : "")}"); };
@@ -26,8 +29,7 @@ namespace C64MemoryModel
             Action<string, string> writeImmediate = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"{operation} #${b2:X2}{(withDescription ? $"     ; {description} (Immediate)" : "")}"); };
             Action<string, string> writeIndirektX = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"ORA (${b2:X2},X){(withDescription ? $"  ; {description} (Indirect,X)" : "")}"); };
             Action<string, string> writeIndirektY = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"ORA (${b2:X2}),Y{(withDescription ? $"  ; {description} (Indirect),Y" : "")}"); };
-            byte[] bytes;
-            byte low, high;
+            Action<string, string> writeRel = (operation, description) => { b2 = m.GetByte(); signedByte = b2 >= 128 ? b2 - 256 : b2; bytes = BitConverter.GetBytes(m.BytePointer + signedByte); low = bytes[0]; high = bytes[1]; write1(); s.Append($"{operation} ${high:X2}{low:X2}{(withDescription ? $"    ; {description}" : "")}"); };
             switch (b)
             {
                 case 0: //00
@@ -60,12 +62,7 @@ namespace C64MemoryModel
                 case 15: //0F
                     writeNoArg("???", "Unknown"); break;
                 case 16: //10
-                    b2 = m.GetByte();
-                    bytes = BitConverter.GetBytes(m.BytePointer + b2);
-                    low = bytes[0];
-                    high = bytes[1];
-                    write1(); s.Append($"BPL ${high:X2}{low:X2}{(withDescription ? $"    ; Branch on Plus" : "")}");
-                    break;
+                    writeRel("BPL", "Branch on Plus"); break;
                 case 17: //11
                     writeIndirektY("ORA", "Bitwise OR with Accumulator"); break;
                 case 18: //12
@@ -124,12 +121,7 @@ namespace C64MemoryModel
                 case 47: //2F
                     writeNoArg("???", "Unknown"); break;
                 case 48: //30
-                    b2 = m.GetByte();
-                    bytes = BitConverter.GetBytes(m.BytePointer + b2);
-                    low = bytes[0];
-                    high = bytes[1];
-                    write1(); s.Append($"BMI ${high:X2}{low:X2}{(withDescription ? $"    ; Branch on Minus" : "")}");
-                    break;
+                    writeRel("BMI", "Branch on Minus"); break;
                 case 49: //31
                     writeIndirektY("AND", "Bitwise AND with Accumulator"); break;
                 case 50: //32
@@ -336,7 +328,7 @@ namespace C64MemoryModel
                 case 161: //A1
                     writeIndirektX("LDA", "Load Accumulator"); break;
                 case 162: //A2
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("LDX", "Load X Register"); break;
                 case 163: //A3
                     writeNoArg("???", "Unknown"); break;
                 case 164: //A4
@@ -344,7 +336,7 @@ namespace C64MemoryModel
                 case 165: //A5
                     writeZeroPage("LDA", "Load Accumulator"); break;
                 case 166: //A6
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("LDX", "Load X Register"); break;
                 case 167: //A7
                     writeNoArg("???", "Unknown"); break;
                 case 168: //A8
@@ -360,7 +352,7 @@ namespace C64MemoryModel
                 case 173: //AD
                     writeAbsolute("LDA", "Load Accumulator"); break;
                 case 174: //AE
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("LDX", "Load X Register"); break;
                 case 175: //AF
                     writeNoArg("???", "Unknown"); break;
                 case 176: //B0
@@ -375,7 +367,7 @@ namespace C64MemoryModel
                 case 181: //B5
                     writeZeroPageX("LDA", "Load Accumulator"); break;
                 case 182: //B6
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("LDX", "Load X Register"); break;
                 case 183: //B7
                     writeNoArg("???", "Unknown"); break;
                 case 184: //B8
@@ -391,7 +383,7 @@ namespace C64MemoryModel
                 case 189: //BD
                     writeAbsoluteX("LDA", "Load Accumulator"); break;
                 case 190: //BE
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteY("LDX", "Load X Register"); break;
                 case 191: //BF
                     writeNoArg("???", "Unknown"); break;
                 case 192: //C0
@@ -426,7 +418,7 @@ namespace C64MemoryModel
                 case 207: //CF
                     writeNoArg("???", "Unknown"); break;
                 case 208: //D0
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeRel("BNE", "Branch on Not Equal"); break;
                 case 209: //D1
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 210: //D2
@@ -469,7 +461,7 @@ namespace C64MemoryModel
                 case 231: //E7
                     writeNoArg("???", "Unknown"); break;
                 case 232: //E8
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("INX", "Increment X"); break;
                 case 233: //E9
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 234: //EA
@@ -485,7 +477,7 @@ namespace C64MemoryModel
                 case 239: //EF
                     writeNoArg("???", "Unknown"); break;
                 case 240: //F0
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeRel("BEQ", "Branch on Equal"); break;
                 case 241: //F1
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 242: //F2
