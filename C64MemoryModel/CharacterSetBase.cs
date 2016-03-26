@@ -15,14 +15,14 @@ namespace C64MemoryModel
         {
             var ret = Characters.FirstOrDefault(x => x.Unicode == input);
             if (ret == null)
-                throw new SystemException("Unsupported character.");
+                throw new SystemException($"Unsupported character: ${(int)input:X4}");
             return ret.PETSCII;
         }
         protected char TranslateCharacterFromPETSCIIToUnicode(byte input)
         {
             var ret = Characters.FirstOrDefault(x => x.PETSCII == input);
             if (ret == null)
-                throw new SystemException("Unsupported character.");
+                throw new SystemException($"Unsupported character: ${input:X2}");
             return ret.Unicode;
         }
         public string TranslateString(byte[] input)

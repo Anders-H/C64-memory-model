@@ -189,6 +189,24 @@ namespace C64MemoryModel
                 throw new SystemException($"Character set {characterSet} not found.");
             SetString(set, text);
         }
+        public void SetString(ushort address, CharacterSetBase characterSet, string text)
+        {
+            if (characterSet == null)
+                throw new SystemException("Character set must not be null.");
+            if (text == null || text.Length <= 0)
+                return;
+            SetBytePointer(address);
+            var bytes = characterSet.TranslateString(text);
+            foreach (var b in bytes)
+                SetByte(b);
+        }
+        public void SetString(ushort address, string characterSet, string text)
+        {
+            var set = CharacterSets.GetCharacterSet(characterSet);
+            if (set == null)
+                throw new SystemException($"Character set {characterSet} not found.");
+            SetString(address, set, text);
+        }
         public string GetString(CharacterSetBase characterSet, int length)
         {
             if (characterSet == null)
@@ -206,6 +224,25 @@ namespace C64MemoryModel
             if (set == null)
                 throw new SystemException($"Character set {characterSet} not found.");
             return GetString(set, length);
+        }
+        public string GetString(ushort address, CharacterSetBase characterSet, int length)
+        {
+            if (characterSet == null)
+                throw new SystemException("Character set must not be null.");
+            if (length <= 0)
+                throw new SystemException("Length must be > 0.");
+            SetBytePointer(address);
+            var bytes = new byte[length];
+            for (var i = 0; i < length; i++)
+                bytes[i] = GetByte();
+            return characterSet.TranslateString(bytes);
+        }
+        public string GetString(ushort address, string characterSet, int length)
+        {
+            var set = CharacterSets.GetCharacterSet(characterSet);
+            if (set == null)
+                throw new SystemException($"Character set {characterSet} not found.");
+            return GetString(address, set, length);
         }
         public void AddBookmark(string name, ushort address) => Bookmarks.Add(new MemoryBookmark(name, address));
         public void AddBookmark(string name, ushort startAddress, ushort endAddress) => Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));

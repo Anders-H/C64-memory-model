@@ -162,6 +162,100 @@ namespace C64MemoryModel
                     return s.ToString();
                 }
 
+                //SetString $1000, "Hello!"
+                match = Regex.Match(input, @"^setstring\s?(\$?[0-9A-F]+)\s?,\s?\""(.*)\""$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    try
+                    {
+                        bool addressSuccess;
+                        var adrValue = match.Groups[1].Value;
+                        var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                        if (!addressSuccess)
+                            return "Invalid address.";
+                        var value = match.Groups[2].Value;
+                        if (string.IsNullOrEmpty(value))
+                            return "Empty string.";
+                        Memory.SetString(adr, Memory.CharacterSets[0], value);
+                        success = true;
+                        return "Ok.";
+                    }
+                    catch (SystemException ex)
+                    {
+                        success = false;
+                        return ex.Message;
+                    }
+                }
+
+                //SetString "Hello!"
+                match = Regex.Match(input, @"^setstring\s?\""(.*)\""$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    try
+                    {
+                        var value = match.Groups[1].Value;
+                        if (string.IsNullOrEmpty(value))
+                            return "Empty string.";
+                        Memory.SetString(Memory.CharacterSets[0], value);
+                        success = true;
+                        return "Ok.";
+                    }
+                    catch (SystemException ex)
+                    {
+                        success = false;
+                        return ex.Message;
+                    }
+                }
+
+                //GetString $1000, 5
+                match = Regex.Match(input, @"^getstring\s?(\$?[0-9A-F]+)\s?,\s?(\$?[0-9A-F]+)$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    try
+                    {
+                        bool addressSuccess;
+                        var adrValue = match.Groups[1].Value;
+                        var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                        if (!addressSuccess)
+                            return "Invalid address.";
+                        bool lengthSuccess;
+                        var lenValue = match.Groups[2].Value;
+                        var len = lenValue.StartsWith("$") ? GetWordHex(lenValue, out lengthSuccess) : GetWordDec(lenValue, out lengthSuccess);
+                        if (!lengthSuccess)
+                            return "Invalid length.";
+                        var ret = Memory.GetString(adr, Memory.CharacterSets[0], len);
+                        success = true;
+                        return ret;
+                    }
+                    catch (SystemException ex)
+                    {
+                        success = false;
+                        return ex.Message;
+                    }
+                }
+
+                //GetString 5
+                match = Regex.Match(input, @"^getstring\s?(\$?[0-9A-F]+)$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    try
+                    {
+                        bool lengthSuccess;
+                        var lenValue = match.Groups[1].Value;
+                        var len = lenValue.StartsWith("$") ? GetWordHex(lenValue, out lengthSuccess) : GetWordDec(lenValue, out lengthSuccess);
+                        if (!lengthSuccess)
+                            return "Invalid length.";
+                        var ret = Memory.GetString(Memory.CharacterSets[0], len);
+                        success = true;
+                        return ret;
+                    }
+                    catch (SystemException ex)
+                    {
+                        success = false;
+                        return ex.Message;
+                    }
+                }
+
                 //M
                 match = Regex.Match(input, @"^m$", RegexOptions.IgnoreCase);
                 if (match.Success)

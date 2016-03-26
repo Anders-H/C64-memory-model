@@ -26,6 +26,8 @@ namespace C64MemoryModel
             Action<string, string> writeImmediate = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"{operation} #${b2:X2}{(withDescription ? $"     ; {description} (Immediate)" : "")}"); };
             Action<string, string> writeIndirektX = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"ORA (${b2:X2},X){(withDescription ? $"  ; {description} (Indirect,X)" : "")}"); };
             Action<string, string> writeIndirektY = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"ORA (${b2:X2}),Y{(withDescription ? $"  ; {description} (Indirect),Y" : "")}"); };
+            byte[] bytes;
+            byte low, high;
             switch (b)
             {
                 case 0: //00
@@ -59,9 +61,9 @@ namespace C64MemoryModel
                     writeNoArg("???", "Unknown"); break;
                 case 16: //10
                     b2 = m.GetByte();
-                    var bytes = BitConverter.GetBytes(m.BytePointer + b2);
-                    var low = bytes[0];
-                    var high = bytes[1];
+                    bytes = BitConverter.GetBytes(m.BytePointer + b2);
+                    low = bytes[0];
+                    high = bytes[1];
                     write1(); s.Append($"BPL ${high:X2}{low:X2}{(withDescription ? $"    ; Branch on Plus" : "")}");
                     break;
                 case 17: //11
@@ -114,7 +116,7 @@ namespace C64MemoryModel
                 case 43: //2B
                     writeNoArg("???", "Unknown"); break;
                 case 44: //2C
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("BIT", "Test bits"); break;
                 case 45: //2D
                     writeAbsolute("AND", "Bitwise AND with Accumulator"); break;
                 case 46: //2E
@@ -122,7 +124,12 @@ namespace C64MemoryModel
                 case 47: //2F
                     writeNoArg("???", "Unknown"); break;
                 case 48: //30
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    b2 = m.GetByte();
+                    bytes = BitConverter.GetBytes(m.BytePointer + b2);
+                    low = bytes[0];
+                    high = bytes[1];
+                    write1(); s.Append($"BMI ${high:X2}{low:X2}{(withDescription ? $"    ; Branch on Minus" : "")}");
+                    break;
                 case 49: //31
                     writeIndirektY("AND", "Bitwise AND with Accumulator"); break;
                 case 50: //32
@@ -136,7 +143,7 @@ namespace C64MemoryModel
                 case 55: //37
                     writeNoArg("???", "Unknown"); break;
                 case 56: //38
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("SEC", "Set Carry"); break;
                 case 57: //39
                     writeAbsoluteY("AND", "Bitwise AND with Accumulator"); break;
                 case 58: //3A

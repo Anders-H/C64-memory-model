@@ -13,6 +13,8 @@ namespace C64MemoryModel
             var chars = new Character[] {
                 new Character(32, ' '),
                 new Character(33, '!'),
+                new Character(34, '\"'),
+                new Character(35, '#'),
                 new Character(44, ','),
                 new Character(45, '-'),
                 new Character(46, '.'),
