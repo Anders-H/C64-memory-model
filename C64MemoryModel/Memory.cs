@@ -8,7 +8,7 @@ namespace C64MemoryModel
     public class Memory
     {
         private Disassembler Disassembler { get; set; }
-        public int BytePointer { get; set; }
+        internal int BytePointer { get; set; }
         private byte[] Bytes { get; } = new byte[ushort.MaxValue];
         public MemoryModelLocationList Locations { get; } = new MemoryModelLocationList();
         public MemoryBookmarkList Bookmarks { get; } = new MemoryBookmarkList();
@@ -71,6 +71,7 @@ namespace C64MemoryModel
         }
         public void SetBytePointer(int address) { address = address < 0 ? ushort.MaxValue : address; address = address > ushort.MaxValue ? 0 : address; BytePointer = address; }
         public void SetBytePointer(IMemoryLocation l, ushort offset) => SetBytePointer(l.StartAddress + offset);
+        public ushort GetBytePointer() => (ushort)BytePointer;
         private void IncreaseBytePointer() => IncreaseBytePointer(1);
         private void IncreaseBytePointer(int count) => SetBytePointer(BytePointer + count);
         public string GetDisassembly(bool withDescription = false)
@@ -172,6 +173,19 @@ namespace C64MemoryModel
             SetByte(address, low);
             SetByte(high);
         }
+        public void SetBits(ushort address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
+        {
+            SetBytePointer(address);
+            SetBits(b7, b6, b5, b4, b3, b2, b1, b0);
+        }
+        public void SetBits(BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
+        {
+            var adr = GetBytePointer();
+            var b = new Byte(GetByte(adr));
+            b.Modify(b7, b6, b5, b4, b3, b2, b1, b0);
+        }
+        public Byte GetBits(ushort address) => new Byte(GetByte(address));
+        public Byte GetBits() => new Byte(GetByte());
         public void SetString(CharacterSetBase characterSet, string text)
         {
             if (characterSet == null)
