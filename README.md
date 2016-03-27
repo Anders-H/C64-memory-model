@@ -66,12 +66,12 @@ HELLO, COMPUTER!
 ##Hello, World!
 The Hello World program for the C64.
 ```C#
-var m = new Memory();
 //The program.
 m.SetBytes(new MemoryBookmark(4096), 162, 0, 189, 14, 16, 240, 6, 32, 210, 255, 232, 208, 245, 96);
-//The data.
-m.SetString(4110, m.CharacterSets[0], "Hello, world!");
-m.SetBytes(new MemoryBookmark(4123), 0, 1); //Terminate string (last byte saved can not be 0, it will be trimmed away).
+//The data at 4110.
+m.SetString(m.CharacterSets[0], "Hello, world!");
+m.SetByte(0); //Terminate string at 4123.
+m.SetByte(1); //Last byte saved can not be 0, it will be trimmed away.
 //Save the program.     
 int startAddress, length;
 m.Save(@"C:\Temp\helloworld.prg", out startAddress, out length);

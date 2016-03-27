@@ -149,15 +149,15 @@ namespace C64MemoryModel
                 case 63: //3F
                     writeNoArg("???", "Unknown"); break;
                 case 64: //40
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("RTI", "Return from Interrupt"); break;
                 case 65: //41
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektX("EOR", "Bitwise Exclusive OR"); break;
                 case 66: //42
                 case 67: //43
                 case 68: //44
                     writeNoArg("???", "Unknown"); break;
                 case 69: //45
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("EOR", "Bitwise Exclusive OR"); break;
                 case 70: //46
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 71: //47
@@ -165,7 +165,7 @@ namespace C64MemoryModel
                 case 72: //48
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 73: //49
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("EOR", "Bitwise Exclusive OR"); break;
                 case 74: //4A
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 75: //4B
@@ -173,7 +173,7 @@ namespace C64MemoryModel
                 case 76: //4C
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 77: //4D
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("EOR", "Bitwise Exclusive OR"); break;
                 case 78: //4E
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 79: //4F
@@ -181,13 +181,13 @@ namespace C64MemoryModel
                 case 80: //50
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 81: //51
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektY("EOR", "Bitwise Exclusive OR"); break;
                 case 82: //52
                 case 83: //53
                 case 84: //54
                     writeNoArg("???", "Unknown"); break;
                 case 85: //55
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("EOR", "Bitwise Exclusive OR"); break;
                 case 86: //56
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 87: //57
@@ -195,13 +195,13 @@ namespace C64MemoryModel
                 case 88: //58
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 89: //59
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteY("EOR", "Bitwise Exclusive OR"); break;
                 case 90: //5A
                 case 91: //5B
                 case 92: //5C
                     writeNoArg("???", "Unknown"); break;
                 case 93: //5D
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("EOR", "Bitwise Exclusive OR"); break;
                 case 94: //5E
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 95: //5F
