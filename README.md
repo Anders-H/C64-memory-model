@@ -80,4 +80,18 @@ m.SetBytePointer(4096);
 Console.WriteLine(m.GetDisassembly(7));
 ```
 
+Output:
+
+```
+. 04096 $1000 A2 00    LDX #$00
+. 04098 $1002 BD 0E 10 LDA $100E,X
+. 04101 $1005 F0 06    BEQ $100D
+. 04103 $1007 20 D2 FF JSR $FFD2
+. 04106 $100A E8       INX
+. 04107 $100B D0 F5    BNE $1002
+. 04109 $100D 60       RTS
+```
+
+Result:
+
 ![Hello, World!](http://imghost.winsoft.se/upload/270571459008119c64helloworld.jpg)
