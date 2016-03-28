@@ -18,14 +18,14 @@ namespace C64MemoryModel
         public bool Bit0 { get; set; }
         public Byte(byte b)
         {
-            Bit7 = (b | 128) == 128;
-            Bit6 = (b | 64) == 64;
-            Bit5 = (b | 32) == 32;
-            Bit4 = (b | 16) == 16;
-            Bit3 = (b | 8) == 8;
-            Bit2 = (b | 4) == 4;
-            Bit1 = (b | 2) == 2;
-            Bit0 = (b | 1) == 1;
+            Bit7 = (b & 128) == 128;
+            Bit6 = (b & 64) == 64;
+            Bit5 = (b & 32) == 32;
+            Bit4 = (b & 16) == 16;
+            Bit3 = (b & 8) == 8;
+            Bit2 = (b & 4) == 4;
+            Bit1 = (b & 2) == 2;
+            Bit0 = (b & 1) == 1;
         }
         public Byte(bool b7, bool b6, bool b5, bool b4, bool b3, bool b2, bool b1, bool b0)
         {

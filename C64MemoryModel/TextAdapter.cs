@@ -256,6 +256,24 @@ namespace C64MemoryModel
                     }
                 }
 
+                //SetBits 110*01*1
+                match = Regex.Match(input, @"^setbits ([01\*][01\*][01\*][01\*][01\*][01\*][01\*][01\*])$");
+                if (match.Success)
+                {
+                    var adr = Memory.GetBytePointer();
+                    var oldByte = Memory.GetByte(adr);
+                    var b = new Byte(oldByte);
+                    var change = match.Groups[1].Value;
+                    var args = new BitValue[8];
+                    for (var i = 0; i < 8; i++)
+                        args[i] = change.Substring(i, 1) == "0" ? BitValue.NotSet : change.Substring(i, 1) == "1" ? BitValue.Set : BitValue.Unchanged;
+                    Memory.SetBits(adr, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+                    var theByte = Memory.GetByte(adr);
+                    success = true;
+                    return $@"{adr:00000} ${adr:X4}: {new Byte(oldByte).ToString()} --> {new Byte(theByte).ToString()}
+{adr:00000} ${adr:X4}:  {oldByte:000} ${oldByte:X2} -->  {theByte:000} ${theByte:X2}";
+                }
+
                 //M
                 match = Regex.Match(input, @"^m$", RegexOptions.IgnoreCase);
                 if (match.Success)

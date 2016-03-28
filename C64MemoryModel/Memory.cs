@@ -183,6 +183,7 @@ namespace C64MemoryModel
             var adr = GetBytePointer();
             var b = new Byte(GetByte(adr));
             b.Modify(b7, b6, b5, b4, b3, b2, b1, b0);
+            SetByte(adr, b.ToByte());
         }
         public Byte GetBits(ushort address) => new Byte(GetByte(address));
         public Byte GetBits() => new Byte(GetByte());
