@@ -274,6 +274,16 @@ namespace C64MemoryModel
 {adr:00000} ${adr:X4}:  {oldByte:000} ${oldByte:X2} -->  {theByte:000} ${theByte:X2}";
                 }
 
+                //GetBits
+                match = Regex.Match(input, @"^getbits$");
+                if (match.Success)
+                {
+                    var adr = Memory.GetBytePointer();
+                    var b = new Byte(Memory.GetByte());
+                    success = true;
+                    return $"{adr:00000} ${adr:X4}: {b.ToString()}";
+                }
+
                 //M
                 match = Regex.Match(input, @"^m$", RegexOptions.IgnoreCase);
                 if (match.Success)

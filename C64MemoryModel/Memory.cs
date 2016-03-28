@@ -22,6 +22,8 @@ namespace C64MemoryModel
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.KeyboardBuffer, 631, 640));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultBasicArea, 2049, 40959));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicRom, 40960, 49151));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteLocations, 53248, 53264));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteEnableRegister, 53269));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BorderColor, 53280));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BackgroundColor, 53281));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ColdRestExecutionAddress, 65532, 65533));
@@ -178,6 +180,11 @@ namespace C64MemoryModel
             SetBytePointer(address);
             SetBits(b7, b6, b5, b4, b3, b2, b1, b0);
         }
+        public void SetBits(IMemoryLocation location, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
+        {
+            SetBytePointer(location.StartAddress);
+            SetBits(b7, b6, b5, b4, b3, b2, b1, b0);
+        }
         public void SetBits(BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
         {
             var adr = GetBytePointer();
@@ -186,6 +193,7 @@ namespace C64MemoryModel
             SetByte(adr, b.ToByte());
         }
         public Byte GetBits(ushort address) => new Byte(GetByte(address));
+        public Byte GetBits(IMemoryLocation location) => new Byte(GetByte(location.StartAddress));
         public Byte GetBits() => new Byte(GetByte());
         public void SetString(CharacterSetBase characterSet, string text)
         {

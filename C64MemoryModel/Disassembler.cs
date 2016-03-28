@@ -159,7 +159,7 @@ namespace C64MemoryModel
                 case 69: //45
                     writeZeroPage("EOR", "Bitwise Exclusive OR"); break;
                 case 70: //46
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("LSR", "Logical Shift Right"); break;
                 case 71: //47
                     writeNoArg("???", "Unknown"); break;
                 case 72: //48
@@ -167,7 +167,7 @@ namespace C64MemoryModel
                 case 73: //49
                     writeImmediate("EOR", "Bitwise Exclusive OR"); break;
                 case 74: //4A
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("LSR", "Logical Shift Right (Accumulator)"); break;
                 case 75: //4B
                     writeNoArg("???", "Unknown"); break;
                 case 76: //4C
@@ -175,7 +175,7 @@ namespace C64MemoryModel
                 case 77: //4D
                     writeAbsolute("EOR", "Bitwise Exclusive OR"); break;
                 case 78: //4E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("LSR", "Logical Shift Right"); break;
                 case 79: //4F
                     writeNoArg("???", "Unknown"); break;
                 case 80: //50
@@ -189,7 +189,7 @@ namespace C64MemoryModel
                 case 85: //55
                     writeZeroPageX("EOR", "Bitwise Exclusive OR"); break;
                 case 86: //56
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("LSR", "Logical Shift Right"); break;
                 case 87: //57
                     writeNoArg("???", "Unknown"); break;
                 case 88: //58
@@ -203,7 +203,7 @@ namespace C64MemoryModel
                 case 93: //5D
                     writeAbsoluteX("EOR", "Bitwise Exclusive OR"); break;
                 case 94: //5E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("LSR", "Logical Shift Right"); break;
                 case 95: //5F
                     writeNoArg("???", "Unknown"); break;
                 case 96: //60

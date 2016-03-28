@@ -95,3 +95,21 @@ Output:
 Result:
 
 ![Hello, World!](http://imghost.winsoft.se/upload/270571459008119c64helloworld.jpg)
+
+##Sprites
+Turn on two sprites and position the first:
+```C#
+//Turn on first and second sprite.
+var b = new C64MemoryModel.Byte(false, false, false, false, false, false, true, true);
+m.SetBytes(new MemoryBookmark(4096), 169, b.ToByte()); //LDA #$03
+m.SetByte(141); //STA
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister).StartAddress);
+//Position the first sprite at 128, 128.
+m.SetByte(169); //LDA
+m.SetByte(128); //#$80
+m.SetByte(141); //STA
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress);
+m.SetByte(141); //STA
+m.SetWord((ushort)(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress + 1));
+m.SetByte(96); //RTS
+```
