@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembler.cs" />
     <Compile Include="BitValue.cs" />
     <Compile Include="Byte.cs" />
     <Compile Include="Character.cs" />

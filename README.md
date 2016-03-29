@@ -81,7 +81,6 @@ Console.WriteLine(m.GetDisassembly(7));
 ```
 
 Output:
-
 ```
 . 04096 $1000 A2 00    LDX #$00
 . 04098 $1002 BD 0E 10 LDA $100E,X
@@ -95,6 +94,28 @@ Output:
 Result:
 
 ![Hello, World!](http://imghost.winsoft.se/upload/270571459008119c64helloworld.jpg)
+
+Same as above, with the assembler:
+```C#
+//The program.
+m.SetBytePointer(4096);
+m.Assembler.Ldx(0);
+m.Assembler.LdaAbsX(4110);
+m.Assembler.Beq(4109);
+m.Assembler.Jsr(65490);
+m.Assembler.Inx();
+m.Assembler.Bne(4098);
+m.Assembler.Rts();
+//The data at 4110.
+m.SetString(m.CharacterSets[0], "Hello, world!");
+m.SetByte(0); //Terminate string at 4123.
+m.SetByte(1); //Last byte saved can not be 0, it will be trimmed away.
+//Save the program.     
+m.Save(@"C:\Temp\helloworld.prg");
+//Show the disassembly.
+m.SetBytePointer(4096);
+Console.WriteLine(m.GetDisassembly(7));
+```
 
 ##Sprites
 Turn on two sprites and position the first:
@@ -112,4 +133,18 @@ m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddre
 m.SetByte(141); //STA
 m.SetWord((ushort)(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress + 1));
 m.SetByte(96); //RTS
+```
+
+Same as above, with the assembler:
+```C#
+//Turn on first and second sprite.
+var b = new C64MemoryModel.Byte(false, false, false, false, false, false, true, true);
+m.SetBytePointer(4096);
+m.Assembler.Lda(b.ToByte());
+m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister).StartAddress);
+//Position the first sprite at 128, 128.
+m.Assembler.Lda(128);
+m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress);
+m.Assembler.Sta((ushort)(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress + 1));
+m.Assembler.Rts();
 ```

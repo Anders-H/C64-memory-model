@@ -7,6 +7,7 @@ namespace C64MemoryModel
 {
     public class Memory
     {
+        public Assembler Assembler { get; }
         private Disassembler Disassembler { get; set; }
         internal int BytePointer { get; set; }
         private byte[] Bytes { get; } = new byte[ushort.MaxValue];
@@ -15,6 +16,7 @@ namespace C64MemoryModel
         public CharacterSetList CharacterSets { get; } = new CharacterSetList();
         public Memory()
         {
+            Assembler = new Assembler(this);
             CharacterSets.Add(new SimpleUppercaseCharacterSet());
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ZeroPage, 0));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ProcessorPort, 1));
@@ -39,6 +41,11 @@ namespace C64MemoryModel
             for (var i = 2; i < newBytes.Length; i++)
                 SetByte(newBytes[i]);
         }
+        public void Load(string filename)
+        {
+            int startAddress, length;
+            Load(filename, out startAddress, out length);
+        }
         public void Save(string filename, out int startAddress, out int length)
         {
             startAddress = 0;
@@ -56,6 +63,11 @@ namespace C64MemoryModel
                 sw.Flush();
                 sw.Close();
             }
+        }
+        public void Save(string filename)
+        {
+            int startAddress, length;
+            Save(filename, out startAddress, out length);
         }
         public void Clear()
         {
