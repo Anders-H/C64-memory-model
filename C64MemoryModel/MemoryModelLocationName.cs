@@ -6,6 +6,7 @@
         ProcessorPort,
         BasicAreaPointer,
         KeyboardBuffer,
+        DefaultSpriteArea,
         DefaultBasicArea,
         BasicRom,
         UpperRam,

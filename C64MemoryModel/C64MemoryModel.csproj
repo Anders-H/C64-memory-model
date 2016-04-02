@@ -47,6 +47,7 @@
     <Compile Include="CharacterSetList.cs" />
     <Compile Include="Disassembler.cs" />
     <Compile Include="CharacterSetBase.cs" />
+    <Compile Include="ExtendedAssembler.cs" />
     <Compile Include="MemoryBookmark.cs" />
     <Compile Include="IMemoryLocation.cs" />
     <Compile Include="Memory.cs" />

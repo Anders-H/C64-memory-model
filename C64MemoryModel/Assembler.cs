@@ -9,7 +9,8 @@ namespace C64MemoryModel
     public class Assembler
     {
         private Memory Memory { get; }
-        internal Assembler(Memory memory) { Memory = memory; }
+        public ExtendedAssembler Extended { get; }
+        internal Assembler(Memory memory) { Memory = memory; Extended = new ExtendedAssembler(this); }
         //032 20 JSR
         public void Jsr(ushort address)
         {
