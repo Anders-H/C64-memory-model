@@ -46,7 +46,7 @@ A C64 program that makes the border purple.
 m.Clear();
 m.SetBytePointer(4096); //Start address
 m.SetBytes(new MemoryBookmark(4096), 169, 4, 141); //LDA Purple STA
-m.SetWord(m.GetModelLocation(MemoryModelLocationName.BorderColor).StartAddress);
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.BorderColor));
 m.SetByte(96); //RTS
 ```
 
@@ -124,14 +124,14 @@ Turn on two sprites and position the first:
 var b = new C64MemoryModel.Byte(false, false, false, false, false, false, true, true);
 m.SetBytes(new MemoryBookmark(4096), 169, b.ToByte()); //LDA #$03
 m.SetByte(141); //STA
-m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister).StartAddress);
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister));
 //Position the first sprite at 128, 128.
 m.SetByte(169); //LDA
 m.SetByte(128); //#$80
 m.SetByte(141); //STA
-m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress);
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteLocations));
 m.SetByte(141); //STA
-m.SetWord((ushort)(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress + 1));
+m.SetWord(m.GetModelLocation(MemoryModelLocationName.SpriteLocations) + 1);
 m.SetByte(96); //RTS
 ```
 
@@ -141,10 +141,10 @@ Same as above, with the assembler:
 var b = new C64MemoryModel.Byte(false, false, false, false, false, false, true, true);
 m.SetBytePointer(4096);
 m.Assembler.Lda(b.ToByte());
-m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister).StartAddress);
+m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister));
 //Position the first sprite at 128, 128.
 m.Assembler.Lda(128);
-m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress);
-m.Assembler.Sta((ushort)(m.GetModelLocation(MemoryModelLocationName.SpriteLocations).StartAddress + 1));
+m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations));
+m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations) + 1);
 m.Assembler.Rts();
 ```

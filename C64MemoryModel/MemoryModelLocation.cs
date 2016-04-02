@@ -32,6 +32,9 @@ namespace C64MemoryModel
         }
         public override string ToString() => Length > 1 ? $"{StartAddress:00000}-{EndAddress:00000} ({Length:0000}) : {DisplayName}" : $"{StartAddress:00000}       ({Length:0000}) : {DisplayName}";
         public bool HitTest(ushort address) => address >= StartAddress && address <= EndAddress;
+        public static ushort operator +(MemoryModelLocation a, MemoryModelLocation b) => (ushort)(a.StartAddress + b.StartAddress);
+        public static ushort operator +(MemoryModelLocation a, int b) => (ushort)(a.StartAddress + b);
+        public static implicit operator ushort (MemoryModelLocation x) => x.StartAddress;
     }
 
     public class MemoryModelLocationList : List<MemoryModelLocation>

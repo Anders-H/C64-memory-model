@@ -22,6 +22,7 @@ namespace C64MemoryModel
             Action write2 = () => s.Append($"{b2:X2} {b3:X2} ");
             Action<string, string> writeNoArg = (operation, description) => { write0(); s.Append($"{operation}{(withDescription ? $"          ; {description}" : "")}"); };
             Action<string, string> writeAbsolute = (operation, description) => { b2 = m.GetByte(); b3 = m.GetByte(); write2(); s.Append($"{operation} ${b3:X2}{b2:X2}{(withDescription ? $"    ; {description} (Absolute)" : "")}"); };
+            Action<string, string, bool> writeJump = (operation, description, indirect) => { b2 = m.GetByte(); b3 = m.GetByte(); write2(); s.Append($"{operation} {(indirect ? "(" : "")}${b3:X2}{b2:X2}{(indirect ? ")" : "")}{(withDescription ? $"{(indirect ? "" : "  ")}  ; {description}" : "")}"); };
             Action<string, string> writeAbsoluteX = (operation, description) => { b2 = m.GetByte(); b3 = m.GetByte(); write2(); s.Append($"{operation} ${b3:X2}{b2:X2},X{(withDescription ? $"  ; {description} (Absolute,X)" : "")}"); };
             Action<string, string> writeAbsoluteY = (operation, description) => { b2 = m.GetByte(); b3 = m.GetByte(); write2(); s.Append($"{operation} ${b3:X2}{b2:X2},Y{(withDescription ? $"  ; {description} (Absolute,Y)" : "")}"); };
             Action<string, string> writeZeroPage = (operation, description) => { b2 = m.GetByte(); write1(); s.Append($"{operation} ${b2:X2}{(withDescription ? $"      ; {description} (Zero Page)" : "")}"); };
@@ -163,7 +164,7 @@ namespace C64MemoryModel
                 case 71: //47
                     writeNoArg("???", "Unknown"); break;
                 case 72: //48
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("PHA", "Push Accumulator"); break;
                 case 73: //49
                     writeImmediate("EOR", "Bitwise Exclusive OR"); break;
                 case 74: //4A
@@ -171,7 +172,7 @@ namespace C64MemoryModel
                 case 75: //4B
                     writeNoArg("???", "Unknown"); break;
                 case 76: //4C
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeJump("JMP", "Absolute Jump", false); break;
                 case 77: //4D
                     writeAbsolute("EOR", "Bitwise Exclusive OR"); break;
                 case 78: //4E
@@ -229,7 +230,7 @@ namespace C64MemoryModel
                 case 107: //6B
                     writeNoArg("???", "Unknown"); break;
                 case 108: //6C
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeJump("JMP", "Indirect Jump", true); break;
                 case 109: //6D
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 110: //6E
@@ -457,7 +458,7 @@ namespace C64MemoryModel
                 case 229: //E5
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 230: //E6
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("INC", "Increment Memory"); break;
                 case 231: //E7
                     writeNoArg("???", "Unknown"); break;
                 case 232: //E8
@@ -473,7 +474,7 @@ namespace C64MemoryModel
                 case 237: //ED
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 238: //EE
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("INC", "Increment Memory"); break;
                 case 239: //EF
                     writeNoArg("???", "Unknown"); break;
                 case 240: //F0
@@ -487,7 +488,7 @@ namespace C64MemoryModel
                 case 245: //F5
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 246: //F6
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("INC", "Increment Memory"); break;
                 case 247: //F7
                     writeNoArg("???", "Unknown"); break;
                 case 248: //F8
@@ -501,7 +502,7 @@ namespace C64MemoryModel
                 case 253: //FD
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 254: //FE
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("INC", "Increment Memory"); break;
                 case 255: //FF
                     writeNoArg("???", "Unknown"); break;
                 default:

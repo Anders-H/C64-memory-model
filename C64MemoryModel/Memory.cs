@@ -24,6 +24,7 @@ namespace C64MemoryModel
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.KeyboardBuffer, 631, 640));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultBasicArea, 2049, 40959));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicRom, 40960, 49151));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.UpperRam, 49152, 53247));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteLocations, 53248, 53264));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteEnableRegister, 53269));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BorderColor, 53280));

@@ -8,6 +8,7 @@
         KeyboardBuffer,
         DefaultBasicArea,
         BasicRom,
+        UpperRam,
         SpriteLocations,
         SpriteEnableRegister,
         BorderColor,
