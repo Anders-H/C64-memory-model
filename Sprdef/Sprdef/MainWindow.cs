@@ -7,7 +7,6 @@ namespace Sprdef
     public partial class MainWindow : Form, ISpriteEditorWindow
     {
         private C64Sprite[] Sprites { get; } = new C64Sprite[8];
-        private Rectangle[] SpriteThumb
         private int CurrentSpriteIndex { get; set; } = 0;
         private C64Sprite CurrentSprite => Sprites[CurrentSpriteIndex];
         private SpriteEditor SpriteEditor { get; }
@@ -84,7 +83,6 @@ namespace Sprdef
             RedrawBackgroundFlag = true;
             Invalidate();
         }
-
 
         protected override void WndProc(ref Message m)
         {
@@ -174,7 +172,14 @@ namespace Sprdef
                 var s = screenThing as C64Sprite;
                 if ((e.Button & MouseButtons.Left) > 0)
                 {
-                    //Select color.
+                    if (s == Sprites[0]) { PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[1]) { PickSpriteClick(sprite2ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[2]) { PickSpriteClick(sprite3ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[3]) { PickSpriteClick(sprite4ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[4]) { PickSpriteClick(sprite5ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[5]) { PickSpriteClick(sprite6ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[6]) { PickSpriteClick(sprite7ToolStripMenuItem, new EventArgs()); return; }
+                    if (s == Sprites[7]) { PickSpriteClick(sprite8ToolStripMenuItem, new EventArgs()); return; }
                 }
                 else if ((e.Button & MouseButtons.Right) > 0)
                 {

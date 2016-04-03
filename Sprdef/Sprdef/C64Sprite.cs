@@ -9,8 +9,7 @@ namespace Sprdef
         private Bitmap SpritePreviewData { get; }
         public Color[] SpritePalette { get; } = new Color[4];
         public  static Color[] C64Palette { get; } = new Color[16];
-        private Rectangle _bounds;
-        public Rectangle Bounds { get; }
+        public Rectangle Bounds { get; private set; }
         static C64Sprite()
         {
             C64Palette[0] = Color.FromArgb(0, 0, 0);
@@ -52,12 +51,12 @@ namespace Sprdef
             if (doubleSize)
             {
                 g.DrawImage(SpritePreviewData, x, y, 48, 42);
-                _bounds = new Rectangle(x, y, 48, 42);
+                Bounds = new Rectangle(x, y, 48, 42);
             }
             else
             {
                 g.DrawImage(SpritePreviewData, x, y);
-                _bounds = new Rectangle(x, y, 24, 21);
+                Bounds = new Rectangle(x, y, 24, 21);
             }
         }
         public bool HitTest(int x, int y) => Bounds.IntersectsWith(new Rectangle(x, y, 1, 1));
