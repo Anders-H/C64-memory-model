@@ -169,7 +169,7 @@ namespace Sprdef
             var screenThing = GetScreenThing(e.X, e.Y);
             if (screenThing is C64Sprite)
             {
-                var s = screenThing as C64Sprite;
+                var s = (C64Sprite)screenThing;
                 if ((e.Button & MouseButtons.Left) > 0)
                 {
                     if (s == Sprites[0]) { PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs()); return; }
@@ -180,12 +180,28 @@ namespace Sprdef
                     if (s == Sprites[5]) { PickSpriteClick(sprite6ToolStripMenuItem, new EventArgs()); return; }
                     if (s == Sprites[6]) { PickSpriteClick(sprite7ToolStripMenuItem, new EventArgs()); return; }
                     if (s == Sprites[7]) { PickSpriteClick(sprite8ToolStripMenuItem, new EventArgs()); return; }
+                    return;
                 }
                 else if ((e.Button & MouseButtons.Right) > 0)
                 {
-                    //Modify palette.
+                    
                 }
             }
+            screenThing = ColorPicker.HitTest(e.X, e.Y);
+            if (screenThing is ColorPicker.ColorCell)
+            {
+                Action<int> setCol = i => { SpriteEditor.SetPixelAtCursor(i); ColorPicker.SelectedColor = i; Invalidate(); };
+                var c = (ColorPicker.ColorCell)screenThing;
+                if (c == ColorPicker.GetColorCell(0))
+                    setCol(0);
+                if (c == ColorPicker.GetColorCell(1))
+                    setCol(1);
+                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
+                    setCol(2);
+                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
+                    setCol(3);
+            }
+
         }
 
         private IScreenThing GetScreenThing(int x, int y)
