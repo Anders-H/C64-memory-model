@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C64MemoryModel
+namespace C64MemoryModel.Chr
 {
     public class CharacterSetList : List<CharacterSetBase>
     {

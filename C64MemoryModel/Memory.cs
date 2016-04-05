@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using C64MemoryModel.Asm;
+using C64MemoryModel.Chr;
 
 namespace C64MemoryModel
 {

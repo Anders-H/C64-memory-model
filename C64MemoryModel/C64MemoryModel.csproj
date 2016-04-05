@@ -40,14 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembler.cs" />
+    <Compile Include="Asm\Assembler.cs" />
+    <Compile Include="Asm\ByteVariable.cs" />
+    <Compile Include="Asm\VariableBase.cs" />
+    <Compile Include="Asm\WordVariable.cs" />
     <Compile Include="BitValue.cs" />
     <Compile Include="Byte.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="CharacterSetList.cs" />
+    <Compile Include="Chr\Character.cs" />
+    <Compile Include="Chr\CharacterSetList.cs" />
     <Compile Include="Disassembler.cs" />
-    <Compile Include="CharacterSetBase.cs" />
-    <Compile Include="ExtendedAssembler.cs" />
+    <Compile Include="Chr\CharacterSetBase.cs" />
+    <Compile Include="Asm\ExtendedAssembler.cs" />
     <Compile Include="MemoryBookmark.cs" />
     <Compile Include="IMemoryLocation.cs" />
     <Compile Include="Memory.cs" />

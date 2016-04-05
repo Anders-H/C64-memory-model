@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using C64MemoryModel.Chr;
 
 namespace C64MemoryModel
 {
@@ -10,7 +6,7 @@ namespace C64MemoryModel
     {
         public SimpleUppercaseCharacterSet() : base("simpleUppercase")
         {
-            var chars = new Character[] {
+            var chars = new[] {
                 new Character(32, ' '),
                 new Character(33, '!'),
                 new Character(34, '\"'),
