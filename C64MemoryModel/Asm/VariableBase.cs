@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace C64MemoryModel.Asm
+﻿namespace C64MemoryModel.Asm
 {
     public abstract class VariableBase
     {
+        protected Memory Memory { get; }
+        public string Name { get; }
         public ushort Address { get; }
-        protected VariableBase(ushort address) { Address = address; }
+        protected VariableBase(Memory memory, string name, ushort address)
+        {
+            Memory = memory;
+            Name = name;
+            Address = address;
+        }
     }
 }

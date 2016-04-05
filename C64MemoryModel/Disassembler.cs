@@ -180,7 +180,7 @@ namespace C64MemoryModel
                 case 79: //4F
                     writeNoArg("???", "Unknown"); break;
                 case 80: //50
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeRel("BVC", "Branch on Overflow Clear"); break;
                 case 81: //51
                     writeIndirektY("EOR", "Bitwise Exclusive OR"); break;
                 case 82: //52
@@ -194,7 +194,7 @@ namespace C64MemoryModel
                 case 87: //57
                     writeNoArg("???", "Unknown"); break;
                 case 88: //58
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("CLI", "Clear Interrupt"); break;
                 case 89: //59
                     writeAbsoluteY("EOR", "Bitwise Exclusive OR"); break;
                 case 90: //5A
@@ -238,7 +238,7 @@ namespace C64MemoryModel
                 case 111: //6F
                     writeNoArg("???", "Unknown"); break;
                 case 112: //70
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeRel("BVS", "Branch on Overflow Set"); break;
                 case 113: //71
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 114: //72
@@ -296,7 +296,7 @@ namespace C64MemoryModel
                 case 143: //8F
                     writeNoArg("???", "Unknown"); break;
                 case 144: //90
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeRel("BCC", "Branch on Carry Clear"); break;
                 case 145: //91
                     writeIndirektY("STA", "Store Accumulator"); break;
                 case 146: //92

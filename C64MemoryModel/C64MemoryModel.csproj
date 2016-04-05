@@ -43,6 +43,7 @@
     <Compile Include="Asm\Assembler.cs" />
     <Compile Include="Asm\ByteVariable.cs" />
     <Compile Include="Asm\VariableBase.cs" />
+    <Compile Include="Asm\VariableList.cs" />
     <Compile Include="Asm\WordVariable.cs" />
     <Compile Include="BitValue.cs" />
     <Compile Include="Byte.cs" />

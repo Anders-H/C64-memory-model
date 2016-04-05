@@ -10,7 +10,7 @@ namespace C64MemoryModel.Asm
     public class ByteVariable : VariableBase
     {
         public byte Value { get; set; }
-        public ByteVariable(ushort address, byte initialValue) : base(address)
+        internal ByteVariable(Memory memory, string name, ushort address, byte initialValue) : base(memory, name, address)
         {
             Value = initialValue;
         }
