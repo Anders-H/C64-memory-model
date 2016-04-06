@@ -26,10 +26,9 @@ namespace C64MemoryModel
                 if (string.IsNullOrWhiteSpace(input))
                     return "";
                 input = Regex.Replace(input, @"\s+", " ").Trim();
-                Match match;
 
                 //GetByte
-                match = Regex.Match(input, @"^getbyte$", RegexOptions.IgnoreCase);
+                var match = Regex.Match(input, @"^getbyte$", RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
                     var adr = Memory.BytePointer;
@@ -262,7 +261,6 @@ namespace C64MemoryModel
                 {
                     var adr = Memory.GetBytePointer();
                     var oldByte = Memory.GetByte(adr);
-                    var b = new Byte(oldByte);
                     var change = match.Groups[1].Value;
                     var args = new BitValue[8];
                     for (var i = 0; i < 8; i++)
@@ -270,7 +268,7 @@ namespace C64MemoryModel
                     Memory.SetBits(adr, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
                     var theByte = Memory.GetByte(adr);
                     success = true;
-                    return $@"{adr:00000} ${adr:X4}: {new Byte(oldByte).ToString()} --> {new Byte(theByte).ToString()}
+                    return $@"{adr:00000} ${adr:X4}: {new Types.Byte(oldByte)} --> {new Types.Byte(theByte)}
 {adr:00000} ${adr:X4}:  {oldByte:000} ${oldByte:X2} -->  {theByte:000} ${theByte:X2}";
                 }
 
@@ -279,9 +277,9 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var adr = Memory.GetBytePointer();
-                    var b = new Byte(Memory.GetByte());
+                    var b = new Types.Byte(Memory.GetByte());
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {b.ToString()}";
+                    return $"{adr:00000} ${adr:X4}: {b}";
                 }
 
                 //M

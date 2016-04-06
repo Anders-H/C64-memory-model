@@ -46,7 +46,7 @@
     <Compile Include="Asm\VariableList.cs" />
     <Compile Include="Asm\WordVariable.cs" />
     <Compile Include="BitValue.cs" />
-    <Compile Include="Byte.cs" />
+    <Compile Include="Types\Byte.cs" />
     <Compile Include="Chr\Character.cs" />
     <Compile Include="Chr\CharacterSetList.cs" />
     <Compile Include="Disassembler.cs" />

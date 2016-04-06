@@ -210,13 +210,13 @@ namespace C64MemoryModel
                 case 96: //60
                     writeNoArg("RTS", "Return from Subroutine"); break;
                 case 97: //61
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektX("ADC", "Add with Carry"); break;
                 case 98: //62
                 case 99: //63
                 case 100: //64
                     writeNoArg("???", "Unknown"); break;
                 case 101: //65
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("ADC", "Add with Carry"); break;
                 case 102: //66
                     writeZeroPage("ROR", "Rotate Right"); break;
                 case 103: //67
@@ -224,7 +224,7 @@ namespace C64MemoryModel
                 case 104: //68
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 105: //69
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("ADC", "Add with Carry"); break;
                 case 106: //6A
                     writeNoArg("ROR", "Rotate Right"); break;
                 case 107: //6B
@@ -232,7 +232,7 @@ namespace C64MemoryModel
                 case 108: //6C
                     writeJump("JMP", "Indirect Jump", true); break;
                 case 109: //6D
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("ADC", "Add with Carry"); break;
                 case 110: //6E
                     writeAbsolute("ROR", "Rotate Right"); break;
                 case 111: //6F
@@ -240,13 +240,13 @@ namespace C64MemoryModel
                 case 112: //70
                     writeRel("BVS", "Branch on Overflow Set"); break;
                 case 113: //71
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektY("ADC", "Add with Carry"); break;
                 case 114: //72
                 case 115: //73
                 case 116: //74
                     writeNoArg("???", "Unknown"); break;
                 case 117: //75
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("ADC", "Add with Carry"); break;
                 case 118: //76
                     writeZeroPageX("ROR", "Rotate Right"); break;
                 case 119: //77
@@ -254,13 +254,13 @@ namespace C64MemoryModel
                 case 120: //78
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 121: //79
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteY("ADC", "Add with Carry"); break;
                 case 122: //7A
                 case 123: //7B
                 case 124: //7C
                     writeNoArg("???", "Unknown"); break;
                 case 125: //7D
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("ADC", "Add with Carry"); break;
                 case 126: //7E
                     writeAbsoluteX("ROR", "Rotate Right"); break;
                 case 127: //7F

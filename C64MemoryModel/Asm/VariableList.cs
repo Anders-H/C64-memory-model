@@ -6,26 +6,22 @@ using System.Threading.Tasks;
 
 namespace C64MemoryModel.Asm
 {
-    public class VariableList : List<VariableBase>
+    public class VariableList : List<IVariable>
     {
-        internal Memory Memory { get; }
-        public VariableList(Memory memory)
+        internal Assembler Assembler { get; }
+        public VariableList(Assembler assembler)
         {
-            Memory = memory;
+            Assembler = assembler;
         }
-        public ByteVariable CreateByteVariable(string name, ushort address, byte initialValue)
+        public ByteVariable CreateByteVariable(string name, ushort address)
         {
-            var x = new ByteVariable(Memory, name, address, initialValue);
-            Memory.SetBytePointer(address);
-            Memory.SetByte(initialValue);
+            var x = new ByteVariable(Assembler, name, address);
             Add(x);
             return x;
         }
-        public WordVariable CreateWordVariable(string name, ushort address, ushort initialValue)
+        public WordVariable CreateWordVariable(string name, ushort address)
         {
-            var x = new WordVariable(Memory, name, address, initialValue);
-            Memory.SetBytePointer(address);
-            Memory.SetWord(initialValue);
+            var x = new WordVariable(Assembler, name, address);
             Add(x);
             return x;
         }

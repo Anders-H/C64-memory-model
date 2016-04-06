@@ -204,13 +204,13 @@ namespace C64MemoryModel
         public void SetBits(BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
         {
             var adr = GetBytePointer();
-            var b = new Byte(GetByte(adr));
+            var b = new Types.Byte(GetByte(adr));
             b.Modify(b7, b6, b5, b4, b3, b2, b1, b0);
             SetByte(adr, b.ToByte());
         }
-        public Byte GetBits(ushort address) => new Byte(GetByte(address));
-        public Byte GetBits(IMemoryLocation location) => new Byte(GetByte(location.StartAddress));
-        public Byte GetBits() => new Byte(GetByte());
+        public Types.Byte GetBits(ushort address) => new Types.Byte(GetByte(address));
+        public Types.Byte GetBits(IMemoryLocation location) => new Types.Byte(GetByte(location.StartAddress));
+        public Types.Byte GetBits() => new Types.Byte(GetByte());
         public void SetString(CharacterSetBase characterSet, string text)
         {
             if (characterSet == null)

@@ -11,7 +11,7 @@ namespace C64MemoryModel.Asm
     {
         private Assembler Assembler { get; }
         public VariableList Variables { get; }
-        internal ExtendedAssembler(Assembler assembler) { Assembler = assembler; Variables = new VariableList(Assembler.Memory); }
+        internal ExtendedAssembler(Assembler assembler) { Assembler = assembler; Variables = new VariableList(Assembler); }
         public void PokeByte(ushort address, byte value)
         {
             Assembler.Lda(value);

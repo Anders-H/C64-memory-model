@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 
 namespace C64MemoryModel.Asm
 {
-    public class ByteVariable : VariableBase
+    public class ByteVariable : VariableBase<byte>
     {
-        public byte Value { get; set; }
-        internal ByteVariable(Memory memory, string name, ushort address, byte initialValue) : base(memory, name, address)
+        public ByteVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address) { } 
+        public override void WriteAssign(byte value)
         {
-            Value = initialValue;
+            Value = value;
         }
     }
 }

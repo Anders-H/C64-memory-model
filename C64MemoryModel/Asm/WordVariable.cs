@@ -1,11 +1,11 @@
 ﻿namespace C64MemoryModel.Asm
 {
-    public class WordVariable : VariableBase
+    public class WordVariable : VariableBase<ushort>
     {
-        public ushort Value { get; set; }
-        internal WordVariable(Memory memory, string name, ushort address, ushort initialValue) : base(memory, name, address)
+        public WordVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address) { }
+        public override void WriteAssign(ushort value)
         {
-            Value = initialValue;
+            Value = value;
         }
     }
 }

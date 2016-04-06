@@ -10,7 +10,7 @@ namespace C64Mem
         {
             var m = new Memory();
             //Turn on first and second sprite.
-            var b = new C64MemoryModel.Byte(false, false, false, false, false, false, true, true);
+            var b = new C64MemoryModel.Types.Byte(false, false, false, false, false, false, true, true);
             m.SetBytePointer(4096);
             m.Assembler.Lda(b.ToByte());
             m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister));
