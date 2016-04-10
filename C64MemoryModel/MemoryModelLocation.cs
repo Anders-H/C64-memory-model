@@ -7,6 +7,7 @@ namespace C64MemoryModel
 {
     public class MemoryModelLocation : IMemoryLocation
     {
+        internal static MemoryModelLocationList List { private get; set; }
         public MemoryModelLocationName Name { get; }
         public string DisplayName { get; }
         public ushort StartAddress { get; }
@@ -35,6 +36,7 @@ namespace C64MemoryModel
         public static ushort operator +(MemoryModelLocation a, MemoryModelLocation b) => (ushort)(a.StartAddress + b.StartAddress);
         public static ushort operator +(MemoryModelLocation a, int b) => (ushort)(a.StartAddress + b);
         public static implicit operator ushort (MemoryModelLocation x) => x.StartAddress;
+        public static implicit operator MemoryModelLocation(MemoryModelLocationName x) => List.GetLocation(x);
     }
 
     public class MemoryModelLocationList : List<MemoryModelLocation>

@@ -2,6 +2,8 @@
 {
     public interface IVariable
     {
+        string Name { get; }
+        ushort Address { get; }
     }
     public abstract class VariableBase<T> : IVariable
     {
@@ -15,6 +17,7 @@
             Name = name;
             Address = address;
         }
-        public abstract void WriteAssign(T value);
+        public abstract void WriteAssign(ushort address, T value);
+        public abstract void WriteDirect(T value);
     }
 }

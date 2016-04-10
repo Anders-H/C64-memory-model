@@ -8,19 +8,6 @@ namespace C64Mem
     {
         private static void Main()
         {
-            var m = new Memory();
-            //Turn on first and second sprite.
-            var b = new C64MemoryModel.Types.Byte(false, false, false, false, false, false, true, true);
-            m.SetBytePointer(4096);
-            m.Assembler.Lda(b.ToByte());
-            m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteEnableRegister));
-            //Position the first sprite at 128, 128.
-            m.Assembler.Lda(128);
-            m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations));
-            m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations) + 1);
-            m.Assembler.Rts();
-            m.Save(@"C:\Temp\hej.prg");
-
             var t = new TextAdapter(new Memory());
             do
             {

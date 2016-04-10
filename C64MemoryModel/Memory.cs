@@ -13,9 +13,14 @@ namespace C64MemoryModel
         private Disassembler Disassembler { get; set; }
         internal int BytePointer { get; set; }
         private byte[] Bytes { get; } = new byte[ushort.MaxValue];
-        public MemoryModelLocationList Locations { get; } = new MemoryModelLocationList();
+        public static MemoryModelLocationList Locations { get; }
         public MemoryBookmarkList Bookmarks { get; } = new MemoryBookmarkList();
         public CharacterSetList CharacterSets { get; } = new CharacterSetList();
+        static Memory()
+        {
+            Locations = new MemoryModelLocationList();
+            MemoryModelLocation.List = Locations;
+        }
         public Memory()
         {
             Assembler = new Assembler(this);

@@ -32,5 +32,11 @@ namespace C64MemoryModel.Asm
             Assembler.Lda(value.Address);
             Assembler.Sta(address.Address);
         }
+        public ByteVariable CreateByteVariable(string name, ushort address) => Variables.CreateByteVariable(name, address);
+        public ByteVariable CreateByteVariable(string name, IMemoryLocation address) => Variables.CreateByteVariable(name, address.StartAddress);
+        public ByteVariable CreateByteVariable(MemoryModelLocation address) => Variables.CreateByteVariable(address.Name.ToString(), address.StartAddress);
+        public WordVariable CreateWordVariable(string name, ushort address) => Variables.CreateWordVariable(name, address);
+        public WordVariable CreateWordVariable(string name, IMemoryLocation address) => Variables.CreateWordVariable(name, address.StartAddress);
+        public WordVariable CreateWordVariable(MemoryModelLocation address) => Variables.CreateWordVariable(address.Name.ToString(), address.StartAddress);
     }
 }

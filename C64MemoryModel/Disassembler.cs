@@ -222,7 +222,7 @@ namespace C64MemoryModel
                 case 103: //67
                     writeNoArg("???", "Unknown"); break;
                 case 104: //68
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("PLA", "Pull Accumulator"); break;
                 case 105: //69
                     writeImmediate("ADC", "Add with Carry"); break;
                 case 106: //6A
@@ -252,7 +252,7 @@ namespace C64MemoryModel
                 case 119: //77
                     writeNoArg("???", "Unknown"); break;
                 case 120: //78
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("SEI", "Set Interrupt"); break;
                 case 121: //79
                     writeAbsoluteY("ADC", "Add with Carry"); break;
                 case 122: //7A
@@ -276,7 +276,7 @@ namespace C64MemoryModel
                 case 133: //85
                     writeZeroPage("STA", "Store Accumulator"); break;
                 case 134: //86
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("STX", "Store X Register"); break;
                 case 135: //87
                     writeNoArg("???", "Unknown"); break;
                 case 136: //88
@@ -292,7 +292,7 @@ namespace C64MemoryModel
                 case 141: //8D
                     writeAbsolute("STA", "Store Accumulator"); break;
                 case 142: //8E
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("STX", "Store X Register"); break;
                 case 143: //8F
                     writeNoArg("???", "Unknown"); break;
                 case 144: //90
@@ -307,7 +307,7 @@ namespace C64MemoryModel
                 case 149: //95
                     writeZeroPageX("STA", "Store Accumulator"); break;
                 case 150: //96
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("STX", "Store X Register"); break;
                 case 151: //97
                     writeNoArg("???", "Unknown"); break;
                 case 152: //98
@@ -390,14 +390,14 @@ namespace C64MemoryModel
                 case 192: //C0
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 193: //C1
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektX("CMP", "Compare Accumulator"); break;
                 case 194: //C2
                 case 195: //C3
                     writeNoArg("???", "Unknown"); break;
                 case 196: //C4
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 197: //C5
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("CMP", "Compare Accumulator"); break;
                 case 198: //C6
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 199: //C7
@@ -405,7 +405,7 @@ namespace C64MemoryModel
                 case 200: //C8
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 201: //C9
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("CMP", "Compare Accumulator"); break;
                 case 202: //CA
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 203: //CB
@@ -413,7 +413,7 @@ namespace C64MemoryModel
                 case 204: //CC
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 205: //CD
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("CMP", "Compare Accumulator"); break;
                 case 206: //CE
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 207: //CF
@@ -421,13 +421,13 @@ namespace C64MemoryModel
                 case 208: //D0
                     writeRel("BNE", "Branch on Not Equal"); break;
                 case 209: //D1
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektY("CMP", "Compare Accumulator"); break;
                 case 210: //D2
                 case 211: //D3
                 case 212: //D4
                     writeNoArg("???", "Unknown"); break;
                 case 213: //D5
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("CMP", "Compare Accumulator"); break;
                 case 214: //D6
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 215: //D7
@@ -435,13 +435,13 @@ namespace C64MemoryModel
                 case 216: //D8
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 217: //D9
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteY("CMP", "Compare Accumulator"); break;
                 case 218: //DA
                 case 219: //DB
                 case 220: //DC
                     writeNoArg("???", "Unknown"); break;
                 case 221: //DD
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("CMP", "Compare Accumulator"); break;
                 case 222: //DE
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 223: //DF

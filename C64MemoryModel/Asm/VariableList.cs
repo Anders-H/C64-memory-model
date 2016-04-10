@@ -19,11 +19,15 @@ namespace C64MemoryModel.Asm
             Add(x);
             return x;
         }
+        public ByteVariable CreateByteVariable(string name, IMemoryLocation address) => CreateByteVariable(name, address.StartAddress);
+        public ByteVariable CreateByteVariable(MemoryModelLocation address) => CreateByteVariable(address.Name.ToString(), address.StartAddress);
         public WordVariable CreateWordVariable(string name, ushort address)
         {
             var x = new WordVariable(Assembler, name, address);
             Add(x);
             return x;
         }
+        public WordVariable CreateWordVariable(string name, IMemoryLocation address) => CreateWordVariable(name, address.StartAddress);
+        public WordVariable CreateWordVariable(MemoryModelLocation address) => CreateWordVariable(address.Name.ToString(), address.StartAddress);
     }
 }

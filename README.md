@@ -148,3 +148,12 @@ m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations));
 m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations) + 1);
 m.Assembler.Rts();
 ```
+
+##Extended assembler
+###Using byte variables
+```C#
+//A program that sets the backgroud color to red.
+var v = m.Assembler.Extended.CreateByteVariable(MemoryModelLocationName.BackgroundColor);
+v.WriteAssign(4096, 2);
+m.Assembler.Rts();
+```
