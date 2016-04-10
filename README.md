@@ -150,10 +150,16 @@ m.Assembler.Rts();
 ```
 
 ##Extended assembler
-###Using byte variables
+Using byte variables:
 ```C#
 //A program that sets the backgroud color to red.
 var v = m.Assembler.Extended.CreateByteVariable(MemoryModelLocationName.BackgroundColor);
 v.WriteAssign(4096, 2);
 m.Assembler.Rts();
+```
+Disassembly:
+```
+. 04096 $1000 A9 02    LDA #$02     ; Load Accumulator (Immediate)
+. 04098 $1002 8D 21 D0 STA $D021    ; Store Accumulator (Absolute)
+. 04101 $1005 60       RTS          ; Return from Subroutine
 ```

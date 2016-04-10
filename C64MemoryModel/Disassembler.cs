@@ -280,11 +280,11 @@ namespace C64MemoryModel
                 case 135: //87
                     writeNoArg("???", "Unknown"); break;
                 case 136: //88
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("DEY", "Decrement Y"); break;
                 case 137: //89
                     writeNoArg("???", "Unknown"); break;
                 case 138: //8A
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("TXA", "Transfer X to A"); break;
                 case 139: //8B
                     writeNoArg("???", "Unknown"); break;
                 case 140: //8C
@@ -449,14 +449,14 @@ namespace C64MemoryModel
                 case 224: //E0
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 225: //E1
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektX("SBC", "Subtract with Carry"); break;
                 case 226: //E2
                 case 227: //E3
                     writeNoArg("???", "Unknown"); break;
                 case 228: //E4
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 229: //E5
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("SBC", "Subtract with Carry"); break;
                 case 230: //E6
                     writeZeroPage("INC", "Increment Memory"); break;
                 case 231: //E7
@@ -464,7 +464,7 @@ namespace C64MemoryModel
                 case 232: //E8
                     writeNoArg("INX", "Increment X"); break;
                 case 233: //E9
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("SBC", "Subtract with Carry"); break;
                 case 234: //EA
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 235: //EB
@@ -472,7 +472,7 @@ namespace C64MemoryModel
                 case 236: //EC
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 237: //ED
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("SBC", "Subtract with Carry"); break;
                 case 238: //EE
                     writeAbsolute("INC", "Increment Memory"); break;
                 case 239: //EF
@@ -480,13 +480,13 @@ namespace C64MemoryModel
                 case 240: //F0
                     writeRel("BEQ", "Branch on Equal"); break;
                 case 241: //F1
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeIndirektY("SBC", "Subtract with Carry"); break;
                 case 242: //F2
                 case 243: //F3
                 case 244: //F4
                     writeNoArg("???", "Unknown"); break;
                 case 245: //F5
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("SBC", "Subtract with Carry"); break;
                 case 246: //F6
                     writeZeroPageX("INC", "Increment Memory"); break;
                 case 247: //F7
@@ -494,13 +494,13 @@ namespace C64MemoryModel
                 case 248: //F8
                     s.Append($" --- Not implemented: {b:X2} ---"); break;
                 case 249: //F9
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteY("SBC", "Subtract with Carry"); break;
                 case 250: //FA
                 case 251: //FB
                 case 252: //FC
                     writeNoArg("???", "Unknown"); break;
                 case 253: //FD
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("SBC", "Subtract with Carry"); break;
                 case 254: //FE
                     writeAbsoluteX("INC", "Increment Memory"); break;
                 case 255: //FF
