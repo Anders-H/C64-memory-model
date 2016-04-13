@@ -311,11 +311,11 @@ namespace C64MemoryModel
                 case 151: //97
                     writeNoArg("???", "Unknown"); break;
                 case 152: //98
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("TYA", "Transfer Y to A"); break;
                 case 153: //99
                     writeAbsoluteY("STA", "Store Accumulator"); break;
                 case 154: //9A
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("TXS", "Transfer X to Stack Pointer"); break;
                 case 155: //9B
                 case 156: //9C
                     writeNoArg("???", "Unknown"); break;
@@ -357,7 +357,7 @@ namespace C64MemoryModel
                 case 175: //AF
                     writeNoArg("???", "Unknown"); break;
                 case 176: //B0
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeRel("BNE", "Branch on Carry Set"); break;
                 case 177: //B1
                     writeIndirektY("LDA", "Load Accumulator"); break;
                 case 178: //B2

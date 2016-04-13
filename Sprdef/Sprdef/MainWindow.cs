@@ -14,14 +14,13 @@ namespace Sprdef
         private int EditorY { get; set; }
         private bool RedrawBackgroundFlag { get; set; } = true;
         private ColorPicker ColorPicker { get; }
-
+        private bool Active { get; set; }
         public MainWindow()
         {
             SpriteEditor = new SpriteEditor(this);
             ColorPicker = new ColorPicker(C64Sprite.C64Palette[0], C64Sprite.C64Palette[1], C64Sprite.C64Palette[2], C64Sprite.C64Palette[3]);
             InitializeComponent();
         }
-
         private void MainWindow_Load(object sender, EventArgs e)
         {
             for (int i = 0; i < Sprites.Length; i++)
@@ -35,7 +34,6 @@ namespace Sprdef
             sprite7ToolStripMenuItem.Click += PickSpriteClick;
             sprite8ToolStripMenuItem.Click += PickSpriteClick;
         }
-
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
@@ -69,6 +67,11 @@ namespace Sprdef
             SpriteEditor.Draw(e.Graphics, EditorX, EditorY);
             ColorPicker.ColorCell.Size = SpriteEditor.PixelSize*2;
             ColorPicker.Draw(e.Graphics, EditorX, EditorY - (ColorPicker.ColorCell.Size + 8), false);
+            if (!Active && Width >= 4)
+            {
+                using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
+                    e.Graphics.FillRectangle(shadow, 0, 0, Width, Height);
+            }
         }
 
         private void MainWindow_Shown(object sender, EventArgs e)
@@ -139,7 +142,6 @@ namespace Sprdef
                     break;
             }
         }
-
         private void PickSpriteClick(object sender, EventArgs e)
         {
             var item = sender as ToolStripMenuItem;
@@ -163,7 +165,6 @@ namespace Sprdef
             else if (item == sprite8ToolStripMenuItem) { SpriteEditor.Sprite = Sprites[7]; spritesToolStripMenuItem.Text = @"Sprite 8/8"; }
             Invalidate();
         }
-
         private void MainWindow_MouseClick(object sender, MouseEventArgs e)
         {
             var screenThing = GetScreenThing(e.X, e.Y);
@@ -203,13 +204,28 @@ namespace Sprdef
             }
 
         }
-
         private IScreenThing GetScreenThing(int x, int y)
         {
             for (var i = 0; i < 8; i++)
                 if (Sprites[i].HitTest(x, y))
                     return Sprites[i];
             return null;
+        }
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e) =>
+            MessageBox.Show("Use cursor keys to move cursor. Use keys 1 or 2 (1 to 4 in multi color mode) to set pixels. Happy spriting!",
+                "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void MainWindow_Activated(object sender, EventArgs e) { Active = true; Invalidate(); lblStatus.Text = "Activated. Use keyboard to draw sprites."; }
+        private void MainWindow_Deactivate(object sender, EventArgs e) { Active = false; Invalidate(); lblStatus.Text = "Paused. Activate window to enable program."; }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Clear all sprites?", "New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                for (int i = 0; i < Sprites.Length; i++)
+                    Sprites[i] = new C64Sprite();
+                PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs());
+                Invalidate();
+            }
         }
     }
 }

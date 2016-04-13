@@ -30,6 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToPrgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToBASICToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToCBMPrgStudioDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spritesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,27 +48,81 @@
             this.sprite7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToPrgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToBASICToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToCBMPrgStudioDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.spritesToolStripMenuItem});
+            this.spritesToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(717, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.exportToPrgToolStripMenuItem,
+            this.exportToBASICToolStripMenuItem,
+            this.exportToCBMPrgStudioDataToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.openToolStripMenuItem.Text = "Open...";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.saveAsToolStripMenuItem.Text = "Save as..";
+            // 
+            // exportToPrgToolStripMenuItem
+            // 
+            this.exportToPrgToolStripMenuItem.Name = "exportToPrgToolStripMenuItem";
+            this.exportToPrgToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.exportToPrgToolStripMenuItem.Text = "Export to prg...";
+            // 
+            // exportToBASICToolStripMenuItem
+            // 
+            this.exportToBASICToolStripMenuItem.Name = "exportToBASICToolStripMenuItem";
+            this.exportToBASICToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.exportToBASICToolStripMenuItem.Text = "Export to BASIC...";
+            // 
+            // exportToCBMPrgStudioDataToolStripMenuItem
+            // 
+            this.exportToCBMPrgStudioDataToolStripMenuItem.Name = "exportToCBMPrgStudioDataToolStripMenuItem";
+            this.exportToCBMPrgStudioDataToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.exportToCBMPrgStudioDataToolStripMenuItem.Text = "Export to CBM prg Studio data...";
             // 
             // spritesToolStripMenuItem
             // 
@@ -137,67 +199,36 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 543);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(717, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // fileToolStripMenuItem
+            // helpToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.exportToPrgToolStripMenuItem,
-            this.exportToBASICToolStripMenuItem,
-            this.exportToCBMPrgStudioDataToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem1});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
-            // newToolStripMenuItem
+            // helpToolStripMenuItem1
             // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.newToolStripMenuItem.Text = "New";
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem1.Text = "Help...";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
-            // openToolStripMenuItem
+            // lblStatus
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.openToolStripMenuItem.Text = "Open...";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.saveAsToolStripMenuItem.Text = "Save as..";
-            // 
-            // exportToPrgToolStripMenuItem
-            // 
-            this.exportToPrgToolStripMenuItem.Name = "exportToPrgToolStripMenuItem";
-            this.exportToPrgToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.exportToPrgToolStripMenuItem.Text = "Export to prg...";
-            // 
-            // exportToBASICToolStripMenuItem
-            // 
-            this.exportToBASICToolStripMenuItem.Name = "exportToBASICToolStripMenuItem";
-            this.exportToBASICToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.exportToBASICToolStripMenuItem.Text = "Export to BASIC...";
-            // 
-            // exportToCBMPrgStudioDataToolStripMenuItem
-            // 
-            this.exportToCBMPrgStudioDataToolStripMenuItem.Name = "exportToCBMPrgStudioDataToolStripMenuItem";
-            this.exportToCBMPrgStudioDataToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.exportToCBMPrgStudioDataToolStripMenuItem.Text = "Export to CBM prg Studio data...";
+            this.lblStatus.BackColor = System.Drawing.SystemColors.Control;
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(16, 17);
+            this.lblStatus.Text = "   ";
             // 
             // MainWindow
             // 
@@ -213,6 +244,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.Text = "SPRDEF";
+            this.Activated += new System.EventHandler(this.MainWindow_Activated);
+            this.Deactivate += new System.EventHandler(this.MainWindow_Deactivate);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Shown += new System.EventHandler(this.MainWindow_Shown);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
@@ -221,6 +254,8 @@
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,6 +282,9 @@
         private System.Windows.Forms.ToolStripMenuItem exportToPrgToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToBASICToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToCBMPrgStudioDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
     }
 }
 
