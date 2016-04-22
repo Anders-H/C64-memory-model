@@ -325,7 +325,7 @@ namespace C64MemoryModel
                 case 159: //9F
                     writeNoArg("???", "Unknown"); break;
                 case 160: //A0
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("LDY", "Load Y Register"); break;
                 case 161: //A1
                     writeIndirektX("LDA", "Load Accumulator"); break;
                 case 162: //A2
@@ -333,7 +333,7 @@ namespace C64MemoryModel
                 case 163: //A3
                     writeNoArg("???", "Unknown"); break;
                 case 164: //A4
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("LDY", "Load Y Register"); break;
                 case 165: //A5
                     writeZeroPage("LDA", "Load Accumulator"); break;
                 case 166: //A6
@@ -349,7 +349,7 @@ namespace C64MemoryModel
                 case 171: //AB
                     writeNoArg("???", "Unknown"); break;
                 case 172: //AC
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("LDY", "Load Y Register"); break;
                 case 173: //AD
                     writeAbsolute("LDA", "Load Accumulator"); break;
                 case 174: //AE
@@ -364,7 +364,7 @@ namespace C64MemoryModel
                 case 179: //B3
                     writeNoArg("???", "Unknown"); break;
                 case 180: //B4
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("LDY", "Load Y Register"); break;
                 case 181: //B5
                     writeZeroPageX("LDA", "Load Accumulator"); break;
                 case 182: //B6
@@ -380,7 +380,7 @@ namespace C64MemoryModel
                 case 187: //BB
                     writeNoArg("???", "Unknown"); break;
                 case 188: //BC
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("LDY", "Load Y Register"); break;
                 case 189: //BD
                     writeAbsoluteX("LDA", "Load Accumulator"); break;
                 case 190: //BE

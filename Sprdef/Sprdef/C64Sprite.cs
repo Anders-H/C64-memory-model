@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Linq.Expressions;
 
 namespace Sprdef
 {
@@ -60,5 +62,24 @@ namespace Sprdef
             }
         }
         public bool HitTest(int x, int y) => Bounds.IntersectsWith(new Rectangle(x, y, 1, 1));
+        public byte[] GetBytes()
+        {
+            var ret = new byte[63];
+            var i = 0;
+            for (var y = 0; y < 21; y++)
+                for (var x = 0; x < 3; x++)
+                {
+                    var b = new C64MemoryModel.Types.Byte(IsSet(x, y), IsSet(x + 1, y), IsSet(x + 2, y), IsSet(x + 3, y), IsSet(x + 4, y), IsSet(x + 5, y), IsSet(x + 6, y), IsSet(x + 7, y));
+                    ret[i] = b.ToByte();
+                    i++;
+                }
+            return ret;
+        }
+        private bool IsSet(int x, int y) => SpriteData[x, y] > 0;
+        public  bool Load(BinaryReader sr)
+        {
+            //TODO: ...
+            return true;
+        }
     }
 }

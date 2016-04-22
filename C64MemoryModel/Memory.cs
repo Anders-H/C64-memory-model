@@ -29,7 +29,7 @@ namespace C64MemoryModel
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ProcessorPort, 1));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicAreaPointer, 43,44));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.KeyboardBuffer, 631, 640));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultSpriteArea, 2040, 2047));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultSpritePointerArea, 2040, 2047));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultBasicArea, 2049, 40959));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicRom, 40960, 49151));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.UpperRam, 49152, 53247));

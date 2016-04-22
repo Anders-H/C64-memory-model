@@ -2,6 +2,9 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
+using System.Text;
+
 namespace Sprdef
 {
     public partial class MainWindow : Form, ISpriteEditorWindow
@@ -15,10 +18,12 @@ namespace Sprdef
         private bool RedrawBackgroundFlag { get; set; } = true;
         private ColorPicker ColorPicker { get; }
         private bool Active { get; set; }
+        private string Filename { get; set; }
         public MainWindow()
         {
             SpriteEditor = new SpriteEditor(this);
             ColorPicker = new ColorPicker(C64Sprite.C64Palette[0], C64Sprite.C64Palette[1], C64Sprite.C64Palette[2], C64Sprite.C64Palette[3]);
+            Filename = "";
             InitializeComponent();
         }
         private void MainWindow_Load(object sender, EventArgs e)
@@ -212,19 +217,112 @@ namespace Sprdef
             return null;
         }
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e) =>
-            MessageBox.Show("Use cursor keys to move cursor. Use keys 1 or 2 (1 to 4 in multi color mode) to set pixels. Happy spriting!",
-                "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void MainWindow_Activated(object sender, EventArgs e) { Active = true; Invalidate(); lblStatus.Text = "Activated. Use keyboard to draw sprites."; }
-        private void MainWindow_Deactivate(object sender, EventArgs e) { Active = false; Invalidate(); lblStatus.Text = "Paused. Activate window to enable program."; }
+            MessageBox.Show(@"Use cursor keys to move cursor. Use keys 1 or 2 (1 to 4 in multi color mode) to set pixels. Happy spriting!",
+                @"Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void MainWindow_Activated(object sender, EventArgs e) { Active = true; Invalidate(); lblStatus.Text = @"Activated. Use keyboard to draw sprites."; }
+        private void MainWindow_Deactivate(object sender, EventArgs e) { Active = false; Invalidate(); lblStatus.Text = @"Paused. Activate window to enable program."; }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Clear all sprites?", "New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show(@"Clear all sprites?", @"New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
-                for (int i = 0; i < Sprites.Length; i++)
+                for (var i = 0; i < Sprites.Length; i++)
                     Sprites[i] = new C64Sprite();
                 PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs());
+                Filename = "";
+                Text = @"SPRDEF";
                 Invalidate();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Filename == "")
+                saveAsToolStripMenuItem_Click(sender, new EventArgs());
+            else
+                SaveSprites(Filename);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new SaveFileDialog())
+            {
+                x.Title = @"Save as";
+                x.Filter = @"Sprite files (*.spr)|*.spr|All files (*.*)|*.*";
+                if (x.ShowDialog(this) == DialogResult.OK)
+                    SaveSprites(x.FileName);
+            }
+        }
+
+        private bool SaveSprites(string filename)
+        {
+            try
+            {
+                using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
+                {
+                    using (var sw = new BinaryWriter(fs))
+                    {
+                        sw.Write(Encoding.UTF8.GetBytes("SPRDEF"));
+                        foreach (var sprite in Sprites)
+                            sw.Write(sprite.GetBytes());
+                        sw.Flush();
+                        sw.Close();
+                    }
+                    fs.Close();
+                }
+                Filename = filename;
+                Text = $"SPRDEF - {Filename}";
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private bool LoadSprites(string filename)
+        {
+            try
+            {
+                var fi = new FileInfo(filename);
+                if (!fi.Exists)
+                    return false;
+                if (fi.Length > 1200 || fi.Length < 10)
+                    return false;
+                var success = false;
+                using (var fs = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read))
+                {
+                    using (var sr = new BinaryReader(fs))
+                    {
+                        var header = sr.ReadBytes(6);
+                        if (Encoding.UTF8.GetString(header) == "SPRDEF")
+                        {
+                            for(var i = 0; i < 8; i++)
+                                Sprites[i].Load(sr);
+                        }
+                        sr.Close();
+                    }
+                    fs.Close();
+                }
+                Filename = filename;
+                Text = $"SPRDEF - {Filename}";
+                Invalidate();
+                return success;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new OpenFileDialog())
+            {
+                x.Title = @"Open sprites";
+                x.Filter = @"Sprite files (*.spr)|*.spr|All files (*.*)|*.*";
+                if (x.ShowDialog(this) == DialogResult.OK)
+                    LoadSprites(x.FileName);
             }
         }
     }
