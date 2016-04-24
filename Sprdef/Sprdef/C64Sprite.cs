@@ -1,7 +1,5 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
-using System.Linq.Expressions;
 
 namespace Sprdef
 {
@@ -78,7 +76,26 @@ namespace Sprdef
         private bool IsSet(int x, int y) => SpriteData[x, y] > 0;
         public  bool Load(BinaryReader sr)
         {
-            //TODO: ...
+            int x = 0, y = 0;
+            for (var i = 0; i < 63; i++)
+            {
+                var b = new C64MemoryModel.Types.Byte(sr.ReadByte());
+                var physicalX = x*3;
+                SetPixel(physicalX, y, b.Bit0 ? 1 : 0);
+                SetPixel(physicalX + 1, y, b.Bit1 ? 1 : 0);
+                SetPixel(physicalX + 2, y, b.Bit2 ? 1 : 0);
+                SetPixel(physicalX + 3, y, b.Bit3 ? 1 : 0);
+                SetPixel(physicalX + 4, y, b.Bit4 ? 1 : 0);
+                SetPixel(physicalX + 5, y, b.Bit5 ? 1 : 0);
+                SetPixel(physicalX + 6, y, b.Bit6 ? 1 : 0);
+                SetPixel(physicalX + 7, y, b.Bit7 ? 1 : 0);
+                x++;
+                if (x > 2)
+                {
+                    x = 0;
+                    y++;
+                }
+            }
             return true;
         }
     }

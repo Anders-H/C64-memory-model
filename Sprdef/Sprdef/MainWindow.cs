@@ -289,7 +289,6 @@ namespace Sprdef
                     return false;
                 if (fi.Length > 1200 || fi.Length < 10)
                     return false;
-                var success = false;
                 using (var fs = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read))
                 {
                     using (var sr = new BinaryReader(fs))
@@ -307,7 +306,7 @@ namespace Sprdef
                 Filename = filename;
                 Text = $"SPRDEF - {Filename}";
                 Invalidate();
-                return success;
+                return true;
             }
             catch (Exception)
             {
