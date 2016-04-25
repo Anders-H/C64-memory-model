@@ -111,12 +111,14 @@
             // 
             // exportToPrgToolStripMenuItem
             // 
+            this.exportToPrgToolStripMenuItem.Enabled = false;
             this.exportToPrgToolStripMenuItem.Name = "exportToPrgToolStripMenuItem";
             this.exportToPrgToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.exportToPrgToolStripMenuItem.Text = "Export to prg...";
             // 
             // exportToBASICToolStripMenuItem
             // 
+            this.exportToBASICToolStripMenuItem.Enabled = false;
             this.exportToBASICToolStripMenuItem.Name = "exportToBASICToolStripMenuItem";
             this.exportToBASICToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.exportToBASICToolStripMenuItem.Text = "Export to BASIC...";
@@ -126,6 +128,7 @@
             this.exportToCBMPrgStudioDataToolStripMenuItem.Name = "exportToCBMPrgStudioDataToolStripMenuItem";
             this.exportToCBMPrgStudioDataToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.exportToCBMPrgStudioDataToolStripMenuItem.Text = "Export to CBM prg Studio data...";
+            this.exportToCBMPrgStudioDataToolStripMenuItem.Click += new System.EventHandler(this.exportToCBMPrgStudioDataToolStripMenuItem_Click);
             // 
             // spritesToolStripMenuItem
             // 

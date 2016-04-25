@@ -53,13 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C64Sprite.cs" />
-    <Compile Include="ColorPicker.cs" />
-    <Compile Include="ExportDialog.cs">
+    <Compile Include="CbmPrgStudioDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExportDialog.Designer.cs">
-      <DependentUpon>ExportDialog.cs</DependentUpon>
+    <Compile Include="CbmPrgStudioDialog.Designer.cs">
+      <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorPicker.cs" />
     <Compile Include="IScreenThing.cs" />
     <Compile Include="ISpriteEditorWindow.cs" />
     <Compile Include="MainWindow.cs">
@@ -71,8 +71,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteEditor.cs" />
-    <EmbeddedResource Include="ExportDialog.resx">
-      <DependentUpon>ExportDialog.cs</DependentUpon>
+    <EmbeddedResource Include="CbmPrgStudioDialog.resx">
+      <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

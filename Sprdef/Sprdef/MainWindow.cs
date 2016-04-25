@@ -324,5 +324,14 @@ namespace Sprdef
                     LoadSprites(x.FileName);
             }
         }
+
+        private void exportToCBMPrgStudioDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new CbmPrgStudioDialog())
+            {
+                x.Sprites = Sprites;
+                x.ShowDialog(this);
+            }
+        }
     }
 }

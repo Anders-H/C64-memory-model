@@ -67,7 +67,8 @@ namespace Sprdef
             for (var y = 0; y < 21; y++)
                 for (var x = 0; x < 3; x++)
                 {
-                    var b = new C64MemoryModel.Types.Byte(IsSet(x, y), IsSet(x + 1, y), IsSet(x + 2, y), IsSet(x + 3, y), IsSet(x + 4, y), IsSet(x + 5, y), IsSet(x + 6, y), IsSet(x + 7, y));
+                    var physicalX = 8*x;
+                    var b = new C64MemoryModel.Types.Byte(IsSet(physicalX, y), IsSet(physicalX + 1, y), IsSet(physicalX + 2, y), IsSet(physicalX + 3, y), IsSet(physicalX + 4, y), IsSet(physicalX + 5, y), IsSet(physicalX + 6, y), IsSet(physicalX + 7, y));
                     ret[i] = b.ToByte();
                     i++;
                 }
@@ -80,7 +81,7 @@ namespace Sprdef
             for (var i = 0; i < 63; i++)
             {
                 var b = new C64MemoryModel.Types.Byte(sr.ReadByte());
-                var physicalX = x*3;
+                var physicalX = x*8;
                 SetPixel(physicalX, y, b.Bit0 ? 1 : 0);
                 SetPixel(physicalX + 1, y, b.Bit1 ? 1 : 0);
                 SetPixel(physicalX + 2, y, b.Bit2 ? 1 : 0);
