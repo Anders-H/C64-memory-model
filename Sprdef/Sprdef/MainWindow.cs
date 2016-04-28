@@ -22,7 +22,7 @@ namespace Sprdef
         public MainWindow()
         {
             SpriteEditor = new SpriteEditor(this);
-            ColorPicker = new ColorPicker(C64Sprite.C64Palette[0], C64Sprite.C64Palette[1], C64Sprite.C64Palette[2], C64Sprite.C64Palette[3]);
+            ColorPicker = new ColorPicker();
             Filename = "";
             InitializeComponent();
         }
@@ -66,7 +66,7 @@ namespace Sprdef
             for (var i = 0; i < 8; i++)
             {
                 Sprites[i].Draw(e.Graphics, startX, startY, doubleSize);
-                startY += doubleSize ? 42 : 21;
+                startY += doubleSize ? 44 : 22;
             }
 
             SpriteEditor.Draw(e.Graphics, EditorX, EditorY);
@@ -129,6 +129,21 @@ namespace Sprdef
                 case Keys.Right:
                     SpriteEditor.MoveCursor(1, 0); handled();
                     break;
+                case Keys.Enter:
+                    SpriteEditor.MoveCursor(0, 1); SpriteEditor.SetCursorX(0); handled();
+                    break;
+                case Keys.Home:
+                    SpriteEditor.SetCursorX(0); handled();
+                    break;
+                case Keys.End:
+                    SpriteEditor.SetCursorX(23); handled();
+                    break;
+                case Keys.PageUp:
+                    SpriteEditor.SetCursorY(0); handled();
+                    break;
+                case Keys.PageDown:
+                    SpriteEditor.SetCursorY(20); handled();
+                    break;
                 case Keys.D1:
                     setCol(0);
                     break;
@@ -188,24 +203,35 @@ namespace Sprdef
                     if (s == Sprites[7]) { PickSpriteClick(sprite8ToolStripMenuItem, new EventArgs()); return; }
                     return;
                 }
-                else if ((e.Button & MouseButtons.Right) > 0)
-                {
-                    
-                }
             }
             screenThing = ColorPicker.HitTest(e.X, e.Y);
             if (screenThing is ColorPicker.ColorCell)
             {
-                Action<int> setCol = i => { SpriteEditor.SetPixelAtCursor(i); ColorPicker.SelectedColor = i; Invalidate(); };
-                var c = (ColorPicker.ColorCell)screenThing;
-                if (c == ColorPicker.GetColorCell(0))
-                    setCol(0);
-                if (c == ColorPicker.GetColorCell(1))
-                    setCol(1);
-                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
-                    setCol(2);
-                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
-                    setCol(3);
+                if ((e.Button & MouseButtons.Left) > 0)
+                {
+                    Action<int> setCol = i => { SpriteEditor.SetPixelAtCursor(i); ColorPicker.SelectedColor = i; Invalidate(); };
+                    var c = (ColorPicker.ColorCell)screenThing;
+                    if (c == ColorPicker.GetColorCell(0))
+                        setCol(0);
+                    if (c == ColorPicker.GetColorCell(1))
+                        setCol(1);
+                    if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
+                        setCol(2);
+                    if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
+                        setCol(3);
+                }
+                else if ((e.Button & MouseButtons.Right) > 0)
+                {
+                    var c = (ColorPicker.ColorCell)screenThing;
+                    if (c == ColorPicker.GetColorCell(0))
+                        pickBackgroundColorToolStripMenuItem_Click(null, new EventArgs());
+                    if (c == ColorPicker.GetColorCell(1))
+                        pickForegroundColorToolStripMenuItem_Click(null, new EventArgs());
+                    if (c == ColorPicker.GetColorCell(2))
+                        pickExtraColor1ToolStripMenuItem_Click(null, new EventArgs());
+                    if (c == ColorPicker.GetColorCell(3))
+                        pickExtraColor2ToolStripMenuItem_Click(null, new EventArgs());
+                }
             }
 
         }
@@ -340,6 +366,70 @@ namespace Sprdef
             {
                 x.Sprites = Sprites;
                 x.ShowDialog(this);
+            }
+        }
+
+        private void pickBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new PaletteDialog())
+            {
+                x.Prompt = "Select background color:";
+                x.ColorIndex = C64Sprite.BackgroundColorIndex;
+                if (x.ShowDialog(this) == DialogResult.OK)
+                {
+                    C64Sprite.BackgroundColorIndex = x.ColorIndex;
+                    for (var i = 0; i < 8; i++)
+                        Sprites[i].ResetPixels();
+                    Invalidate();
+                }
+            }
+        }
+
+        private void pickForegroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new PaletteDialog())
+            {
+                x.Prompt = "Select foreground color:";
+                x.ColorIndex = C64Sprite.ForegroundColorIndex;
+                if (x.ShowDialog(this) == DialogResult.OK)
+                {
+                    C64Sprite.ForegroundColorIndex = x.ColorIndex;
+                    for (var i = 0; i < 8; i++)
+                        Sprites[i].ResetPixels();
+                    Invalidate();
+                }
+            }
+        }
+
+        private void pickExtraColor1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new PaletteDialog())
+            {
+                x.Prompt = "Select first extra color:";
+                x.ColorIndex = C64Sprite.ExtraColor1Index;
+                if (x.ShowDialog(this) == DialogResult.OK)
+                {
+                    C64Sprite.ExtraColor1Index = x.ColorIndex;
+                    for (var i = 0; i < 8; i++)
+                        Sprites[i].ResetPixels();
+                    Invalidate();
+                }
+            }
+        }
+
+        private void pickExtraColor2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new PaletteDialog())
+            {
+                x.Prompt = "Select second extra color:";
+                x.ColorIndex = C64Sprite.ExtraColor2Index;
+                if (x.ShowDialog(this) == DialogResult.OK)
+                {
+                    C64Sprite.ExtraColor2Index = x.ColorIndex;
+                    for (var i = 0; i < 8; i++)
+                        Sprites[i].ResetPixels();
+                    Invalidate();
+                }
             }
         }
     }

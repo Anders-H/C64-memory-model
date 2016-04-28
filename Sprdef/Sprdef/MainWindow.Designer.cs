@@ -50,6 +50,11 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pickBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pickForegroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pickExtraColor1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pickExtraColor2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +64,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.spritesToolStripMenuItem,
+            this.paletteToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -206,7 +212,7 @@
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(127, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.helpToolStripMenuItem1.Text = "Help...";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
@@ -226,6 +232,45 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(16, 17);
             this.lblStatus.Text = "   ";
+            // 
+            // paletteToolStripMenuItem
+            // 
+            this.paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pickBackgroundColorToolStripMenuItem,
+            this.pickForegroundColorToolStripMenuItem,
+            this.pickExtraColor1ToolStripMenuItem,
+            this.pickExtraColor2ToolStripMenuItem});
+            this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
+            this.paletteToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.paletteToolStripMenuItem.Text = "Palette";
+            // 
+            // pickBackgroundColorToolStripMenuItem
+            // 
+            this.pickBackgroundColorToolStripMenuItem.Name = "pickBackgroundColorToolStripMenuItem";
+            this.pickBackgroundColorToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pickBackgroundColorToolStripMenuItem.Text = "Pick background color...";
+            this.pickBackgroundColorToolStripMenuItem.Click += new System.EventHandler(this.pickBackgroundColorToolStripMenuItem_Click);
+            // 
+            // pickForegroundColorToolStripMenuItem
+            // 
+            this.pickForegroundColorToolStripMenuItem.Name = "pickForegroundColorToolStripMenuItem";
+            this.pickForegroundColorToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pickForegroundColorToolStripMenuItem.Text = "Pick foreground color...";
+            this.pickForegroundColorToolStripMenuItem.Click += new System.EventHandler(this.pickForegroundColorToolStripMenuItem_Click);
+            // 
+            // pickExtraColor1ToolStripMenuItem
+            // 
+            this.pickExtraColor1ToolStripMenuItem.Name = "pickExtraColor1ToolStripMenuItem";
+            this.pickExtraColor1ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pickExtraColor1ToolStripMenuItem.Text = "Pick extra color 1...";
+            this.pickExtraColor1ToolStripMenuItem.Click += new System.EventHandler(this.pickExtraColor1ToolStripMenuItem_Click);
+            // 
+            // pickExtraColor2ToolStripMenuItem
+            // 
+            this.pickExtraColor2ToolStripMenuItem.Name = "pickExtraColor2ToolStripMenuItem";
+            this.pickExtraColor2ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pickExtraColor2ToolStripMenuItem.Text = "Pick extra color 2...";
+            this.pickExtraColor2ToolStripMenuItem.Click += new System.EventHandler(this.pickExtraColor2ToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -281,6 +326,11 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.ToolStripMenuItem paletteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pickBackgroundColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pickForegroundColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pickExtraColor1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pickExtraColor2ToolStripMenuItem;
     }
 }
 

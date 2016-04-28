@@ -34,9 +34,9 @@ namespace Sprdef
             if (CursorY >= 20)
                 CursorY = 20;
         }
-
+        public void SetCursorX(int x) => CursorX = x;
+        public void SetCursorY(int y) => CursorY = y;
         public void SetPixelAtCursor(int index) => Sprite.SetPixel(CursorX, CursorY, index);
-
         public void Draw(Graphics g, int x, int y)
         {
             if (Sprite == null)
@@ -45,8 +45,10 @@ namespace Sprdef
             var physicalY = y;
             var ps = PixelSize - 1;
             var brushes = new SolidBrush[4];
-            for(var i = 0; i < 4; i++)
-                brushes[i] = new SolidBrush(Sprite.SpritePalette[i]);
+            brushes[0] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.BackgroundColorIndex));
+            brushes[1] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.ForegroundColorIndex));
+            brushes[2] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.ExtraColor1Index));
+            brushes[3] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.ExtraColor2Index));
             for (var sy = 0; sy < 21; sy++)
             {
                 for (var sx = 0; sx < 24; sx++)

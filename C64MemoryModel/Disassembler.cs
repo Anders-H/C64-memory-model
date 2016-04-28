@@ -376,7 +376,7 @@ namespace C64MemoryModel
                 case 185: //B9
                     writeAbsoluteY("LDA", "Load Accumulator"); break;
                 case 186: //BA
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("TSX", "Transfer Stack Pointer to X"); break;
                 case 187: //BB
                     writeNoArg("???", "Unknown"); break;
                 case 188: //BC

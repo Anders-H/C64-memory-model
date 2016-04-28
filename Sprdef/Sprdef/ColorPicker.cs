@@ -8,13 +8,20 @@ namespace Sprdef
         public class ColorCell : IScreenThing
         {
             public static int Size { get; set; }
-            public Color Color { get; set; }
             public Rectangle Bounds { get; private set; }
-            public ColorCell(Color color) { Bounds = new Rectangle(); Size = 20; Color = color; }
-            public void Draw(Graphics g, int x, int y, bool enabled, bool selected)
+            public ColorCell() { Bounds = new Rectangle(); Size = 20; }
+            public void Draw(Graphics g, int x, int y, int colorIndex, bool enabled, bool selected)
             {
                 Bounds = new Rectangle(x, y, Size, Size);
-                using (var b = new SolidBrush(Color))
+                var paletteIndex = C64Sprite.BackgroundColorIndex;
+                switch (colorIndex)
+                {
+                    case 1: paletteIndex = C64Sprite.ForegroundColorIndex; break;
+                    case 2: paletteIndex = C64Sprite.ExtraColor1Index; break;
+                    case 3: paletteIndex = C64Sprite.ExtraColor2Index; break;
+                }
+                var color = C64Sprite.Palette.GetColor(paletteIndex);
+                using (var b = new SolidBrush(color))
                     g.FillRectangle(b, Bounds);
                 if (enabled && selected)
                 {
@@ -51,12 +58,12 @@ namespace Sprdef
             }
         }
 
-        public ColorPicker(Color col1, Color col2, Color col3, Color col4)
+        public ColorPicker()
         {
-            _colorCells[0] = new ColorCell(col1);
-            _colorCells[1] = new ColorCell(col2);
-            _colorCells[2] = new ColorCell(col3);
-            _colorCells[3] = new ColorCell(col4);
+            _colorCells[0] = new ColorCell();
+            _colorCells[1] = new ColorCell();
+            _colorCells[2] = new ColorCell();
+            _colorCells[3] = new ColorCell();
         }
 
         public ColorCell GetColorCell(int index) => _colorCells[index];
@@ -64,7 +71,7 @@ namespace Sprdef
         public void Draw(Graphics g, int x, int y, bool multiColor)
         {
             for (int i = 0; i < 4; i++)
-                GetColorCell(i).Draw(g, x + (i * (ColorCell.Size + 8)), y, multiColor | (i < 2), i == SelectedColor);
+                GetColorCell(i).Draw(g, x + (i * (ColorCell.Size + 8)), y, i, multiColor | (i < 2), i == SelectedColor);
         }
 
         public ColorCell HitTest(int x, int y)
