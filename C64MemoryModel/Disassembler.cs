@@ -341,11 +341,11 @@ namespace C64MemoryModel
                 case 167: //A7
                     writeNoArg("???", "Unknown"); break;
                 case 168: //A8
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("TXA", "Transfer X to A"); break;
                 case 169: //A9
                     writeImmediate("LDA", "Load Accumulator"); break;
                 case 170: //AA
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("TAX", "Transfer A to X"); break;
                 case 171: //AB
                     writeNoArg("???", "Unknown"); break;
                 case 172: //AC
@@ -372,7 +372,7 @@ namespace C64MemoryModel
                 case 183: //B7
                     writeNoArg("???", "Unknown"); break;
                 case 184: //B8
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("CLV", "Clear Overflow"); break;
                 case 185: //B9
                     writeAbsoluteY("LDA", "Load Accumulator"); break;
                 case 186: //BA
@@ -492,7 +492,7 @@ namespace C64MemoryModel
                 case 247: //F7
                     writeNoArg("???", "Unknown"); break;
                 case 248: //F8
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("SED", "Set Decimal"); break;
                 case 249: //F9
                     writeAbsoluteY("SBC", "Subtract with Carry"); break;
                 case 250: //FA

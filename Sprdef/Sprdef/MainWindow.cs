@@ -333,5 +333,14 @@ namespace Sprdef
                 x.ShowDialog(this);
             }
         }
+
+        private void exportToBASICToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new BasicDialog())
+            {
+                x.Sprites = Sprites;
+                x.ShowDialog(this);
+            }
+        }
     }
 }
