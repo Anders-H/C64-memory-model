@@ -1,5 +1,11 @@
 #Commodore 64 memory model
-Create and edit .prg files.
+Backend for creating C64 tools.
+
+##Installation
+
+The C# library:
+
+`Install-Package C64MemModel`
 
 ##Load .prg files
 ```C#

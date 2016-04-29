@@ -388,34 +388,34 @@ namespace C64MemoryModel
                 case 191: //BF
                     writeNoArg("???", "Unknown"); break;
                 case 192: //C0
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("CPY", "Compare Y Register"); break;
                 case 193: //C1
                     writeIndirektX("CMP", "Compare Accumulator"); break;
                 case 194: //C2
                 case 195: //C3
                     writeNoArg("???", "Unknown"); break;
                 case 196: //C4
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("CPY", "Compare Y Register"); break;
                 case 197: //C5
                     writeZeroPage("CMP", "Compare Accumulator"); break;
                 case 198: //C6
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("DEC", "Decrement Memory"); break;
                 case 199: //C7
                     writeNoArg("???", "Unknown"); break;
                 case 200: //C8
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("INY", "Increment Y"); break;
                 case 201: //C9
                     writeImmediate("CMP", "Compare Accumulator"); break;
                 case 202: //CA
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("DEX", "Decrement X"); break;
                 case 203: //CB
                     writeNoArg("???", "Unknown"); break;
                 case 204: //CC
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("CPY", "Compare Y Register"); break;
                 case 205: //CD
                     writeAbsolute("CMP", "Compare Accumulator"); break;
                 case 206: //CE
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("DEC", "Decrement Memory"); break;
                 case 207: //CF
                     writeNoArg("???", "Unknown"); break;
                 case 208: //D0
@@ -429,11 +429,11 @@ namespace C64MemoryModel
                 case 213: //D5
                     writeZeroPageX("CMP", "Compare Accumulator"); break;
                 case 214: //D6
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPageX("DEC", "Decrement Memory"); break;
                 case 215: //D7
                     writeNoArg("???", "Unknown"); break;
                 case 216: //D8
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("CLD", "Clear Decimal"); break;
                 case 217: //D9
                     writeAbsoluteY("CMP", "Compare Accumulator"); break;
                 case 218: //DA
@@ -443,18 +443,18 @@ namespace C64MemoryModel
                 case 221: //DD
                     writeAbsoluteX("CMP", "Compare Accumulator"); break;
                 case 222: //DE
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsoluteX("DEC", "Decrement Memory"); break;
                 case 223: //DF
                     writeNoArg("???", "Unknown"); break;
                 case 224: //E0
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeImmediate("CPX", "Compare X Register"); break;
                 case 225: //E1
                     writeIndirektX("SBC", "Subtract with Carry"); break;
                 case 226: //E2
                 case 227: //E3
                     writeNoArg("???", "Unknown"); break;
                 case 228: //E4
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeZeroPage("CPX", "Compare X Register"); break;
                 case 229: //E5
                     writeZeroPage("SBC", "Subtract with Carry"); break;
                 case 230: //E6
@@ -466,11 +466,11 @@ namespace C64MemoryModel
                 case 233: //E9
                     writeImmediate("SBC", "Subtract with Carry"); break;
                 case 234: //EA
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeNoArg("NOP", "No Operation"); break;
                 case 235: //EB
                     writeNoArg("???", "Unknown"); break;
                 case 236: //EC
-                    s.Append($" --- Not implemented: {b:X2} ---"); break;
+                    writeAbsolute("CPX", "Compare X Register"); break;
                 case 237: //ED
                     writeAbsolute("SBC", "Subtract with Carry"); break;
                 case 238: //EE
