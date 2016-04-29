@@ -71,7 +71,7 @@ namespace Sprdef
 
             SpriteEditor.Draw(e.Graphics, EditorX, EditorY);
             ColorPicker.ColorCell.Size = SpriteEditor.PixelSize*2;
-            ColorPicker.Draw(e.Graphics, EditorX, EditorY - (ColorPicker.ColorCell.Size + 8), false);
+            ColorPicker.Draw(e.Graphics, EditorX, EditorY - (ColorPicker.ColorCell.Size + 8), SpriteEditor.Multicolor);
             if (!Active && Width >= 4)
             {
                 using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
@@ -124,10 +124,10 @@ namespace Sprdef
                     SpriteEditor.MoveCursor(0, 1); handled();
                     break;
                 case Keys.Left:
-                    SpriteEditor.MoveCursor(-1, 0); handled();
+                    SpriteEditor.MoveCursor(SpriteEditor.Multicolor ? -2 : -1, 0); handled();
                     break;
                 case Keys.Right:
-                    SpriteEditor.MoveCursor(1, 0); handled();
+                    SpriteEditor.MoveCursor(SpriteEditor.Multicolor ? 2 : 1, 0); handled();
                     break;
                 case Keys.Enter:
                     SpriteEditor.MoveCursor(0, 1); SpriteEditor.SetCursorX(0); handled();
@@ -136,7 +136,7 @@ namespace Sprdef
                     SpriteEditor.SetCursorX(0); handled();
                     break;
                 case Keys.End:
-                    SpriteEditor.SetCursorX(23); handled();
+                    SpriteEditor.SetCursorX(SpriteEditor.Multicolor ? 22 : 23); handled();
                     break;
                 case Keys.PageUp:
                     SpriteEditor.SetCursorY(0); handled();
@@ -431,6 +431,22 @@ namespace Sprdef
                     Invalidate();
                 }
             }
+        }
+
+        private void multicolorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cursorX = SpriteEditor.GetCursorX();
+            multicolorToolStripMenuItem.Checked = !multicolorToolStripMenuItem.Checked;
+            SpriteEditor.Multicolor = multicolorToolStripMenuItem.Checked;
+            if (SpriteEditor.Multicolor && (cursorX % 2 != 0))
+            {
+                cursorX -= 1;
+                SpriteEditor.SetCursorX(cursorX);
+            }
+            SpriteEditor.SetCursorX(cursorX);
+            for (var i = 0; i < 8; i++)
+                Sprites[i].ResetPixels();
+            Invalidate();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Sprdef
 {
     public class C64Sprite : IScreenThing
     {
-        private byte[,] SpriteData { get; }
+        private bool[,] SpriteData { get; }
         private Bitmap SpritePreviewData { get; }
         public static C64MemoryModel.C64Palette Palette = new C64MemoryModel.C64Palette();
         public static int BackgroundColorIndex { get; set; }
@@ -22,30 +22,76 @@ namespace Sprdef
         }
         public C64Sprite()
         {
-            SpriteData = new byte[24, 21];
+            SpriteData = new bool[24, 21];
             SpritePreviewData = new Bitmap(24, 21);
             using (var g = Graphics.FromImage(SpritePreviewData))
                 g.FillRectangle(Brushes.Black, 0, 0, 24, 21);
         }
         public void ResetPixels()
         {
-            for (var y = 0; y < 21; y++)
-                for (var x = 0; x < 24; x++)
-                    SetPixel(x, y, GetPixel(x, y));
+            if (SpriteEditor.Multicolor)
+                for (var y = 0; y < 21; y++)
+                    for (var x = 0; x < 23; x += 2)
+                        SetPixel(x, y, GetPixel(x, y));
+            else
+                for (var y = 0; y < 21; y++)
+                    for (var x = 0; x < 24; x++)
+                        SetPixel(x, y, GetPixel(x, y));
         }
         public void SetPixel(int x, int y, int colorIndex)
         {
-            SpriteData[x, y] = (byte)colorIndex;
-            var paletteIndex = BackgroundColorIndex;
-            switch (colorIndex)
+            if (SpriteEditor.Multicolor)
             {
-                case 1: paletteIndex = ForegroundColorIndex; break;
-                case 2: paletteIndex = ExtraColor1Index; break;
-                case 3: paletteIndex = ExtraColor2Index; break;
-            }       
-            SpritePreviewData.SetPixel(x, y, Palette.GetColor(paletteIndex));
+                int paletteIndex;
+                switch (colorIndex)
+                {
+                    case 1:
+                        paletteIndex = ForegroundColorIndex;
+                        SpriteData[x, y] = false;
+                        SpriteData[x + 1, y] = true;
+                        break;
+                    case 2:
+                        paletteIndex = ExtraColor1Index;
+                        SpriteData[x, y] = true;
+                        SpriteData[x + 1, y] = false;
+                        break;
+                    case 3:
+                        paletteIndex = ExtraColor2Index;
+                        SpriteData[x, y] = true;
+                        SpriteData[x + 1, y] = true;
+                        break;
+                    default:
+                        paletteIndex = BackgroundColorIndex;
+                        SpriteData[x, y] = false;
+                        SpriteData[x + 1, y] = false;
+                        break;
+                }
+                SpritePreviewData.SetPixel(x, y, Palette.GetColor(paletteIndex));
+                SpritePreviewData.SetPixel(x + 1, y, Palette.GetColor(paletteIndex));
+            }
+            else
+            {
+                SpriteData[x, y] = colorIndex > 0;
+                SpritePreviewData.SetPixel(x, y, Palette.GetColor(colorIndex == 0 ? BackgroundColorIndex : ForegroundColorIndex));
+            }
         }
-        public byte GetPixel(int x, int y) => SpriteData[x, y];
+        public int GetPixel(int x, int y)
+        {
+            if (SpriteEditor.Multicolor)
+            {
+                if (x % 2 != 0)
+                    x -= 1;
+                if (!SpriteData[x, y] && SpriteData[x + 1, y])
+                    return ForegroundColorIndex;
+                if (SpriteData[x, y] && !SpriteData[x + 1, y])
+                    return ExtraColor1Index;
+                if (SpriteData[x, y] && SpriteData[x + 1, y])
+                    return ExtraColor2Index;
+                return BackgroundColorIndex;
+            }
+            else
+                return SpriteData[x, y] ? (byte)1 : (byte)0;
+        }
         public void Draw(Graphics g, int x, int y, bool doubleSize)
         {
             if (doubleSize)
@@ -74,7 +120,7 @@ namespace Sprdef
                 }
             return ret;
         }
-        private bool IsSet(int x, int y) => SpriteData[x, y] > 0;
+        private bool IsSet(int x, int y) => SpriteEditor.Multicolor ? SpriteData[x, y] | SpriteData[x + 1, y] : SpriteData[x, y];
         public  bool Load(BinaryReader sr)
         {
             int x = 0, y = 0;

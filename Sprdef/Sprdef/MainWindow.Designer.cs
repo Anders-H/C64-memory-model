@@ -46,15 +46,17 @@
             this.sprite6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pickBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pickForegroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pickExtraColor1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pickExtraColor2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.multicolorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -200,42 +202,11 @@
             this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite8ToolStripMenuItem.Text = "Sprite 8";
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.helpToolStripMenuItem1});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // helpToolStripMenuItem1
-            // 
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.helpToolStripMenuItem1.Text = "Help...";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 543);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(717, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.BackColor = System.Drawing.SystemColors.Control;
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(16, 17);
-            this.lblStatus.Text = "   ";
-            // 
             // paletteToolStripMenuItem
             // 
             this.paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.multicolorToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.pickBackgroundColorToolStripMenuItem,
             this.pickForegroundColorToolStripMenuItem,
             this.pickExtraColor1ToolStripMenuItem,
@@ -271,6 +242,52 @@
             this.pickExtraColor2ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.pickExtraColor2ToolStripMenuItem.Text = "Pick extra color 2...";
             this.pickExtraColor2ToolStripMenuItem.Click += new System.EventHandler(this.pickExtraColor2ToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem1});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(127, 22);
+            this.helpToolStripMenuItem1.Text = "Help...";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 543);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(717, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.BackColor = System.Drawing.SystemColors.Control;
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(16, 17);
+            this.lblStatus.Text = "   ";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(199, 6);
+            // 
+            // multicolorToolStripMenuItem
+            // 
+            this.multicolorToolStripMenuItem.Name = "multicolorToolStripMenuItem";
+            this.multicolorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.multicolorToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.multicolorToolStripMenuItem.Text = "Multicolor";
+            this.multicolorToolStripMenuItem.Click += new System.EventHandler(this.multicolorToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -331,6 +348,8 @@
         private System.Windows.Forms.ToolStripMenuItem pickForegroundColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pickExtraColor1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pickExtraColor2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem multicolorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }
 
