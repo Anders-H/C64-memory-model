@@ -3,9 +3,13 @@ Backend for creating C64 tools.
 
 ##Installation
 
-The C# library:
+**The C# library:**
 
 `Install-Package C64MemModel`
+
+**Tools (requires .NET Framework 4.6 or later):**
+
+[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe)
 
 ##Load .prg files
 ```C#
