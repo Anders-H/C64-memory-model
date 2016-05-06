@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,7 @@
     <Compile Include="Asm\VariableList.cs" />
     <Compile Include="Asm\WordVariable.cs" />
     <Compile Include="BitValue.cs" />
+    <Compile Include="C64Palette.cs" />
     <Compile Include="Types\Byte.cs" />
     <Compile Include="Chr\Character.cs" />
     <Compile Include="Chr\CharacterSetList.cs" />

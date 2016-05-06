@@ -5,52 +5,98 @@ namespace Sprdef
 {
     public class C64Sprite : IScreenThing
     {
-        private byte[,] SpriteData { get; }
+        private bool[,] SpriteData { get; }
         private Bitmap SpritePreviewData { get; }
-        public Color[] SpritePalette { get; } = new Color[4];
-        public  static Color[] C64Palette { get; } = new Color[16];
+        public static C64MemoryModel.C64Palette Palette = new C64MemoryModel.C64Palette();
+        public static int BackgroundColorIndex { get; set; }
+        public static int ForegroundColorIndex { get; set; }
+        public static int ExtraColor1Index { get; set; }
+        public static int ExtraColor2Index { get; set; }
         public Rectangle Bounds { get; private set; }
         static C64Sprite()
         {
-            C64Palette[0] = Color.FromArgb(0, 0, 0);
-            C64Palette[1] = Color.FromArgb(255, 255, 255);
-            C64Palette[2] = Color.FromArgb(136, 0, 0);
-            C64Palette[3] = Color.FromArgb(170, 255, 238);
-            C64Palette[4] = Color.FromArgb(204, 68, 204);
-            C64Palette[5] = Color.FromArgb(0, 204, 85);
-            C64Palette[6] = Color.FromArgb(0, 0, 170);
-            C64Palette[7] = Color.FromArgb(238, 238, 119);
-            C64Palette[8] = Color.FromArgb(221, 136, 85);
-            C64Palette[9] = Color.FromArgb(102, 68, 0);
-            C64Palette[10] = Color.FromArgb(255, 119, 119);
-            C64Palette[11] = Color.FromArgb(51, 51, 51);
-            C64Palette[12] = Color.FromArgb(119, 119, 119);
-            C64Palette[13] = Color.FromArgb(170, 255, 102);
-            C64Palette[14] = Color.FromArgb(0, 136, 255);
-            C64Palette[15] = Color.FromArgb(187, 187, 187);
+            BackgroundColorIndex = 0;
+            ForegroundColorIndex = 1;
+            ExtraColor1Index = 2;
+            ExtraColor2Index = 3;
         }
         public C64Sprite()
         {
-            SpriteData = new byte[24, 21];
-            SpritePalette[0] = C64Palette[0];
-            SpritePalette[1] = C64Palette[1];
-            SpritePalette[2] = C64Palette[2];
-            SpritePalette[3] = C64Palette[3];
+            SpriteData = new bool[24, 21];
             SpritePreviewData = new Bitmap(24, 21);
             using (var g = Graphics.FromImage(SpritePreviewData))
                 g.FillRectangle(Brushes.Black, 0, 0, 24, 21);
         }
+        public void ResetPixels()
+        {
+            if (SpriteEditor.Multicolor)
+                for (var y = 0; y < 21; y++)
+                    for (var x = 0; x < 23; x += 2)
+                        SetPixel(x, y, GetPixel(x, y));
+            else
+                for (var y = 0; y < 21; y++)
+                    for (var x = 0; x < 24; x++)
+                        SetPixel(x, y, GetPixel(x, y));
+        }
         public void SetPixel(int x, int y, int colorIndex)
         {
-            SpriteData[x, y] = (byte)colorIndex;
-            SpritePreviewData.SetPixel(x, y, C64Palette[colorIndex]);
+            if (SpriteEditor.Multicolor)
+            {
+                int paletteIndex;
+                switch (colorIndex)
+                {
+                    case 1:
+                        paletteIndex = ForegroundColorIndex;
+                        SpriteData[x, y] = false;
+                        SpriteData[x + 1, y] = true;
+                        break;
+                    case 2:
+                        paletteIndex = ExtraColor1Index;
+                        SpriteData[x, y] = true;
+                        SpriteData[x + 1, y] = false;
+                        break;
+                    case 3:
+                        paletteIndex = ExtraColor2Index;
+                        SpriteData[x, y] = true;
+                        SpriteData[x + 1, y] = true;
+                        break;
+                    default:
+                        paletteIndex = BackgroundColorIndex;
+                        SpriteData[x, y] = false;
+                        SpriteData[x + 1, y] = false;
+                        break;
+                }
+                SpritePreviewData.SetPixel(x, y, Palette.GetColor(paletteIndex));
+                SpritePreviewData.SetPixel(x + 1, y, Palette.GetColor(paletteIndex));
+            }
+            else
+            {
+                SpriteData[x, y] = colorIndex > 0;
+                SpritePreviewData.SetPixel(x, y, Palette.GetColor(colorIndex == 0 ? BackgroundColorIndex : ForegroundColorIndex));
+            }
         }
-        public byte GetPixel(int x, int y) => SpriteData[x, y];
+        public int GetPixel(int x, int y)
+        {
+            if (SpriteEditor.Multicolor)
+            {
+                if (x % 2 != 0)
+                    x -= 1;
+                if (!SpriteData[x, y] && SpriteData[x + 1, y])
+                    return ForegroundColorIndex;
+                if (SpriteData[x, y] && !SpriteData[x + 1, y])
+                    return ExtraColor1Index;
+                if (SpriteData[x, y] && SpriteData[x + 1, y])
+                    return ExtraColor2Index;
+                return BackgroundColorIndex;
+            }
+            else
+                return SpriteData[x, y] ? (byte)1 : (byte)0;
+        }
         public void Draw(Graphics g, int x, int y, bool doubleSize)
         {
             if (doubleSize)
             {
-                g.DrawImage(SpritePreviewData, x, y, 48, 42);
+                g.DrawImage(SpritePreviewData, x, y, 48, 43);
                 Bounds = new Rectangle(x, y, 48, 42);
             }
             else
@@ -74,7 +120,7 @@ namespace Sprdef
                 }
             return ret;
         }
-        private bool IsSet(int x, int y) => SpriteData[x, y] > 0;
+        private bool IsSet(int x, int y) => SpriteEditor.Multicolor ? SpriteData[x, y] | SpriteData[x + 1, y] : SpriteData[x, y];
         public  bool Load(BinaryReader sr)
         {
             int x = 0, y = 0;
