@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using C64MemoryModel;
+using C64MemoryModel.Types;
 
 namespace C64Mem
 {
@@ -8,15 +9,6 @@ namespace C64Mem
     {
         private static void Main()
         {
-            var m = new Memory();
-            //A program that sets the backgroud color to red.
-            var v = m.Assembler.Extended.CreateByteVariable(MemoryModelLocationName.BackgroundColor);
-            v.WriteAssign(4096, 2);
-            m.Assembler.Rts();
-            m.SetBytePointer(4096);
-            Console.Write(m.GetDisassembly(10, true));
-
-
             var t = new TextAdapter(new Memory());
             do
             {

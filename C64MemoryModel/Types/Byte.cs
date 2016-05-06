@@ -43,7 +43,7 @@
             Bit1 = (b1 == BitValue.Set ? true : (b1 == BitValue.NotSet ? false : Bit1));
             Bit0 = (b0 == BitValue.Set ? true : (b0 == BitValue.NotSet ? false : Bit0));
         }
-        public override string ToString() => $"{(Bit7 ? "1" : "0")}{(Bit6 ? "1" : "0")}{(Bit5 ? "1" : "0")}{(Bit4 ? "1" : "0")}{(Bit3 ? "1" : "0")}{(Bit2 ? "1" : "0")}{(Bit1 ? "1" : "0")}{(Bit0 ? "1" : "0")}";
+        public override string ToString() => $"{HighNibbleString()}{LowNibbleString()}";
         public byte ToByte()
         {
             var b = (Bit7 ? 128 : 0);
@@ -56,5 +56,8 @@
             b += (Bit0 ? 1 : 0);
             return (byte)b;
         }
+
+        public string HighNibbleString() => $"{(Bit7 ? "1" : "0")}{(Bit6 ? "1" : "0")}{(Bit5 ? "1" : "0")}{(Bit4 ? "1" : "0")}";
+        public string LowNibbleString() => $"{(Bit3 ? "1" : "0")}{(Bit2 ? "1" : "0")}{(Bit1 ? "1" : "0")}{(Bit0 ? "1" : "0")}";
     }
 }
