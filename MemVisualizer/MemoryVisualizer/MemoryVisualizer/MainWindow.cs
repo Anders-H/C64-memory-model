@@ -14,7 +14,10 @@ namespace MemoryVisualizer
         private int DisplayPointer { get; set; }
         private DisplayMode DisplayMode { get; set; }
         private ScreenCharacterMap Characters { get; } = new ScreenCharacterMap();
-
+        private bool RecalcGridFontSize { get; set; } = true;
+        private Font GridFont { get; set; } = new Font("Courier New", 10);
+        private float FontXOffset { get; set; } = 0f;
+        private float FontYOffset { get; set; } = 0f;
         public MainWindow()
         {
             InitializeComponent();
@@ -23,7 +26,11 @@ namespace MemoryVisualizer
         {
             Palette = new C64Palette();
         }
-        private void MainWindow_Resize(object sender, EventArgs e) => Invalidate();
+        private void MainWindow_Resize(object sender, EventArgs e)
+        {
+            RecalcGridFontSize = true;
+            Invalidate();
+        }
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
             var borderHeight = (int)(ClientSize.Height*0.10);
@@ -49,6 +56,12 @@ namespace MemoryVisualizer
                     {
                         var characterWidth = (float)((double)InnerClient.Width/(double)ScreenCharacterMap.Columns);
                         var characterHeight = (float)((double)InnerClient.Height / (double)ScreenCharacterMap.Rows);
+                        if (RecalcGridFontSize)
+                        {
+                            RecalcGridFontSize = false;
+                            GridFont.Dispose();
+                            GridFont = new Font("Courier New", characterHeight > characterWidth ? characterWidth : characterHeight);
+                        }
                         var xPos = (float)InnerClient.Left;
                         var yPos = (float)InnerClient.Top;
                         for (var y = 0; y < ScreenCharacterMap.Rows; y++)
@@ -58,7 +71,7 @@ namespace MemoryVisualizer
 #if DEBUG
                                 e.Graphics.DrawRectangle(Pens.Black, xPos, yPos, characterWidth, characterHeight);
 #endif
-                                e.Graphics.DrawString(Characters.GetCharacter(x, y).ToString(), Font, lightBlue, xPos, yPos);
+                                e.Graphics.DrawString(Characters.GetCharacter(x, y).ToString(), GridFont, lightBlue, xPos + FontXOffset, yPos + FontYOffset);
                                 xPos += characterWidth;
                             }
                             xPos = (float)InnerClient.Left;

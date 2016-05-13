@@ -1,0 +1,617 @@
+From 92316d42ff1cf70310a67f7c93e4b14d64df87b1 Mon Sep 17 00:00:00 2001
+From: Anders-H <anders@winsoft.se>
+Date: Fri, 13 May 2016 16:20:11 +0200
+Subject: Revert "Added Byte."
+
+This reverts commit 48b9f004862ac26775b253522685b26afeb5a6b2.
+
+diff --git a/C64MemoryModel/Asm/Assembler.cs b/C64MemoryModel/Asm/Assembler.cs
+index 484127a..b38c96c 100644
+--- a/C64MemoryModel/Asm/Assembler.cs
++++ b/C64MemoryModel/Asm/Assembler.cs
+@@ -1,5 +1,4 @@
+ ﻿using System;
+-using C64MemoryModel.Types;
+ 
+ namespace C64MemoryModel.Asm
+ {
+@@ -9,32 +8,32 @@ namespace C64MemoryModel.Asm
+         public ExtendedAssembler Extended { get; }
+         internal Assembler(Memory memory) { Memory = memory; Extended = new ExtendedAssembler(this); }
+         //032 20 JSR
+-        public void Jsr(Word address) => Absolute(23, address);
++        public void Jsr(ushort address) => Absolute(23, address);
+         //096 60 RTS
+         public void Rts() => Memory.SetByte(96);
+         //141 8D STA Absolute
+-        public void Sta(Word address) => Absolute(141, address);
++        public void Sta(ushort address) => Absolute(141, address);
+         //162 A2 LDX Immediate
+         public void Ldx(byte value) => Immediate(162, value);
+         //169 A9 LDA Immediate
+         public void Lda(byte value) => Immediate(169, value);
+         //173 AD LDA Absolute
+-        public void Lda(Word address) => Absolute(173, address);
++        public void Lda(ushort address) => Absolute(173, address);
+         //189 BD LDA Absolute,X
+-        public void LdaAbsX(Word address) => Absolute(189, address);
++        public void LdaAbsX(ushort address) => Absolute(189, address);
+         //208 D0 BNE
+-        public void Bne(Word address) => Relative(208, address);
++        public void Bne(ushort address) => Relative(208, address);
+         //232 E8 INX
+         public void Inx() => Memory.SetByte(232);
+         //240 F0 BEQ
+-        public void Beq(Word address) => Relative(240, address);
++        public void Beq(ushort address) => Relative(240, address);
+         //--------------------------------------------------------------------------------------------------
+         private void Immediate(byte opcode, byte value)
+         {
+             Memory.SetByte(opcode);
+             Memory.SetByte(value);
+         }
+-        private void Absolute(byte opcode, Word address)
++        private void Absolute(byte opcode, ushort address)
+         {
+             var bytes = BitConverter.GetBytes(address);
+             var low = bytes[0];
+@@ -43,7 +42,7 @@ namespace C64MemoryModel.Asm
+             Memory.SetByte(low);
+             Memory.SetByte(high);
+         }
+-        private void Relative(byte opcode, Word address)
++        private void Relative(byte opcode, ushort address)
+         {
+             var currentAddress = Memory.GetBytePointer() + 2;
+             var diff = address - currentAddress;
+diff --git a/C64MemoryModel/Asm/ByteVariable.cs b/C64MemoryModel/Asm/ByteVariable.cs
+index d095ab5..5b7bea4 100644
+--- a/C64MemoryModel/Asm/ByteVariable.cs
++++ b/C64MemoryModel/Asm/ByteVariable.cs
+@@ -1,11 +1,11 @@
+-﻿using C64MemoryModel.Types;
++﻿using System.Runtime.CompilerServices;
+ 
+ namespace C64MemoryModel.Asm
+ {
+     public class ByteVariable : VariableBase<byte>
+     {
+-        public ByteVariable(Assembler assembler, string name, Word address) : base(assembler, name, address) { } 
+-        public override void WriteAssign(Word address, byte value)
++        public ByteVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address) { } 
++        public override void WriteAssign(ushort address, byte value)
+         {
+             Value = value;
+             Assembler.Memory.SetBytePointer(address); //From argument - wher the assembler sould be written.
+diff --git a/C64MemoryModel/Asm/ExtendedAssembler.cs b/C64MemoryModel/Asm/ExtendedAssembler.cs
+index 4edb750..4ba2117 100644
+--- a/C64MemoryModel/Asm/ExtendedAssembler.cs
++++ b/C64MemoryModel/Asm/ExtendedAssembler.cs
+@@ -1,4 +1,9 @@
+-﻿using C64MemoryModel.Types;
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Net.Sockets;
++using System.Text;
++using System.Threading.Tasks;
+ 
+ namespace C64MemoryModel.Asm
+ {
+@@ -7,7 +12,7 @@ namespace C64MemoryModel.Asm
+         private Assembler Assembler { get; }
+         public VariableList Variables { get; }
+         internal ExtendedAssembler(Assembler assembler) { Assembler = assembler; Variables = new VariableList(Assembler); }
+-        public void PokeByte(Word address, byte value)
++        public void PokeByte(ushort address, byte value)
+         {
+             Assembler.Lda(value);
+             Assembler.Sta(address);
+@@ -17,7 +22,7 @@ namespace C64MemoryModel.Asm
+             Assembler.Lda(value);
+             Assembler.Sta(address.Address);
+         }
+-        public void PokeByte(Word address, ByteVariable value)
++        public void PokeByte(ushort address, ByteVariable value)
+         {
+             Assembler.Lda(value.Address);
+             Assembler.Sta(address);
+@@ -27,10 +32,10 @@ namespace C64MemoryModel.Asm
+             Assembler.Lda(value.Address);
+             Assembler.Sta(address.Address);
+         }
+-        public ByteVariable CreateByteVariable(string name, Word address) => Variables.CreateByteVariable(name, address);
++        public ByteVariable CreateByteVariable(string name, ushort address) => Variables.CreateByteVariable(name, address);
+         public ByteVariable CreateByteVariable(string name, IMemoryLocation address) => Variables.CreateByteVariable(name, address.StartAddress);
+         public ByteVariable CreateByteVariable(MemoryModelLocation address) => Variables.CreateByteVariable(address.Name.ToString(), address.StartAddress);
+-        public WordVariable CreateWordVariable(string name, Word address) => Variables.CreateWordVariable(name, address);
++        public WordVariable CreateWordVariable(string name, ushort address) => Variables.CreateWordVariable(name, address);
+         public WordVariable CreateWordVariable(string name, IMemoryLocation address) => Variables.CreateWordVariable(name, address.StartAddress);
+         public WordVariable CreateWordVariable(MemoryModelLocation address) => Variables.CreateWordVariable(address.Name.ToString(), address.StartAddress);
+     }
+diff --git a/C64MemoryModel/Asm/VariableBase.cs b/C64MemoryModel/Asm/VariableBase.cs
+index 9066870..f0a6ec4 100644
+--- a/C64MemoryModel/Asm/VariableBase.cs
++++ b/C64MemoryModel/Asm/VariableBase.cs
+@@ -1,25 +1,23 @@
+-﻿using C64MemoryModel.Types;
+-
+-namespace C64MemoryModel.Asm
++﻿namespace C64MemoryModel.Asm
+ {
+     public interface IVariable
+     {
+         string Name { get; }
+-        Word Address { get; }
++        ushort Address { get; }
+     }
+     public abstract class VariableBase<T> : IVariable
+     {
+         protected Assembler Assembler { get; }
+         public string Name { get; }
+-        public Word Address { get; }
++        public ushort Address { get; }
+         public T Value { get; protected set; }
+-        protected VariableBase(Assembler assembler, string name, Word address)
++        protected VariableBase(Assembler assembler, string name, ushort address)
+         {
+             Assembler = assembler;
+             Name = name;
+             Address = address;
+         }
+-        public abstract void WriteAssign(Word address, T value);
++        public abstract void WriteAssign(ushort address, T value);
+         public abstract void WriteDirect(T value);
+     }
+ }
+diff --git a/C64MemoryModel/Asm/VariableList.cs b/C64MemoryModel/Asm/VariableList.cs
+index 6d0aeb1..87b25f3 100644
+--- a/C64MemoryModel/Asm/VariableList.cs
++++ b/C64MemoryModel/Asm/VariableList.cs
+@@ -13,7 +13,7 @@ namespace C64MemoryModel.Asm
+         {
+             Assembler = assembler;
+         }
+-        public ByteVariable CreateByteVariable(string name, Word address)
++        public ByteVariable CreateByteVariable(string name, ushort address)
+         {
+             var x = new ByteVariable(Assembler, name, address);
+             Add(x);
+@@ -21,7 +21,7 @@ namespace C64MemoryModel.Asm
+         }
+         public ByteVariable CreateByteVariable(string name, IMemoryLocation address) => CreateByteVariable(name, address.StartAddress);
+         public ByteVariable CreateByteVariable(MemoryModelLocation address) => CreateByteVariable(address.Name.ToString(), address.StartAddress);
+-        public WordVariable CreateWordVariable(string name, Word address)
++        public WordVariable CreateWordVariable(string name, ushort address)
+         {
+             var x = new WordVariable(Assembler, name, address);
+             Add(x);
+diff --git a/C64MemoryModel/Asm/WordVariable.cs b/C64MemoryModel/Asm/WordVariable.cs
+index f52f586..354bfe6 100644
+--- a/C64MemoryModel/Asm/WordVariable.cs
++++ b/C64MemoryModel/Asm/WordVariable.cs
+@@ -2,10 +2,10 @@
+ 
+ namespace C64MemoryModel.Asm
+ {
+-    public class WordVariable : VariableBase<Word>
++    public class WordVariable : VariableBase<ushort>
+     {
+-        public WordVariable(Assembler assembler, string name, Word address) : base(assembler, name, address) { }
+-        public override void WriteAssign(Word address, Word value)
++        public WordVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address) { }
++        public override void WriteAssign(ushort address, ushort value)
+         {
+             Value = value;
+             var bytes = BitConverter.GetBytes(value);
+@@ -15,9 +15,9 @@ namespace C64MemoryModel.Asm
+             Assembler.Lda(low);
+             Assembler.Sta(Address);
+             Assembler.Lda(high);
+-            Assembler.Sta((Word)(Address + 1));
++            Assembler.Sta((ushort)(Address + 1));
+         }
+-        public override void WriteDirect(Word value)
++        public override void WriteDirect(ushort value)
+         {
+             Value = value;
+             Assembler.Memory.SetBytePointer(Address); //From property - where the variable is stored.
+diff --git a/C64MemoryModel/IMemoryLocation.cs b/C64MemoryModel/IMemoryLocation.cs
+index ef0e658..b1c52ae 100644
+--- a/C64MemoryModel/IMemoryLocation.cs
++++ b/C64MemoryModel/IMemoryLocation.cs
+@@ -2,11 +2,11 @@
+ {
+     public interface IMemoryLocation
+     {
+-        Word StartAddress { get; }
+-        Word EndAddress { get; }
+-        Word Length { get; }
++        ushort StartAddress { get; }
++        ushort EndAddress { get; }
++        ushort Length { get; }
+         bool IsMemoyModel { get; }
+         bool IsCustomBookmark { get; }
+-        bool HitTest(Word address);
++        bool HitTest(ushort address);
+     }
+ }
+diff --git a/C64MemoryModel/Memory.cs b/C64MemoryModel/Memory.cs
+index bb9d3ae..4be2c20 100644
+--- a/C64MemoryModel/Memory.cs
++++ b/C64MemoryModel/Memory.cs
+@@ -83,7 +83,7 @@ namespace C64MemoryModel
+             for (var i = 0; i < Bytes.Length; i++)
+                 Bytes[i] = 0;
+         }
+-        public string Visualize(Word address) { SetBytePointer(address); return Visualize(); }
++        public string Visualize(ushort address) { SetBytePointer(address); return Visualize(); }
+         public string Visualize()
+         {
+             var s = new StringBuilder();
+@@ -94,7 +94,7 @@ namespace C64MemoryModel
+         }
+         public void SetBytePointer(int address) { address = address < 0 ? ushort.MaxValue : address; address = address > ushort.MaxValue ? 0 : address; BytePointer = address; }
+         public void SetBytePointer(IMemoryLocation l, ushort offset) => SetBytePointer(l.StartAddress + offset);
+-        public Word GetBytePointer() => (Word)BytePointer;
++        public ushort GetBytePointer() => (ushort)BytePointer;
+         private void IncreaseBytePointer() => IncreaseBytePointer(1);
+         private void IncreaseBytePointer(int count) => SetBytePointer(BytePointer + count);
+         public string GetDisassembly(bool withDescription = false)
+@@ -112,21 +112,21 @@ namespace C64MemoryModel
+             return s.ToString();
+         }
+         public byte PeekByte() => Bytes[BytePointer];
+-        public byte PeekByte(Word address) => Bytes[address];
++        public byte PeekByte(ushort address) => Bytes[address];
+         public byte GetByte()
+         {
+             var ret = Bytes[BytePointer];
+             IncreaseBytePointer();
+             return ret;
+         }
+-        public byte GetByte(Word address)
++        public byte GetByte(ushort address)
+         {
+             SetBytePointer(address);
+             var ret = Bytes[BytePointer];
+             IncreaseBytePointer();
+             return ret;
+         }
+-        public byte GetByte(IMemoryLocation location, Word offset)
++        public byte GetByte(IMemoryLocation location, ushort offset)
+         {
+             SetBytePointer(location.StartAddress + offset);
+             var ret = Bytes[BytePointer];
+@@ -138,13 +138,13 @@ namespace C64MemoryModel
+             Bytes[BytePointer] = value;
+             IncreaseBytePointer();
+         }
+-        public void SetByte(Word address, byte value)
++        public void SetByte(ushort address, byte value)
+         {
+             SetBytePointer(address);
+             Bytes[BytePointer] = value;
+             IncreaseBytePointer();
+         }
+-        public void SetByte(IMemoryLocation location, Word offset, byte value)
++        public void SetByte(IMemoryLocation location, ushort offset, byte value)
+         {
+             SetBytePointer(location.StartAddress + offset);
+             Bytes[BytePointer] = value;
+@@ -168,19 +168,19 @@ namespace C64MemoryModel
+                 ret[i] = GetByte();
+             return ret;
+         }
+-        public Word GetWord()
++        public ushort GetWord()
+         {
+             var low = GetByte();
+             var high = GetByte();
+             return BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
+         }
+-        public Word GetWord(Word address)
++        public ushort GetWord(ushort address)
+         {
+             var low = GetByte(address);
+             var high = GetByte();
+             return BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
+         }
+-        public void SetWord(Word value)
++        public void SetWord(ushort value)
+         {
+             var bytes = BitConverter.GetBytes(value);
+             var low = bytes[0];
+@@ -188,7 +188,7 @@ namespace C64MemoryModel
+             SetByte(low);
+             SetByte(high);
+         }
+-        public void SetWord(Word address, Word value)
++        public void SetWord(ushort address, ushort value)
+         {
+             var bytes = BitConverter.GetBytes(value);
+             var low = bytes[0];
+@@ -196,7 +196,7 @@ namespace C64MemoryModel
+             SetByte(address, low);
+             SetByte(high);
+         }
+-        public void SetBits(Word address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
++        public void SetBits(ushort address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
+         {
+             SetBytePointer(address);
+             SetBits(b7, b6, b5, b4, b3, b2, b1, b0);
+@@ -213,7 +213,7 @@ namespace C64MemoryModel
+             b.Modify(b7, b6, b5, b4, b3, b2, b1, b0);
+             SetByte(adr, b.ToByte());
+         }
+-        public Types.Byte GetBits(Word address) => new Types.Byte(GetByte(address));
++        public Types.Byte GetBits(ushort address) => new Types.Byte(GetByte(address));
+         public Types.Byte GetBits(IMemoryLocation location) => new Types.Byte(GetByte(location.StartAddress));
+         public Types.Byte GetBits() => new Types.Byte(GetByte());
+         public void SetString(CharacterSetBase characterSet, string text)
+@@ -233,7 +233,7 @@ namespace C64MemoryModel
+                 throw new SystemException($"Character set {characterSet} not found.");
+             SetString(set, text);
+         }
+-        public void SetString(Word address, CharacterSetBase characterSet, string text)
++        public void SetString(ushort address, CharacterSetBase characterSet, string text)
+         {
+             if (characterSet == null)
+                 throw new SystemException("Character set must not be null.");
+@@ -244,7 +244,7 @@ namespace C64MemoryModel
+             foreach (var b in bytes)
+                 SetByte(b);
+         }
+-        public void SetString(Word address, string characterSet, string text)
++        public void SetString(ushort address, string characterSet, string text)
+         {
+             var set = CharacterSets.GetCharacterSet(characterSet);
+             if (set == null)
+@@ -269,7 +269,7 @@ namespace C64MemoryModel
+                 throw new SystemException($"Character set {characterSet} not found.");
+             return GetString(set, length);
+         }
+-        public string GetString(Word address, CharacterSetBase characterSet, int length)
++        public string GetString(ushort address, CharacterSetBase characterSet, int length)
+         {
+             if (characterSet == null)
+                 throw new SystemException("Character set must not be null.");
+@@ -281,21 +281,21 @@ namespace C64MemoryModel
+                 bytes[i] = GetByte();
+             return characterSet.TranslateString(bytes);
+         }
+-        public string GetString(Word address, string characterSet, int length)
++        public string GetString(ushort address, string characterSet, int length)
+         {
+             var set = CharacterSets.GetCharacterSet(characterSet);
+             if (set == null)
+                 throw new SystemException($"Character set {characterSet} not found.");
+             return GetString(address, set, length);
+         }
+-        public void AddBookmark(string name, Word address) => Bookmarks.Add(new MemoryBookmark(name, address));
+-        public void AddBookmark(string name, Word startAddress, Word endAddress) => Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));
++        public void AddBookmark(string name, ushort address) => Bookmarks.Add(new MemoryBookmark(name, address));
++        public void AddBookmark(string name, ushort startAddress, ushort endAddress) => Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));
+         public MemoryModelLocation GetModelLocation(string name) => Locations.GetLocation(name);
+         public MemoryModelLocation GetModelLocation(MemoryModelLocationName name) => Locations.GetLocation(name);
+-        public MemoryModelLocation GetModelLocation(Word address) => Locations.GetLocation(address);
++        public MemoryModelLocation GetModelLocation(ushort address) => Locations.GetLocation(address);
+         public MemoryBookmark GetBookmark(string name) => Bookmarks.GetLocation(name);
+-        public MemoryBookmark GetBookmark(Word address) => Bookmarks.GetLocation(address);
+-        public List<IMemoryLocation> GetLocations(Word address)
++        public MemoryBookmark GetBookmark(ushort address) => Bookmarks.GetLocation(address);
++        public List<IMemoryLocation> GetLocations(ushort address)
+         {
+             var ret = new List<IMemoryLocation>();
+             ret.AddRange(Bookmarks.GetAll(address));
+diff --git a/C64MemoryModel/MemoryBookmark.cs b/C64MemoryModel/MemoryBookmark.cs
+index 71116a2..e9db15e 100644
+--- a/C64MemoryModel/MemoryBookmark.cs
++++ b/C64MemoryModel/MemoryBookmark.cs
+@@ -2,31 +2,30 @@
+ using System.Collections.Generic;
+ using System.Linq;
+ using System.Text;
+-using C64MemoryModel.Types;
+ 
+ namespace C64MemoryModel
+ {
+     public class MemoryBookmark : IMemoryLocation
+     {
+         public string Name { get; set; }
+-        public Word StartAddress { get; }
+-        public Word EndAddress { get; }
+-        public Word Length => (Word)((EndAddress - StartAddress) + 1);
++        public ushort StartAddress { get; }
++        public ushort EndAddress { get; }
++        public ushort Length => (ushort)((EndAddress - StartAddress) + 1);
+         public bool IsMemoyModel => false;
+         public bool IsCustomBookmark => true;
+-        public MemoryBookmark(Word address)
++        public MemoryBookmark(ushort address)
+         {
+             Name = "";
+             StartAddress = address;
+             EndAddress = address;
+         }
+-        public MemoryBookmark(string name, Word address)
++        public MemoryBookmark(string name, ushort address)
+         {
+             Name = name;
+             StartAddress = address;
+             EndAddress = address;
+         }
+-        public MemoryBookmark(string name, Word startAddress, Word endAddress)
++        public MemoryBookmark(string name, ushort startAddress, ushort endAddress)
+         {
+             if (startAddress > endAddress)
+                 throw new SystemException($"Negative range: {startAddress} - {endAddress}");
+@@ -35,7 +34,7 @@ namespace C64MemoryModel
+             EndAddress = endAddress;
+         }
+         public override string ToString() => Length > 1 ? $"{StartAddress:00000}-{EndAddress:00000} ({Length:0000}) : {Name}" : $"{StartAddress:00000}       ({Length:0000}) : {Name}";
+-        public bool HitTest(Word address) => address >= StartAddress && address <= EndAddress;
++        public bool HitTest(ushort address) => address >= StartAddress && address <= EndAddress;
+     }
+ 
+     public class MemoryBookmarkList : List<MemoryBookmark>
+@@ -50,11 +49,11 @@ namespace C64MemoryModel
+         }
+         public MemoryBookmark GetLocation(string name)
+             => this.FirstOrDefault(x => string.Compare(name, x.Name, StringComparison.CurrentCultureIgnoreCase) == 0);
+-        public MemoryBookmark GetLocation(Word address)
++        public MemoryBookmark GetLocation(ushort address)
+             => this.FirstOrDefault(x => x.HitTest(address));
+-        public void Add(string name, Word address) => Add(new MemoryBookmark(name, address));
+-        public void Add(string name, Word startAddress, Word endAddress) => Add(new MemoryBookmark(name, startAddress, endAddress));
+-        public List<IMemoryLocation> GetAll(Word address) => this.Where(x => x.HitTest(address)).Cast<IMemoryLocation>().ToList();
++        public void Add(string name, ushort address) => Add(new MemoryBookmark(name, address));
++        public void Add(string name, ushort startAddress, ushort endAddress) => Add(new MemoryBookmark(name, startAddress, endAddress));
++        public List<IMemoryLocation> GetAll(ushort address) => this.Where(x => x.HitTest(address)).Cast<IMemoryLocation>().ToList();
+         public List<IMemoryLocation> GetAll(string name) => this.Where(x => string.Compare(name, x.Name, StringComparison.CurrentCultureIgnoreCase) == 0).Cast<IMemoryLocation>().ToList();
+     }
+ }
+diff --git a/C64MemoryModel/MemoryModelLocation.cs b/C64MemoryModel/MemoryModelLocation.cs
+index 9a5522e..c7ebe35 100644
+--- a/C64MemoryModel/MemoryModelLocation.cs
++++ b/C64MemoryModel/MemoryModelLocation.cs
+@@ -2,7 +2,6 @@
+ using System.Collections.Generic;
+ using System.Linq;
+ using System.Text;
+-using C64MemoryModel.Types;
+ 
+ namespace C64MemoryModel
+ {
+@@ -11,19 +10,19 @@ namespace C64MemoryModel
+         internal static MemoryModelLocationList List { private get; set; }
+         public MemoryModelLocationName Name { get; }
+         public string DisplayName { get; }
+-        public Word StartAddress { get; }
+-        public Word EndAddress { get; }
+-        public Word Length => (Word)(EndAddress - StartAddress + 1);
++        public ushort StartAddress { get; }
++        public ushort EndAddress { get; }
++        public ushort Length => (ushort)(EndAddress - StartAddress + 1);
+         public bool IsMemoyModel => true;
+         public bool IsCustomBookmark => false;
+-        internal MemoryModelLocation(MemoryModelLocationName name, Word address)
++        internal MemoryModelLocation(MemoryModelLocationName name, ushort address)
+         {
+             Name = name;
+             DisplayName = name.ToString();
+             StartAddress = address;
+             EndAddress = address;
+         }
+-        internal MemoryModelLocation(MemoryModelLocationName name, Word startAddress, Word endAddress)
++        internal MemoryModelLocation(MemoryModelLocationName name, ushort startAddress, ushort endAddress)
+         {
+             if (startAddress > endAddress)
+                 throw new SystemException($"Negative range: {startAddress} - {endAddress}");
+@@ -33,10 +32,10 @@ namespace C64MemoryModel
+             EndAddress = endAddress;
+         }
+         public override string ToString() => Length > 1 ? $"{StartAddress:00000}-{EndAddress:00000} ({Length:0000}) : {DisplayName}" : $"{StartAddress:00000}       ({Length:0000}) : {DisplayName}";
+-        public bool HitTest(Word address) => address >= StartAddress && address <= EndAddress;
+-        public static Word operator +(MemoryModelLocation a, MemoryModelLocation b) => (Word)(a.StartAddress + b.StartAddress);
+-        public static Word operator +(MemoryModelLocation a, int b) => (Word)(a.StartAddress + b);
+-        public static implicit operator Word (MemoryModelLocation x) => x.StartAddress;
++        public bool HitTest(ushort address) => address >= StartAddress && address <= EndAddress;
++        public static ushort operator +(MemoryModelLocation a, MemoryModelLocation b) => (ushort)(a.StartAddress + b.StartAddress);
++        public static ushort operator +(MemoryModelLocation a, int b) => (ushort)(a.StartAddress + b);
++        public static implicit operator ushort (MemoryModelLocation x) => x.StartAddress;
+         public static implicit operator MemoryModelLocation(MemoryModelLocationName x) => List.GetLocation(x);
+     }
+ 
+@@ -54,9 +53,9 @@ namespace C64MemoryModel
+             => this.FirstOrDefault(x => string.Compare(name, x.DisplayName, StringComparison.CurrentCultureIgnoreCase) == 0);
+         public MemoryModelLocation GetLocation(MemoryModelLocationName name)
+             => this.FirstOrDefault(x => name == x.Name);
+-        public MemoryModelLocation GetLocation(Word address)
++        public MemoryModelLocation GetLocation(ushort address)
+             => this.FirstOrDefault(x => x.HitTest(address));
+-        public List<IMemoryLocation> GetAll(Word address) => this.Where(x => x.HitTest(address)).Cast<IMemoryLocation>().ToList();
++        public List<IMemoryLocation> GetAll(ushort address) => this.Where(x => x.HitTest(address)).Cast<IMemoryLocation>().ToList();
+         public List<IMemoryLocation> GetAll(string name) => this.Where(x => string.Compare(name, x.DisplayName, StringComparison.CurrentCultureIgnoreCase) == 0).Cast<IMemoryLocation>().ToList();
+     }
+ }
+diff --git a/C64MemoryModel/TextAdapter.cs b/C64MemoryModel/TextAdapter.cs
+index db8f20f..e10774e 100644
+--- a/C64MemoryModel/TextAdapter.cs
++++ b/C64MemoryModel/TextAdapter.cs
+@@ -81,7 +81,7 @@ namespace C64MemoryModel
+                 {
+                     bool byteSuccess;
+                     var value = match.Groups[1].Value;
+-                    var adr = (Word)Memory.BytePointer;
++                    var adr = (ushort)Memory.BytePointer;
+                     var oldByte = Memory.GetByte(adr);
+                     var theByte = value.StartsWith("$") ? GetByteHex(value, out byteSuccess) : GetByteDec(value, out byteSuccess);
+                     if (!byteSuccess)
+@@ -117,7 +117,7 @@ namespace C64MemoryModel
+                 {
+                     bool wordSuccess;
+                     var value = match.Groups[1].Value;
+-                    var adr = (Word)Memory.BytePointer;
++                    var adr = (ushort)Memory.BytePointer;
+                     var oldByte1 = Memory.GetByte(adr);
+                     var oldByte2 = Memory.GetByte();
+                     var theWord = value.StartsWith("$") ? GetWordHex(value, out wordSuccess) : GetWordDec(value, out wordSuccess);
+@@ -404,26 +404,26 @@ namespace C64MemoryModel
+                 return "Invalid argument.";
+             }
+         }
+-        private Word GetWordHex(string s, out bool success)
++        private ushort GetWordHex(string s, out bool success)
+         {
+             s = s.StartsWith("$", StringComparison.Ordinal) ? s.Substring(1) : s;
+             success = true;
+             int result;
+             if (int.TryParse(s, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out result))
+-                result = result % (Word.MaxValue + 1);
++                result = result % (ushort.MaxValue + 1);
+             else
+                 success = false;
+-            return (Word) result;
++            return (ushort) result;
+         }
+-        private Word GetWordDec(string s, out bool success)
++        private ushort GetWordDec(string s, out bool success)
+         {
+             success = true;
+             int result;
+             if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out result))
+-                result = result % (Word.MaxValue + 1);
++                result = result % (ushort.MaxValue + 1);
+             else
+                 success = false;
+-            return (Word)result;
++            return (ushort)result;
+         }
+         private byte GetByteHex(string s, out bool success)
+         {
+diff --git a/C64MemoryModel/Types/Word.cs b/C64MemoryModel/Types/Word.cs
+index 0616688..c52e53e 100644
+--- a/C64MemoryModel/Types/Word.cs
++++ b/C64MemoryModel/Types/Word.cs
+@@ -1,4 +1,9 @@
+ ﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++using System.Threading;
++using System.Threading.Tasks;
+ 
+ namespace C64MemoryModel.Types
+ {
+@@ -29,10 +34,5 @@ namespace C64MemoryModel.Types
+         }
+         public override string ToString() => $"{HighByte}{LowByte}";
+         public ushort ToUshort() => BitConverter.ToUInt16(new [] {LowByte.ToByte(), HighByte.ToByte() }, 0);
+-        public static implicit operator Word(ushort x) => new Word(x);
+-        public static bool operator ==(Word a, Word b) => a.ToUshort() == b.ToUshort();
+-        public static bool operator !=(Word a, Word b) => a.ToUshort() != b.ToUshort();
+-        public static bool operator >(Word a, Word b) => a.ToUshort() > b.ToUshort();
+-        public static bool operator <(Word a, Word b) => a.ToUshort() < b.ToUshort();
+     }
+ }
