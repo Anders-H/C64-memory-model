@@ -83,7 +83,7 @@ namespace C64MemoryModel
             for (var i = 0; i < Bytes.Length; i++)
                 Bytes[i] = 0;
         }
-        public string Visualize(ushort address) { SetBytePointer(address); return Visualize(); }
+        public string Visualize(Word address) { SetBytePointer(address); return Visualize(); }
         public string Visualize()
         {
             var s = new StringBuilder();
@@ -94,7 +94,7 @@ namespace C64MemoryModel
         }
         public void SetBytePointer(int address) { address = address < 0 ? ushort.MaxValue : address; address = address > ushort.MaxValue ? 0 : address; BytePointer = address; }
         public void SetBytePointer(IMemoryLocation l, ushort offset) => SetBytePointer(l.StartAddress + offset);
-        public ushort GetBytePointer() => (ushort)BytePointer;
+        public Word GetBytePointer() => (Word)BytePointer;
         private void IncreaseBytePointer() => IncreaseBytePointer(1);
         private void IncreaseBytePointer(int count) => SetBytePointer(BytePointer + count);
         public string GetDisassembly(bool withDescription = false)
@@ -112,21 +112,21 @@ namespace C64MemoryModel
             return s.ToString();
         }
         public byte PeekByte() => Bytes[BytePointer];
-        public byte PeekByte(ushort address) => Bytes[address];
+        public byte PeekByte(Word address) => Bytes[address];
         public byte GetByte()
         {
             var ret = Bytes[BytePointer];
             IncreaseBytePointer();
             return ret;
         }
-        public byte GetByte(ushort address)
+        public byte GetByte(Word address)
         {
             SetBytePointer(address);
             var ret = Bytes[BytePointer];
             IncreaseBytePointer();
             return ret;
         }
-        public byte GetByte(IMemoryLocation location, ushort offset)
+        public byte GetByte(IMemoryLocation location, Word offset)
         {
             SetBytePointer(location.StartAddress + offset);
             var ret = Bytes[BytePointer];
@@ -138,13 +138,13 @@ namespace C64MemoryModel
             Bytes[BytePointer] = value;
             IncreaseBytePointer();
         }
-        public void SetByte(ushort address, byte value)
+        public void SetByte(Word address, byte value)
         {
             SetBytePointer(address);
             Bytes[BytePointer] = value;
             IncreaseBytePointer();
         }
-        public void SetByte(IMemoryLocation location, ushort offset, byte value)
+        public void SetByte(IMemoryLocation location, Word offset, byte value)
         {
             SetBytePointer(location.StartAddress + offset);
             Bytes[BytePointer] = value;
@@ -168,19 +168,19 @@ namespace C64MemoryModel
                 ret[i] = GetByte();
             return ret;
         }
-        public ushort GetWord()
+        public Word GetWord()
         {
             var low = GetByte();
             var high = GetByte();
             return BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
         }
-        public ushort GetWord(ushort address)
+        public Word GetWord(Word address)
         {
             var low = GetByte(address);
             var high = GetByte();
             return BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
         }
-        public void SetWord(ushort value)
+        public void SetWord(Word value)
         {
             var bytes = BitConverter.GetBytes(value);
             var low = bytes[0];
@@ -188,7 +188,7 @@ namespace C64MemoryModel
             SetByte(low);
             SetByte(high);
         }
-        public void SetWord(ushort address, ushort value)
+        public void SetWord(Word address, Word value)
         {
             var bytes = BitConverter.GetBytes(value);
             var low = bytes[0];
@@ -196,7 +196,7 @@ namespace C64MemoryModel
             SetByte(address, low);
             SetByte(high);
         }
-        public void SetBits(ushort address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
+        public void SetBits(Word address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
         {
             SetBytePointer(address);
             SetBits(b7, b6, b5, b4, b3, b2, b1, b0);
@@ -213,7 +213,7 @@ namespace C64MemoryModel
             b.Modify(b7, b6, b5, b4, b3, b2, b1, b0);
             SetByte(adr, b.ToByte());
         }
-        public Types.Byte GetBits(ushort address) => new Types.Byte(GetByte(address));
+        public Types.Byte GetBits(Word address) => new Types.Byte(GetByte(address));
         public Types.Byte GetBits(IMemoryLocation location) => new Types.Byte(GetByte(location.StartAddress));
         public Types.Byte GetBits() => new Types.Byte(GetByte());
         public void SetString(CharacterSetBase characterSet, string text)
@@ -233,7 +233,7 @@ namespace C64MemoryModel
                 throw new SystemException($"Character set {characterSet} not found.");
             SetString(set, text);
         }
-        public void SetString(ushort address, CharacterSetBase characterSet, string text)
+        public void SetString(Word address, CharacterSetBase characterSet, string text)
         {
             if (characterSet == null)
                 throw new SystemException("Character set must not be null.");
@@ -244,7 +244,7 @@ namespace C64MemoryModel
             foreach (var b in bytes)
                 SetByte(b);
         }
-        public void SetString(ushort address, string characterSet, string text)
+        public void SetString(Word address, string characterSet, string text)
         {
             var set = CharacterSets.GetCharacterSet(characterSet);
             if (set == null)
@@ -269,7 +269,7 @@ namespace C64MemoryModel
                 throw new SystemException($"Character set {characterSet} not found.");
             return GetString(set, length);
         }
-        public string GetString(ushort address, CharacterSetBase characterSet, int length)
+        public string GetString(Word address, CharacterSetBase characterSet, int length)
         {
             if (characterSet == null)
                 throw new SystemException("Character set must not be null.");
@@ -281,21 +281,21 @@ namespace C64MemoryModel
                 bytes[i] = GetByte();
             return characterSet.TranslateString(bytes);
         }
-        public string GetString(ushort address, string characterSet, int length)
+        public string GetString(Word address, string characterSet, int length)
         {
             var set = CharacterSets.GetCharacterSet(characterSet);
             if (set == null)
                 throw new SystemException($"Character set {characterSet} not found.");
             return GetString(address, set, length);
         }
-        public void AddBookmark(string name, ushort address) => Bookmarks.Add(new MemoryBookmark(name, address));
-        public void AddBookmark(string name, ushort startAddress, ushort endAddress) => Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));
+        public void AddBookmark(string name, Word address) => Bookmarks.Add(new MemoryBookmark(name, address));
+        public void AddBookmark(string name, Word startAddress, Word endAddress) => Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));
         public MemoryModelLocation GetModelLocation(string name) => Locations.GetLocation(name);
         public MemoryModelLocation GetModelLocation(MemoryModelLocationName name) => Locations.GetLocation(name);
-        public MemoryModelLocation GetModelLocation(ushort address) => Locations.GetLocation(address);
+        public MemoryModelLocation GetModelLocation(Word address) => Locations.GetLocation(address);
         public MemoryBookmark GetBookmark(string name) => Bookmarks.GetLocation(name);
-        public MemoryBookmark GetBookmark(ushort address) => Bookmarks.GetLocation(address);
-        public List<IMemoryLocation> GetLocations(ushort address)
+        public MemoryBookmark GetBookmark(Word address) => Bookmarks.GetLocation(address);
+        public List<IMemoryLocation> GetLocations(Word address)
         {
             var ret = new List<IMemoryLocation>();
             ret.AddRange(Bookmarks.GetAll(address));
