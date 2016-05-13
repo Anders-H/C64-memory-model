@@ -71,6 +71,7 @@
             // 
             // MainWindow
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 761);
@@ -81,6 +82,8 @@
             this.MinimumSize = new System.Drawing.Size(640, 400);
             this.Name = "MainWindow";
             this.Text = "C64 Memory Visualizer";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragOver);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
             this.menuStrip1.ResumeLayout(false);
