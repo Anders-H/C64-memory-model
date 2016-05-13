@@ -2,11 +2,11 @@
 {
     public interface IMemoryLocation
     {
-        Word StartAddress { get; }
-        Word EndAddress { get; }
-        Word Length { get; }
+        ushort StartAddress { get; }
+        ushort EndAddress { get; }
+        ushort Length { get; }
         bool IsMemoyModel { get; }
         bool IsCustomBookmark { get; }
-        bool HitTest(Word address);
+        bool HitTest(ushort address);
     }
 }

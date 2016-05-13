@@ -2,10 +2,10 @@
 
 namespace C64MemoryModel.Asm
 {
-    public class WordVariable : VariableBase<Word>
+    public class WordVariable : VariableBase<ushort>
     {
-        public WordVariable(Assembler assembler, string name, Word address) : base(assembler, name, address) { }
-        public override void WriteAssign(Word address, Word value)
+        public WordVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address) { }
+        public override void WriteAssign(ushort address, ushort value)
         {
             Value = value;
             var bytes = BitConverter.GetBytes(value);
@@ -15,9 +15,9 @@ namespace C64MemoryModel.Asm
             Assembler.Lda(low);
             Assembler.Sta(Address);
             Assembler.Lda(high);
-            Assembler.Sta((Word)(Address + 1));
+            Assembler.Sta((ushort)(Address + 1));
         }
-        public override void WriteDirect(Word value)
+        public override void WriteDirect(ushort value)
         {
             Value = value;
             Assembler.Memory.SetBytePointer(Address); //From property - where the variable is stored.

@@ -81,7 +81,7 @@ namespace C64MemoryModel
                 {
                     bool byteSuccess;
                     var value = match.Groups[1].Value;
-                    var adr = (Word)Memory.BytePointer;
+                    var adr = (ushort)Memory.BytePointer;
                     var oldByte = Memory.GetByte(adr);
                     var theByte = value.StartsWith("$") ? GetByteHex(value, out byteSuccess) : GetByteDec(value, out byteSuccess);
                     if (!byteSuccess)
@@ -117,7 +117,7 @@ namespace C64MemoryModel
                 {
                     bool wordSuccess;
                     var value = match.Groups[1].Value;
-                    var adr = (Word)Memory.BytePointer;
+                    var adr = (ushort)Memory.BytePointer;
                     var oldByte1 = Memory.GetByte(adr);
                     var oldByte2 = Memory.GetByte();
                     var theWord = value.StartsWith("$") ? GetWordHex(value, out wordSuccess) : GetWordDec(value, out wordSuccess);
@@ -404,26 +404,26 @@ namespace C64MemoryModel
                 return "Invalid argument.";
             }
         }
-        private Word GetWordHex(string s, out bool success)
+        private ushort GetWordHex(string s, out bool success)
         {
             s = s.StartsWith("$", StringComparison.Ordinal) ? s.Substring(1) : s;
             success = true;
             int result;
             if (int.TryParse(s, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out result))
-                result = result % (Word.MaxValue + 1);
+                result = result % (ushort.MaxValue + 1);
             else
                 success = false;
-            return (Word) result;
+            return (ushort) result;
         }
-        private Word GetWordDec(string s, out bool success)
+        private ushort GetWordDec(string s, out bool success)
         {
             success = true;
             int result;
             if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out result))
-                result = result % (Word.MaxValue + 1);
+                result = result % (ushort.MaxValue + 1);
             else
                 success = false;
-            return (Word)result;
+            return (ushort)result;
         }
         private byte GetByteHex(string s, out bool success)
         {

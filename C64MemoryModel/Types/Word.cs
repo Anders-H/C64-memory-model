@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace C64MemoryModel.Types
 {
@@ -29,10 +34,5 @@ namespace C64MemoryModel.Types
         }
         public override string ToString() => $"{HighByte}{LowByte}";
         public ushort ToUshort() => BitConverter.ToUInt16(new [] {LowByte.ToByte(), HighByte.ToByte() }, 0);
-        public static implicit operator Word(ushort x) => new Word(x);
-        public static bool operator ==(Word a, Word b) => a.ToUshort() == b.ToUshort();
-        public static bool operator !=(Word a, Word b) => a.ToUshort() != b.ToUshort();
-        public static bool operator >(Word a, Word b) => a.ToUshort() > b.ToUshort();
-        public static bool operator <(Word a, Word b) => a.ToUshort() < b.ToUshort();
     }
 }
