@@ -33,13 +33,21 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previousPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rawHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rawDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
@@ -69,6 +77,52 @@
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.previousPageToolStripMenuItem,
+            this.nextPageToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rawHexToolStripMenuItem,
+            this.rawDecToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // previousPageToolStripMenuItem
+            // 
+            this.previousPageToolStripMenuItem.Name = "previousPageToolStripMenuItem";
+            this.previousPageToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.previousPageToolStripMenuItem.Text = "Previous page (Page Up)";
+            this.previousPageToolStripMenuItem.Click += new System.EventHandler(this.previousPageToolStripMenuItem_Click);
+            // 
+            // nextPageToolStripMenuItem
+            // 
+            this.nextPageToolStripMenuItem.Name = "nextPageToolStripMenuItem";
+            this.nextPageToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.nextPageToolStripMenuItem.Text = "Next page (Page Down)";
+            this.nextPageToolStripMenuItem.Click += new System.EventHandler(this.nextPageToolStripMenuItem_Click);
+            // 
+            // rawHexToolStripMenuItem
+            // 
+            this.rawHexToolStripMenuItem.Checked = true;
+            this.rawHexToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rawHexToolStripMenuItem.Name = "rawHexToolStripMenuItem";
+            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rawHexToolStripMenuItem.Text = "Raw (Hex)";
+            // 
+            // rawDecToolStripMenuItem
+            // 
+            this.rawDecToolStripMenuItem.Name = "rawDecToolStripMenuItem";
+            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rawDecToolStripMenuItem.Text = "Raw (Dec)";
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -78,6 +132,7 @@
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(640, 400);
             this.Name = "MainWindow";
@@ -85,6 +140,7 @@
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragOver);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -99,6 +155,12 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previousPageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nextPageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rawHexToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rawDecToolStripMenuItem;
     }
 }
 

@@ -8,6 +8,6 @@ namespace MemoryVisualizer
 {
     public enum DisplayMode
     {
-        Raw
+        HexRaw, DecRaw, Disassembly
     }
 }

@@ -12,7 +12,7 @@ namespace C64MemoryModel
         public Assembler Assembler { get; }
         private Disassembler Disassembler { get; set; }
         internal int BytePointer { get; set; }
-        private byte[] Bytes { get; } = new byte[ushort.MaxValue];
+        private byte[] Bytes { get; } = new byte[ushort.MaxValue + 1];
         public static MemoryModelLocationList Locations { get; }
         public MemoryBookmarkList Bookmarks { get; } = new MemoryBookmarkList();
         public CharacterSetList CharacterSets { get; } = new CharacterSetList();

@@ -9,6 +9,9 @@ namespace C64Mem
     {
         private static void Main()
         {
+            var m = new C64MemoryModel.Memory();
+            Console.WriteLine(m.GetByte(ushort.MaxValue));
+
             var t = new TextAdapter(new Memory());
             do
             {

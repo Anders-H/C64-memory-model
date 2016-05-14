@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using C64MemoryModel;
 
 namespace MemoryVisualizer
@@ -18,6 +19,8 @@ namespace MemoryVisualizer
         private Font GridFont { get; set; } = new Font("Courier New", 10);
         private float FontXOffset { get; set; } = 0f;
         private float FontYOffset { get; set; } = 0f;
+        private int StepSize { get; set; }
+        private List<int> DisassemblyStepSize { get; } = new List<int>();
         public MainWindow()
         {
             InitializeComponent();
@@ -60,7 +63,11 @@ namespace MemoryVisualizer
                         {
                             RecalcGridFontSize = false;
                             GridFont.Dispose();
-                            GridFont = new Font("Courier New", characterHeight > characterWidth ? characterWidth : characterHeight);
+                            var fontSize = characterHeight > characterWidth ? characterWidth : characterHeight;
+                            GridFont = new Font("Courier New", fontSize * 0.9f);
+                            var charSize = e.Graphics.MeasureString("W", GridFont);
+                            FontXOffset = (characterWidth / 2) - (charSize.Width / 2);
+                            FontYOffset = ((characterHeight / 2) - (charSize.Height / 2)) * 1.1f;
                         }
                         var xPos = (float)InnerClient.Left;
                         var yPos = (float)InnerClient.Top;
@@ -68,9 +75,6 @@ namespace MemoryVisualizer
                         {
                             for (var x = 0; x < ScreenCharacterMap.Columns; x++)
                             {
-#if DEBUG
-                                e.Graphics.DrawRectangle(Pens.Black, xPos, yPos, characterWidth, characterHeight);
-#endif
                                 e.Graphics.DrawString(Characters.GetCharacter(x, y).ToString(), GridFont, lightBlue, xPos + FontXOffset, yPos + FontYOffset);
                                 xPos += characterWidth;
                             }
@@ -78,7 +82,6 @@ namespace MemoryVisualizer
                             yPos += characterHeight;
                         }
                     }
-
                 }
             }
         }
@@ -103,8 +106,7 @@ namespace MemoryVisualizer
                 Text = $"C64 Memory Visualizer - {filename}";
                 Memory = temp;
                 DisplayPointer = start;
-                DisplayMode = DisplayMode.Raw;
-                Characters.SetCharacters(0, 0, "Hello!");
+                DisplayMode = DisplayMode.HexRaw;
                 RenderScreen();
             }
             catch (Exception)
@@ -126,14 +128,57 @@ namespace MemoryVisualizer
 
         private void RenderScreen()
         {
-            //Characters.Clear();
-            switch(DisplayMode)
+            Characters.Clear();
+            var displayPointer = DisplayPointer;
+            switch (DisplayMode)
             {
-                case DisplayMode.Raw:
-
+                case DisplayMode.HexRaw:
+                    for (var row = 0; row < ScreenCharacterMap.Rows; row++)
+                    {
+                        if (displayPointer > ushort.MaxValue)
+                            break;
+                        Characters.SetCharacters(0, row, displayPointer.ToString("00000"));
+                        Characters.SetCharacters(6, row, displayPointer.ToString("X4"));
+                        var x = 11;
+                        for (int col = 0; col < 8; col++)
+                        {
+                            if (displayPointer > ushort.MaxValue)
+                                break;
+                            Characters.SetCharacters(x, row, Memory.GetByte((ushort)displayPointer).ToString("X2"));
+                            x += 3;
+                            displayPointer++;
+                        }
+                    }
+                    StepSize = ScreenCharacterMap.Rows * 8;
                     break;
             }
             Invalidate();
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.PageUp)
+                previousPageToolStripMenuItem_Click(sender, new EventArgs());
+            else if (e.KeyCode == Keys.PageDown)
+                nextPageToolStripMenuItem_Click(sender, new EventArgs());
+        }
+
+        private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DisplayPointer > 0)
+                DisplayPointer -= StepSize;
+            if (DisplayPointer < 0)
+                DisplayPointer = 0;
+            RenderScreen();
+        }
+
+        private void nextPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DisplayPointer + StepSize <= ushort.MaxValue)
+                DisplayPointer += StepSize;
+            if (DisplayPointer > ushort.MaxValue)
+                DisplayPointer = ushort.MaxValue;
+            RenderScreen();
         }
     }
 }
