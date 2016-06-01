@@ -36,8 +36,8 @@ namespace MemoryVisualizer
         }
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
-            var borderHeight = (int)(ClientSize.Height*0.10);
-            var borderWidth = (int)(ClientSize.Width*0.10);
+            var borderHeight = (int)(ClientSize.Height * 0.10);
+            var borderWidth = (int)(ClientSize.Width * 0.10);
             OuterClient = new Rectangle(0, menuStrip1.Height, ClientSize.Width, ClientSize.Height - menuStrip1.Height);
             InnerClient = new Rectangle(OuterClient.Left + borderWidth, OuterClient.Top + borderHeight, OuterClient.Width - borderWidth - borderWidth, OuterClient.Height - borderHeight - borderHeight);
             using (var lightBlue = new SolidBrush(Palette.GetColor(C64Color.LightBlue)))
@@ -57,7 +57,7 @@ namespace MemoryVisualizer
                     }
                     else
                     {
-                        var characterWidth = (float)((double)InnerClient.Width/(double)ScreenCharacterMap.Columns);
+                        var characterWidth = (float)((double)InnerClient.Width / (double)ScreenCharacterMap.Columns);
                         var characterHeight = (float)((double)InnerClient.Height / (double)ScreenCharacterMap.Rows);
                         if (RecalcGridFontSize)
                         {
@@ -140,7 +140,7 @@ namespace MemoryVisualizer
                         Characters.SetCharacters(0, row, displayPointer.ToString("00000"));
                         Characters.SetCharacters(6, row, displayPointer.ToString("X4"));
                         var x = 11;
-                        for (int col = 0; col < 8; col++)
+                        for (var col = 0; col < 8; col++)
                         {
                             if (displayPointer > ushort.MaxValue)
                                 break;
@@ -150,6 +150,25 @@ namespace MemoryVisualizer
                         }
                     }
                     StepSize = ScreenCharacterMap.Rows * 8;
+                    break;
+                case DisplayMode.DecRaw:
+                    for (var row = 0; row < ScreenCharacterMap.Rows; row++)
+                    {
+                        if (displayPointer > ushort.MaxValue)
+                            break;
+                        Characters.SetCharacters(0, row, displayPointer.ToString("00000"));
+                        Characters.SetCharacters(6, row, displayPointer.ToString("X4"));
+                        var x = 11;
+                        for (var col = 0; col < 4; col++)
+                        {
+                            if (displayPointer > ushort.MaxValue)
+                                break;
+                            Characters.SetCharacters(x, row, Memory.GetByte((ushort)displayPointer).ToString("000"));
+                            x += 4;
+                            displayPointer++;
+                        }
+                    }
+                    StepSize = ScreenCharacterMap.Rows * 4;
                     break;
             }
             Invalidate();
@@ -180,5 +199,25 @@ namespace MemoryVisualizer
                 DisplayPointer = ushort.MaxValue;
             RenderScreen();
         }
+
+        private void rawHexToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
+                item.Checked = false;
+            rawHexToolStripMenuItem.Checked = true;
+            DisplayMode = DisplayMode.HexRaw;
+            RenderScreen();
+        }
+
+        private void rawDecToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
+                item.Checked = false;
+            rawDecToolStripMenuItem.Checked = true;
+            DisplayMode = DisplayMode.DecRaw;
+            RenderScreen();
+        }
+
+        private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e) => setDisassemblyStartAddressToolStripMenuItem.Enabled = Memory != null && DisplayMode == DisplayMode.Disassembly;
     }
 }

@@ -39,6 +39,8 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rawHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rawDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setDisassemblyStartAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,22 +83,25 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.previousPageToolStripMenuItem,
-            this.nextPageToolStripMenuItem});
+            this.nextPageToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.setDisassemblyStartAddressToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.DropDownOpening += new System.EventHandler(this.editToolStripMenuItem_DropDownOpening);
             // 
             // previousPageToolStripMenuItem
             // 
             this.previousPageToolStripMenuItem.Name = "previousPageToolStripMenuItem";
-            this.previousPageToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.previousPageToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.previousPageToolStripMenuItem.Text = "Previous page (Page Up)";
             this.previousPageToolStripMenuItem.Click += new System.EventHandler(this.previousPageToolStripMenuItem_Click);
             // 
             // nextPageToolStripMenuItem
             // 
             this.nextPageToolStripMenuItem.Name = "nextPageToolStripMenuItem";
-            this.nextPageToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.nextPageToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.nextPageToolStripMenuItem.Text = "Next page (Page Down)";
             this.nextPageToolStripMenuItem.Click += new System.EventHandler(this.nextPageToolStripMenuItem_Click);
             // 
@@ -114,14 +119,27 @@
             this.rawHexToolStripMenuItem.Checked = true;
             this.rawHexToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rawHexToolStripMenuItem.Name = "rawHexToolStripMenuItem";
-            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rawHexToolStripMenuItem.Text = "Raw (Hex)";
+            this.rawHexToolStripMenuItem.Click += new System.EventHandler(this.rawHexToolStripMenuItem_Click);
             // 
             // rawDecToolStripMenuItem
             // 
             this.rawDecToolStripMenuItem.Name = "rawDecToolStripMenuItem";
-            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rawDecToolStripMenuItem.Text = "Raw (Dec)";
+            this.rawDecToolStripMenuItem.Click += new System.EventHandler(this.rawDecToolStripMenuItem_Click);
+            // 
+            // setDisassemblyStartAddressToolStripMenuItem
+            // 
+            this.setDisassemblyStartAddressToolStripMenuItem.Name = "setDisassemblyStartAddressToolStripMenuItem";
+            this.setDisassemblyStartAddressToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.setDisassemblyStartAddressToolStripMenuItem.Text = "Set disassembly start address...";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(232, 6);
             // 
             // MainWindow
             // 
@@ -161,6 +179,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rawHexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rawDecToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setDisassemblyStartAddressToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }
 
