@@ -20,6 +20,7 @@ namespace MemoryVisualizer
         private float FontXOffset { get; set; } = 0f;
         private float FontYOffset { get; set; } = 0f;
         private int StepSize { get; set; }
+        private int DisassemblyStartAddress { get; set; }
         private List<int> DisassemblyStepSize { get; } = new List<int>();
         public MainWindow()
         {
@@ -106,6 +107,7 @@ namespace MemoryVisualizer
                 Text = $"C64 Memory Visualizer - {filename}";
                 Memory = temp;
                 DisplayPointer = start;
+                DisassemblyStartAddress = start;
                 DisplayMode = DisplayMode.HexRaw;
                 RenderScreen();
             }
@@ -170,6 +172,9 @@ namespace MemoryVisualizer
                     }
                     StepSize = ScreenCharacterMap.Rows * 4;
                     break;
+                case DisplayMode.Disassembly:
+
+                    break;
             }
             Invalidate();
         }
@@ -218,6 +223,33 @@ namespace MemoryVisualizer
             RenderScreen();
         }
 
+        private void disassemblyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!SetDisassemblyStartAddress())
+                return;
+            foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
+                item.Checked = false;
+            disassemblyToolStripMenuItem.Checked = true;
+            DisplayMode = DisplayMode.Disassembly;
+            RenderScreen();
+        }
+
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e) => setDisassemblyStartAddressToolStripMenuItem.Enabled = Memory != null && DisplayMode == DisplayMode.Disassembly;
+
+        private void setDisassemblyStartAddressToolStripMenuItem_Click(object sender, EventArgs e) => SetDisassemblyStartAddress();
+
+        private bool SetDisassemblyStartAddress()
+        {
+            using (var x = new DialogDisassemblyStartAddress())
+            {
+                x.StartAddress = DisassemblyStartAddress;
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return false;
+                DisassemblyStartAddress = x.StartAddress;
+                DisassemblyStepSize.Clear();
+                DisplayPointer = x.StartAddress;
+                return true;
+            }
+        }
     }
 }

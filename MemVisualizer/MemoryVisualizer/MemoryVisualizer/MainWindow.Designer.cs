@@ -36,11 +36,12 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previousPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.setDisassemblyStartAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rawHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rawDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setDisassemblyStartAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.disassemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,14 +69,14 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -105,11 +106,24 @@
             this.nextPageToolStripMenuItem.Text = "Next page (Page Down)";
             this.nextPageToolStripMenuItem.Click += new System.EventHandler(this.nextPageToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(232, 6);
+            // 
+            // setDisassemblyStartAddressToolStripMenuItem
+            // 
+            this.setDisassemblyStartAddressToolStripMenuItem.Name = "setDisassemblyStartAddressToolStripMenuItem";
+            this.setDisassemblyStartAddressToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.setDisassemblyStartAddressToolStripMenuItem.Text = "Set disassembly start address...";
+            this.setDisassemblyStartAddressToolStripMenuItem.Click += new System.EventHandler(this.setDisassemblyStartAddressToolStripMenuItem_Click);
+            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rawHexToolStripMenuItem,
-            this.rawDecToolStripMenuItem});
+            this.rawDecToolStripMenuItem,
+            this.disassemblyToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -130,16 +144,12 @@
             this.rawDecToolStripMenuItem.Text = "Raw (Dec)";
             this.rawDecToolStripMenuItem.Click += new System.EventHandler(this.rawDecToolStripMenuItem_Click);
             // 
-            // setDisassemblyStartAddressToolStripMenuItem
+            // disassemblyToolStripMenuItem
             // 
-            this.setDisassemblyStartAddressToolStripMenuItem.Name = "setDisassemblyStartAddressToolStripMenuItem";
-            this.setDisassemblyStartAddressToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.setDisassemblyStartAddressToolStripMenuItem.Text = "Set disassembly start address...";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(232, 6);
+            this.disassemblyToolStripMenuItem.Name = "disassemblyToolStripMenuItem";
+            this.disassemblyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.disassemblyToolStripMenuItem.Text = "Disassembly";
+            this.disassemblyToolStripMenuItem.Click += new System.EventHandler(this.disassemblyToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -181,6 +191,7 @@
         private System.Windows.Forms.ToolStripMenuItem rawDecToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setDisassemblyStartAddressToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem disassemblyToolStripMenuItem;
     }
 }
 
