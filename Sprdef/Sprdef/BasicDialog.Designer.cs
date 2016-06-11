@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
+            this.chkCompact = new System.Windows.Forms.CheckBox();
+            this.chkSeparators = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numLineNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numStep)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +50,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(384, 340);
-            this.textBox1.TabIndex = 4;
+            this.textBox1.TabIndex = 6;
             this.textBox1.WordWrap = false;
             // 
             // label1
@@ -116,7 +118,7 @@
             this.btnClose.Location = new System.Drawing.Point(312, 372);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 6;
+            this.btnClose.TabIndex = 8;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -126,16 +128,42 @@
             this.btnCopy.Location = new System.Drawing.Point(232, 372);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(75, 23);
-            this.btnCopy.TabIndex = 5;
+            this.btnCopy.TabIndex = 7;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // chkCompact
+            // 
+            this.chkCompact.AutoSize = true;
+            this.chkCompact.Location = new System.Drawing.Point(240, 8);
+            this.chkCompact.Name = "chkCompact";
+            this.chkCompact.Size = new System.Drawing.Size(68, 17);
+            this.chkCompact.TabIndex = 4;
+            this.chkCompact.Text = "Compact";
+            this.chkCompact.UseVisualStyleBackColor = true;
+            this.chkCompact.CheckedChanged += new System.EventHandler(this.chkCompact_CheckedChanged);
+            // 
+            // chkSeparators
+            // 
+            this.chkSeparators.AutoSize = true;
+            this.chkSeparators.Checked = true;
+            this.chkSeparators.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSeparators.Location = new System.Drawing.Point(312, 8);
+            this.chkSeparators.Name = "chkSeparators";
+            this.chkSeparators.Size = new System.Drawing.Size(77, 17);
+            this.chkSeparators.TabIndex = 5;
+            this.chkSeparators.Text = "Separators";
+            this.chkSeparators.UseVisualStyleBackColor = true;
+            this.chkSeparators.CheckedChanged += new System.EventHandler(this.chkSeparators_CheckedChanged);
             // 
             // BasicDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(392, 400);
+            this.Controls.Add(this.chkSeparators);
+            this.Controls.Add(this.chkCompact);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.numStep);
@@ -167,5 +195,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.CheckBox chkCompact;
+        private System.Windows.Forms.CheckBox chkSeparators;
     }
 }

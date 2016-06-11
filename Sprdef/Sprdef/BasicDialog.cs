@@ -34,26 +34,44 @@ namespace Sprdef
             {
                 if (i > 0)
                     s.AppendLine();
-                s.AppendLine($"{lineNumber} REM SPRITE {i + 1}");
-                lineNumber += step;
+                if (chkSeparators.Checked)
+                {
+                    s.AppendLine($"{lineNumber} REM SPRITE {i + 1}");
+                    lineNumber += step;
+                }
                 var p = 0;
                 var data = Sprites[i].GetBytes();
-                for (var x = 0; x < 10; x++)
+                if (chkCompact.Checked)
                 {
-                    s.AppendLine($"{lineNumber} DATA {data[p]}, {data[p + 1]}, {data[p + 2]}, {data[p + 3]}, {data[p + 4]}, {data[p + 5]}");
+                    for (var x = 0; x < 6; x++)
+                    {
+                        s.AppendLine($"{lineNumber} DATA{data[p]},{data[p + 1]},{data[p + 2]},{data[p + 3]},{data[p + 4]},{data[p + 5]},{data[p + 6]},{data[p + 7]},{data[p + 8]},{data[p + 9]}");
+                        lineNumber += step;
+                        p += 10;
+                    }
+                    s.AppendLine($"{lineNumber} DATA{data[p]},{data[p + 1]},{data[p + 2]}");
                     lineNumber += step;
-                    p += 6;
                 }
-                s.AppendLine($"{lineNumber} DATA {data[p]}, {data[p + 1]}, {data[p + 2]}");
-                lineNumber += step;
+                else
+                {
+                    for (var x = 0; x < 10; x++)
+                    {
+                        s.AppendLine($"{lineNumber} DATA {data[p]}, {data[p + 1]}, {data[p + 2]}, {data[p + 3]}, {data[p + 4]}, {data[p + 5]}");
+                        lineNumber += step;
+                        p += 6;
+                    }
+                    s.AppendLine($"{lineNumber} DATA {data[p]}, {data[p + 1]}, {data[p + 2]}");
+                    lineNumber += step;
+                }
             }
             textBox1.Text = s.ToString();
             textBox1.SelectionStart = 0;
             textBox1.SelectionLength = 0;
             textBox1.ScrollToCaret();
         }
-
         private void btnCopy_Click(object sender, EventArgs e) => Clipboard.SetText(textBox1.Text);
         private void btnClose_Click(object sender, EventArgs e) => Close();
+        private void chkCompact_CheckedChanged(object sender, EventArgs e) => RefreshList();
+        private void chkSeparators_CheckedChanged(object sender, EventArgs e) => RefreshList();
     }
 }

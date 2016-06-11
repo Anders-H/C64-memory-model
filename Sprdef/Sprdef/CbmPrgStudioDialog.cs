@@ -36,16 +36,22 @@ namespace Sprdef
                     s.AppendLine();
                 s.AppendLine($"; Sprite {i + 1}");
                 var bytes = Sprites[i].GetBytes();
-                for (var b = 0; b < 63; b++)
+                s.Append(" BYTE");
+                for (var b = 0; b < 40; b++)
                 {
-                    switch (b % 3)
-                    {
-                        case 0:
-                            s.AppendLine(hex
-                                ? $" BYTE ${bytes[b]:X2}, ${bytes[b + 1]:X2}, ${bytes[b + 2]:X2}"
-                                : $" BYTE {bytes[b]}, {bytes[b + 1]}, {bytes[b + 2]}");
-                            break;
-                    }
+                    if (hex)
+                        s.Append($" ${bytes[b]:X2}{(b < 39 ? "," : "")}");
+                    else
+                        s.Append($" {bytes[b]}{(b < 39 ? "," : "")}");
+                }
+                s.AppendLine();
+                s.Append(" BYTE");
+                for (var b = 40; b < 63; b++)
+                {
+                    if (hex)
+                        s.Append($" ${bytes[b]:X2}{(b < 62 ? "," : "")}");
+                    else
+                        s.Append($" {bytes[b]}{(b < 62 ? "," : "")}");
                 }
             }
             textBox1.Text = s.ToString();

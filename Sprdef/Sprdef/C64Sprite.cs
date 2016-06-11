@@ -32,11 +32,28 @@ namespace Sprdef
             if (SpriteEditor.Multicolor)
                 for (var y = 0; y < 21; y++)
                     for (var x = 0; x < 23; x += 2)
-                        SetPixel(x, y, GetPixel(x, y));
+                        SetPixel(x, y, GetColorIndex(x, y));
             else
                 for (var y = 0; y < 21; y++)
                     for (var x = 0; x < 24; x++)
                         SetPixel(x, y, GetPixel(x, y));
+        }
+        public int GetColorIndex(int x, int y)
+        {
+            if (SpriteEditor.Multicolor)
+            {
+                if (!SpriteData[x, y] && SpriteData[x + 1, y])
+                    return 1;
+                else if (SpriteData[x, y] && !SpriteData[x + 1, y])
+                    return 2;
+                else if (SpriteData[x, y] && SpriteData[x + 1, y])
+                    return 3;
+                else
+                    return 0;
+            }
+            else
+                return SpriteData[x, y] ? 1 : 0;
+
         }
         public void SetPixel(int x, int y, int colorIndex)
         {

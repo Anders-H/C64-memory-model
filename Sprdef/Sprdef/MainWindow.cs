@@ -432,7 +432,6 @@ namespace Sprdef
                 }
             }
         }
-
         private void multicolorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var cursorX = SpriteEditor.GetCursorX();
@@ -448,5 +447,6 @@ namespace Sprdef
                 Sprites[i].ResetPixels();
             Invalidate();
         }
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) => MessageBox.Show($@"Sprdef version {System.Reflection.Assembly.GetEntryAssembly().GetName().Version}", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 }

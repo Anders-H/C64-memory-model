@@ -69,7 +69,7 @@ namespace Sprdef
                     {
                         if (sx % 2 == 0)
                         {
-                            g.FillRectangle(brushes[Sprite.GetPixel(sx, sy)], physicalX, physicalY, pwidth - 1, ps);
+                            g.FillRectangle(brushes[Sprite.GetColorIndex(sx, sy)], physicalX, physicalY, pwidth - 1, ps);
                             physicalX += pwidth;
                         }
                     }

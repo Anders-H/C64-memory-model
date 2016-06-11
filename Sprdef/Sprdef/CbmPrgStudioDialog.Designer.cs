@@ -42,7 +42,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(384, 448);
+            this.textBox1.Size = new System.Drawing.Size(740, 292);
             this.textBox1.TabIndex = 0;
             this.textBox1.WordWrap = false;
             // 
@@ -50,7 +50,7 @@
             // 
             this.cboDecHex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDecHex.FormattingEnabled = true;
-            this.cboDecHex.Location = new System.Drawing.Point(8, 460);
+            this.cboDecHex.Location = new System.Drawing.Point(8, 304);
             this.cboDecHex.Name = "cboDecHex";
             this.cboDecHex.Size = new System.Drawing.Size(148, 21);
             this.cboDecHex.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(236, 460);
+            this.btnCopy.Location = new System.Drawing.Point(592, 304);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(75, 23);
             this.btnCopy.TabIndex = 2;
@@ -68,7 +68,8 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(316, 460);
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(672, 304);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;
@@ -81,7 +82,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(400, 488);
+            this.ClientSize = new System.Drawing.Size(755, 333);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.cboDecHex);
