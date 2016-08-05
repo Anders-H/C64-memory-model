@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace C64MemoryModel.Chr
 {
@@ -10,7 +9,8 @@ namespace C64MemoryModel.Chr
     {
         protected List<Character> Characters { get; } = new List<Character>();
         public string Name { get; }
-        public CharacterSetBase(string name) { Name = name; }
+        protected CharacterSetBase(string name) { Name = name; }
+        // ReSharper disable once InconsistentNaming
         protected byte TranslateCharacterFromUnicodeToPETSCII(char input)
         {
             var ret = Characters.FirstOrDefault(x => x.Unicode == input);
@@ -18,6 +18,7 @@ namespace C64MemoryModel.Chr
                 throw new SystemException($"Unsupported character: ${(int)input:X4}");
             return ret.PETSCII;
         }
+        // ReSharper disable once InconsistentNaming
         protected char TranslateCharacterFromPETSCIIToUnicode(byte input)
         {
             var ret = Characters.FirstOrDefault(x => x.PETSCII == input);
@@ -40,8 +41,7 @@ namespace C64MemoryModel.Chr
             var ret = new List<byte>();
             if (input == null || input.Length <= 0)
                 return ret.ToArray();
-            foreach (var x in input)
-                ret.Add(TranslateCharacterFromUnicodeToPETSCII(x));
+            ret.AddRange(input.Select(TranslateCharacterFromUnicodeToPETSCII));
             return ret.ToArray();
         }
     }

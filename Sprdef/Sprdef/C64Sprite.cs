@@ -40,20 +40,15 @@ namespace Sprdef
         }
         public int GetColorIndex(int x, int y)
         {
-            if (SpriteEditor.Multicolor)
-            {
-                if (!SpriteData[x, y] && SpriteData[x + 1, y])
-                    return 1;
-                else if (SpriteData[x, y] && !SpriteData[x + 1, y])
-                    return 2;
-                else if (SpriteData[x, y] && SpriteData[x + 1, y])
-                    return 3;
-                else
-                    return 0;
-            }
-            else
+            if (!SpriteEditor.Multicolor)
                 return SpriteData[x, y] ? 1 : 0;
-
+            if (!SpriteData[x, y] && SpriteData[x + 1, y])
+                return 1;
+            if (SpriteData[x, y] && !SpriteData[x + 1, y])
+                return 2;
+            if (SpriteData[x, y] && SpriteData[x + 1, y])
+                return 3;
+            return 0;
         }
         public void SetPixel(int x, int y, int colorIndex)
         {
@@ -106,9 +101,9 @@ namespace Sprdef
                     return ExtraColor2Index;
                 return BackgroundColorIndex;
             }
-            else
-                return SpriteData[x, y] ? (byte)1 : (byte)0;
+            return SpriteData[x, y] ? 1 : 0;
         }
+
         public void Draw(Graphics g, int x, int y, bool doubleSize)
         {
             if (doubleSize)
@@ -137,7 +132,8 @@ namespace Sprdef
                 }
             return ret;
         }
-        private bool IsSet(int x, int y) => SpriteEditor.Multicolor ? SpriteData[x, y] | SpriteData[x + 1, y] : SpriteData[x, y];
+
+        private bool IsSet(int x, int y) => SpriteData[x, y];
         public  bool Load(BinaryReader sr)
         {
             int x = 0, y = 0;
@@ -145,20 +141,19 @@ namespace Sprdef
             {
                 var b = new C64MemoryModel.Types.Byte(sr.ReadByte());
                 var physicalX = x*8;
-                SetPixel(physicalX, y, b.Bit0 ? 1 : 0);
-                SetPixel(physicalX + 1, y, b.Bit1 ? 1 : 0);
-                SetPixel(physicalX + 2, y, b.Bit2 ? 1 : 0);
-                SetPixel(physicalX + 3, y, b.Bit3 ? 1 : 0);
-                SetPixel(physicalX + 4, y, b.Bit4 ? 1 : 0);
-                SetPixel(physicalX + 5, y, b.Bit5 ? 1 : 0);
-                SetPixel(physicalX + 6, y, b.Bit6 ? 1 : 0);
-                SetPixel(physicalX + 7, y, b.Bit7 ? 1 : 0);
+                SetPixel(physicalX, y, b.Bit7 ? 1 : 0);
+                SetPixel(physicalX + 1, y, b.Bit6 ? 1 : 0);
+                SetPixel(physicalX + 2, y, b.Bit5 ? 1 : 0);
+                SetPixel(physicalX + 3, y, b.Bit4 ? 1 : 0);
+                SetPixel(physicalX + 4, y, b.Bit3 ? 1 : 0);
+                SetPixel(physicalX + 5, y, b.Bit2 ? 1 : 0);
+                SetPixel(physicalX + 6, y, b.Bit1 ? 1 : 0);
+                SetPixel(physicalX + 7, y, b.Bit0 ? 1 : 0);
                 x++;
-                if (x > 2)
-                {
-                    x = 0;
-                    y++;
-                }
+                if (x <= 2)
+                    continue;
+                x = 0;
+                y++;
             }
             return true;
         }

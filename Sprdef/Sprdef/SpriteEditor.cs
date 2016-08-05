@@ -7,7 +7,7 @@ namespace Sprdef
         private ISpriteEditorWindow Window { get; }
         private int CursorX { get; set; }
         private int CursorY { get; set; }
-        public static bool Multicolor { get; set; } = false;
+        public static bool Multicolor { get; set; }
 
         public int PixelSize { get; set; } = 10;
 

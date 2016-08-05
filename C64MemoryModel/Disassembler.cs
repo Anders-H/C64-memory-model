@@ -12,7 +12,7 @@ namespace C64MemoryModel
             var b = m.GetByte();
             s.Append($"{b:X2} ");
             byte b2 = 0, b3 = 0;
-            var signedByte = 0;
+            int signedByte;
             Action write0 = () => s.Append($"      ");
             // ReSharper disable once AccessToModifiedClosure
             Action write1 = () => s.Append($"{b2:X2}    ");

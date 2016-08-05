@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace C64MemoryModel.Asm
+﻿namespace C64MemoryModel.Asm
 {
     public class ByteVariable : VariableBase<byte>
     {

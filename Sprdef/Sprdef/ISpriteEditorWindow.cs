@@ -1,5 +1,4 @@
-﻿using System;
-namespace Sprdef
+﻿namespace Sprdef
 {
     public interface ISpriteEditorWindow
     {
