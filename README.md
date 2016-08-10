@@ -9,7 +9,7 @@ Backend for creating C64 tools.
 
 **Tools (requires .NET Framework 4.6 or later):**
 
-[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe)
+[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe) version 1.2
 
 ##Load .prg files
 ```C#

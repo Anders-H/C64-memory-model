@@ -282,6 +282,9 @@ namespace Sprdef
 
         private bool SaveSprites(string filename)
         {
+            var multicolor = SpriteEditor.Multicolor;
+            if (multicolor)
+                multicolorToolStripMenuItem_Click(null, new EventArgs());
             try
             {
                 using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
@@ -304,10 +307,18 @@ namespace Sprdef
             {
                 return false;
             }
+            finally
+            {
+                if (multicolor)
+                    multicolorToolStripMenuItem_Click(null, new EventArgs());
+            }
         }
 
         private bool LoadSprites(string filename)
         {
+            var multicolor = SpriteEditor.Multicolor;
+            if (multicolor)
+                multicolorToolStripMenuItem_Click(null, new EventArgs());
             try
             {
                 var fi = new FileInfo(filename);
@@ -337,6 +348,11 @@ namespace Sprdef
             catch (Exception)
             {
                 return false;
+            }
+            finally
+            {
+                if (multicolor)
+                    multicolorToolStripMenuItem_Click(null, new EventArgs());
             }
         }
 
