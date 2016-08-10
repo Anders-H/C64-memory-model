@@ -36,6 +36,6 @@ namespace MemoryVisualizer
             StartAddress = startAddress;
             DialogResult = DialogResult.OK;
         }
-        private void DialogDisassemblyStartAddress_Load(object sender, EventArgs e) => textBox1.Text = StartAddress.ToString("n0");
+        private void DialogDisassemblyStartAddress_Load(object sender, EventArgs e) => textBox1.Text = StartAddress.ToString(CultureInfo.InvariantCulture);
     }
 }

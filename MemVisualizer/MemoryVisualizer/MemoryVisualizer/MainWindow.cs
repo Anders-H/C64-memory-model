@@ -21,7 +21,8 @@ namespace MemoryVisualizer
         private float FontYOffset { get; set; } = 0f;
         private int StepSize { get; set; }
         private int DisassemblyStartAddress { get; set; }
-        private List<int> DisassemblyStepSize { get; } = new List<int>();
+        private int LastPerformedDisassemblyStepSize { get; set; }
+        private Stack<int> DisassemblyStepSize { get; } = new Stack<int>();
         public MainWindow()
         {
             InitializeComponent();
@@ -173,7 +174,12 @@ namespace MemoryVisualizer
                     StepSize = ScreenCharacterMap.Rows * 4;
                     break;
                 case DisplayMode.Disassembly:
-
+                    Memory.SetBytePointer(DisplayPointer);
+                    var disassembly = Memory.GetDisassembly(25);
+                    var disassemblyRows = System.Text.RegularExpressions.Regex.Split(disassembly, @"\n");
+                    for (var row = 0; row < disassemblyRows.Length; row++)
+                        Characters.SetCharacters(0, row, disassemblyRows[row]);
+                    LastPerformedDisassemblyStepSize = Memory.GetBytePointer() - DisplayPointer;
                     break;
             }
             Invalidate();
@@ -189,19 +195,40 @@ namespace MemoryVisualizer
 
         private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DisplayPointer > 0)
-                DisplayPointer -= StepSize;
-            if (DisplayPointer < 0)
-                DisplayPointer = 0;
+            switch (DisplayMode)
+            {
+                case DisplayMode.Disassembly:
+                    if (DisassemblyStepSize.Count > 0)
+                        DisplayPointer -= DisassemblyStepSize.Pop();
+                    break;
+                default:
+                    if (DisplayPointer > 0)
+                        DisplayPointer -= StepSize;
+                    if (DisplayPointer < 0)
+                        DisplayPointer = 0;
+                    break;
+            }
             RenderScreen();
         }
 
         private void nextPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DisplayPointer + StepSize <= ushort.MaxValue)
-                DisplayPointer += StepSize;
-            if (DisplayPointer > ushort.MaxValue)
-                DisplayPointer = ushort.MaxValue;
+            switch (DisplayMode)
+            {
+                case DisplayMode.Disassembly:
+                    if (LastPerformedDisassemblyStepSize > 0)
+                    {
+                        DisassemblyStepSize.Push(LastPerformedDisassemblyStepSize);
+                        DisplayPointer += LastPerformedDisassemblyStepSize;
+                    }
+                    break;
+                default:
+                    if (DisplayPointer + StepSize <= ushort.MaxValue)
+                        DisplayPointer += StepSize;
+                    if (DisplayPointer > ushort.MaxValue)
+                        DisplayPointer = ushort.MaxValue;
+                    break;
+            }
             RenderScreen();
         }
 
