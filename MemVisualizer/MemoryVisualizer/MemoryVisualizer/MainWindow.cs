@@ -275,8 +275,14 @@ namespace MemoryVisualizer
                 DisassemblyStartAddress = x.StartAddress;
                 DisassemblyStepSize.Clear();
                 DisplayPointer = x.StartAddress;
+                RenderScreen();
                 return true;
             }
+        }
+        private void homeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisplayPointer = DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress : 0;
+            RenderScreen();
         }
     }
 }
