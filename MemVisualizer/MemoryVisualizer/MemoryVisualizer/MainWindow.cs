@@ -8,6 +8,7 @@ namespace MemoryVisualizer
 {
     public partial class MainWindow : Form
     {
+        private MemOverview MemOverview { get; set; }
         private static C64Palette Palette { get; }
         private Rectangle OuterClient { get; set; }
         private Rectangle InnerClient { get; set; }
@@ -34,6 +35,8 @@ namespace MemoryVisualizer
         private void MainWindow_Resize(object sender, EventArgs e)
         {
             RecalcGridFontSize = true;
+            if (Memory != null)
+                MemOverview = MemOverview.Create(Memory, Bounds.Height > 10 ? Bounds.Height - 5 : 10);
             Invalidate();
         }
         private void MainWindow_Paint(object sender, PaintEventArgs e)
@@ -86,6 +89,7 @@ namespace MemoryVisualizer
                     }
                 }
             }
+            MemOverview?.Draw(e.Graphics, DisplayPointer);
         }
         private void quitToolStripMenuItem_Click(object sender, EventArgs e) => Close();
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -110,6 +114,8 @@ namespace MemoryVisualizer
                 DisplayPointer = start;
                 DisassemblyStartAddress = start;
                 DisplayMode = DisplayMode.HexRaw;
+                if (Memory != null)
+                    MemOverview = MemOverview.Create(Memory, Bounds.Height > 10 ? Bounds.Height - 5 : 10);
                 RenderScreen();
             }
             catch (Exception)
@@ -283,6 +289,11 @@ namespace MemoryVisualizer
         {
             DisplayPointer = DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress : 0;
             RenderScreen();
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
