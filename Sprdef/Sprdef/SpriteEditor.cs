@@ -4,10 +4,9 @@ namespace Sprdef
 {
     public class SpriteEditor
     {
-        private ISpriteEditorWindow Window { get; }
         private int CursorX { get; set; }
         private int CursorY { get; set; }
-        public static bool Multicolor { get; set; }
+        public static bool Multicolor { get; set; } = false;
 
         public int PixelSize { get; set; } = 10;
 
@@ -15,13 +14,6 @@ namespace Sprdef
 
         public int InnerWidth => 24*PixelSize;
         public int InnerHeight => 21*PixelSize;
-
-        public SpriteEditor(ISpriteEditorWindow window)
-        {
-            Multicolor = false;
-            Window = window;
-        }
-
         public void MoveCursor(int x, int y)
         {
             CursorX += x;

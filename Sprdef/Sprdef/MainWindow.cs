@@ -21,7 +21,7 @@ namespace Sprdef
         private string Filename { get; set; }
         public MainWindow()
         {
-            SpriteEditor = new SpriteEditor(this);
+            SpriteEditor = new SpriteEditor();
             ColorPicker = new ColorPicker();
             Filename = "";
             InitializeComponent();
@@ -205,35 +205,33 @@ namespace Sprdef
                 }
             }
             screenThing = ColorPicker.HitTest(e.X, e.Y);
-            if (screenThing is ColorPicker.ColorCell)
+            //if (!(screenThing is ColorPicker.ColorCell))
+            //    return;
+            if ((e.Button & MouseButtons.Left) > 0)
             {
-                if ((e.Button & MouseButtons.Left) > 0)
-                {
-                    Action<int> setCol = i => { SpriteEditor.SetPixelAtCursor(i); ColorPicker.SelectedColor = i; Invalidate(); };
-                    var c = (ColorPicker.ColorCell)screenThing;
-                    if (c == ColorPicker.GetColorCell(0))
-                        setCol(0);
-                    if (c == ColorPicker.GetColorCell(1))
-                        setCol(1);
-                    if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
-                        setCol(2);
-                    if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
-                        setCol(3);
-                }
-                else if ((e.Button & MouseButtons.Right) > 0)
-                {
-                    var c = (ColorPicker.ColorCell)screenThing;
-                    if (c == ColorPicker.GetColorCell(0))
-                        pickBackgroundColorToolStripMenuItem_Click(null, new EventArgs());
-                    if (c == ColorPicker.GetColorCell(1))
-                        pickForegroundColorToolStripMenuItem_Click(null, new EventArgs());
-                    if (c == ColorPicker.GetColorCell(2))
-                        pickExtraColor1ToolStripMenuItem_Click(null, new EventArgs());
-                    if (c == ColorPicker.GetColorCell(3))
-                        pickExtraColor2ToolStripMenuItem_Click(null, new EventArgs());
-                }
+                Action<int> setCol = i => { SpriteEditor.SetPixelAtCursor(i); ColorPicker.SelectedColor = i; Invalidate(); };
+                var c = (ColorPicker.ColorCell)screenThing;
+                if (c == ColorPicker.GetColorCell(0))
+                    setCol(0);
+                if (c == ColorPicker.GetColorCell(1))
+                    setCol(1);
+                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
+                    setCol(2);
+                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
+                    setCol(3);
             }
-
+            else if ((e.Button & MouseButtons.Right) > 0)
+            {
+                var c = (ColorPicker.ColorCell)screenThing;
+                if (c == ColorPicker.GetColorCell(0))
+                    pickBackgroundColorToolStripMenuItem_Click(null, new EventArgs());
+                if (c == ColorPicker.GetColorCell(1))
+                    pickForegroundColorToolStripMenuItem_Click(null, new EventArgs());
+                if (c == ColorPicker.GetColorCell(2))
+                    pickExtraColor1ToolStripMenuItem_Click(null, new EventArgs());
+                if (c == ColorPicker.GetColorCell(3))
+                    pickExtraColor2ToolStripMenuItem_Click(null, new EventArgs());
+            }
         }
         private IScreenThing GetScreenThing(int x, int y)
         {
@@ -266,7 +264,11 @@ namespace Sprdef
             if (Filename == "")
                 saveAsToolStripMenuItem_Click(sender, new EventArgs());
             else
-                SaveSprites(Filename);
+            {
+                if (SaveSprites(Filename))
+                    return;
+                MessageBox.Show($"Failed to save \"{Filename}\".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -275,8 +277,11 @@ namespace Sprdef
             {
                 x.Title = @"Save as";
                 x.Filter = @"Sprite files (*.spr)|*.spr|All files (*.*)|*.*";
-                if (x.ShowDialog(this) == DialogResult.OK)
-                    SaveSprites(x.FileName);
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                if (SaveSprites(x.FileName))
+                    return;
+                MessageBox.Show($"Failed to save \"{Filename}\".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -362,8 +367,11 @@ namespace Sprdef
             {
                 x.Title = @"Open sprites";
                 x.Filter = @"Sprite files (*.spr)|*.spr|All files (*.*)|*.*";
-                if (x.ShowDialog(this) == DialogResult.OK)
-                    LoadSprites(x.FileName);
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                if (LoadSprites(x.FileName))
+                    return;
+                MessageBox.Show($"Failed to load \"{Filename}\".", @"Load sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
