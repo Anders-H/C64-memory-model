@@ -450,5 +450,15 @@ namespace Sprdef
             Invalidate();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) => MessageBox.Show($@"Sprdef version {System.Reflection.Assembly.GetEntryAssembly().GetName().Version}", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void exportPNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new ExportPngDialog())
+            {
+                x.Multicolor = SpriteEditor.Multicolor;
+                if (x.DialogResult != DialogResult.OK)
+                    return;
+
+            }
+        }
     }
 }
