@@ -46,10 +46,8 @@ namespace Sprdef
 
             public bool HitTest(int x, int y) => Bounds.IntersectsWith(new Rectangle(x, y, 1, 1));
         }
-
         private readonly ColorCell[] _colorCells = new ColorCell[4];
         public int SelectedColor { get; set; } = 1;
-
         public Rectangle Bounds
         {
             get
@@ -57,7 +55,6 @@ namespace Sprdef
                 throw new NotImplementedException();
             }
         }
-
         public ColorPicker()
         {
             _colorCells[0] = new ColorCell();
@@ -65,15 +62,12 @@ namespace Sprdef
             _colorCells[2] = new ColorCell();
             _colorCells[3] = new ColorCell();
         }
-
         public ColorCell GetColorCell(int index) => _colorCells[index];
-
         public void Draw(Graphics g, int x, int y, bool multiColor)
         {
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
                 GetColorCell(i).Draw(g, x + (i * (ColorCell.Size + 8)), y, i, multiColor | (i < 2), i == SelectedColor);
         }
-
         public ColorCell HitTest(int x, int y)
         {
             if (_colorCells[0].HitTest(x, y))

@@ -10,16 +10,13 @@ namespace Sprdef
         {
             InitializeComponent();
         }
-
         public C64Sprite[] Sprites { get; set; }
-
         private void CbmPrgStudioDialog_Load(object sender, EventArgs e)
         {
             cboDecHex.Items.Add("Hex");
             cboDecHex.Items.Add("Dec");
             cboDecHex.SelectedIndex = 0;
         }
-
         private void cboDecHex_SelectedIndexChanged(object sender, EventArgs e)
         {
             var s = new StringBuilder();
@@ -41,12 +38,7 @@ namespace Sprdef
                 s.AppendLine();
                 s.Append(" BYTE");
                 for (var b = 40; b < 63; b++)
-                {
-                    if (hex)
-                        s.Append($" ${bytes[b]:X2}{(b < 62 ? "," : "")}");
-                    else
-                        s.Append($" {bytes[b]}{(b < 62 ? "," : "")}");
-                }
+                    s.Append(hex ? $" ${bytes[b]:X2}{(b < 62 ? "," : "")}" : $" {bytes[b]}{(b < 62 ? "," : "")}");
             }
             textBox1.Text = s.ToString();
             textBox1.SelectionStart = 0;

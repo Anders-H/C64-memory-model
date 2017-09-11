@@ -36,9 +36,8 @@
     <ApplicationIcon>polar_bear.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C64MemoryModel, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\C64MemModel.1.0.1\lib\net46\C64MemoryModel.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="C64MemoryModel">
+      <HintPath>..\..\C64MemoryModel\bin\Release\C64MemoryModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -105,7 +104,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

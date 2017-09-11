@@ -63,7 +63,7 @@ namespace C64MemoryModel
                 startAddress += 1;
             while (Bytes[end] == 0)
                 end -= 1;
-            length = (end - startAddress) + 1;
+            length = end - startAddress + 1;
             var startBytes = BitConverter.GetBytes(startAddress);
             using (var sw = new FileStream(filename, FileMode.Create))
             {
@@ -106,9 +106,10 @@ namespace C64MemoryModel
         public string GetDisassembly(int count, bool withDescription = false)
         {
             var s = new StringBuilder();
-            if (count > 0)
-                for (int i = 0; i < count; i++)
-                    s.Append(GetDisassembly(withDescription));
+            if (count <= 0)
+                return s.ToString();
+            for (var i = 0; i < count; i++)
+                s.Append(GetDisassembly(withDescription));
             return s.ToString();
         }
         public byte PeekByte() => Bytes[BytePointer];

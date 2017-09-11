@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MemoryVisualizer
@@ -22,8 +15,7 @@ namespace MemoryVisualizer
         private void btnOK_Click(object sender, EventArgs e)
         {
             Action invalidAddress = () => MessageBox.Show($@"Invalid start address. Must be integer (0 to {ushort.MaxValue}).",Text,MessageBoxButtons.OK, MessageBoxIcon.Information);
-            int startAddress;
-            if (!int.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out startAddress))
+            if (!int.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out int startAddress))
             {
                 invalidAddress();
                 return;

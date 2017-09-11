@@ -28,7 +28,7 @@ namespace Sprdef
         }
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < Sprites.Length; i++)
+            for (var i = 0; i < Sprites.Length; i++)
                 Sprites[i] = new C64Sprite();
             sprite1ToolStripMenuItem.Click += PickSpriteClick;
             sprite2ToolStripMenuItem.Click += PickSpriteClick;
@@ -72,44 +72,37 @@ namespace Sprdef
             SpriteEditor.Draw(e.Graphics, EditorX, EditorY);
             ColorPicker.ColorCell.Size = SpriteEditor.PixelSize*2;
             ColorPicker.Draw(e.Graphics, EditorX, EditorY - (ColorPicker.ColorCell.Size + 8), SpriteEditor.Multicolor);
-            if (!Active && Width >= 4)
-            {
-                using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
-                    e.Graphics.FillRectangle(shadow, 0, 0, Width, Height);
-            }
+            if (Active || Width < 4)
+                return;
+            using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
+                e.Graphics.FillRectangle(shadow, 0, 0, Width, Height);
         }
-
         private void MainWindow_Shown(object sender, EventArgs e)
         {
             SpriteEditor.Sprite = CurrentSprite;
             Action x = DelayedRedraw;
             x.BeginInvoke(null, null);
         }
-
         private void MainWindow_Resize(object sender, EventArgs e)
         {
             RedrawBackgroundFlag = true;
-            Invalidate();
+            Refresh();
         }
-
         protected override void WndProc(ref Message m)
         {
             // Redraw on window state change.
             var org = WindowState;
             base.WndProc(ref m);
-            if (WindowState != org)
-            {
-                Action x = DelayedRedraw;
-                x.BeginInvoke(null, null);
-            }
+            if (WindowState == org)
+                return;
+            Action x = DelayedRedraw;
+            x.BeginInvoke(null, null);
         }
-
         private void DelayedRedraw()
         {
             System.Threading.Thread.Sleep(20);
             Invalidate();
         }
-
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             // ReSharper disable once ImplicitlyCapturedClosure
@@ -248,17 +241,15 @@ namespace Sprdef
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(@"Clear all sprites?", @"New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            {
-                for (var i = 0; i < Sprites.Length; i++)
-                    Sprites[i] = new C64Sprite();
-                PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs());
-                Filename = "";
-                Text = @"SPRDEF";
-                Invalidate();
-            }
+            if (MessageBox.Show(@"Clear all sprites?", @"New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                return;
+            for (var i = 0; i < Sprites.Length; i++)
+                Sprites[i] = new C64Sprite();
+            PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs());
+            Filename = "";
+            Text = @"SPRDEF";
+            Invalidate();
         }
-
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Filename == "")
@@ -267,10 +258,9 @@ namespace Sprdef
             {
                 if (SaveSprites(Filename))
                     return;
-                MessageBox.Show($"Failed to save \"{Filename}\".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Failed to save ""{Filename}"".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new SaveFileDialog())
@@ -281,10 +271,9 @@ namespace Sprdef
                     return;
                 if (SaveSprites(x.FileName))
                     return;
-                MessageBox.Show($"Failed to save \"{Filename}\".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Failed to save ""{Filename}"".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private bool SaveSprites(string filename)
         {
             var multicolor = SpriteEditor.Multicolor;
@@ -305,7 +294,7 @@ namespace Sprdef
                     fs.Close();
                 }
                 Filename = filename;
-                Text = $"SPRDEF - {Filename}";
+                Text = $@"SPRDEF - {Filename}";
                 return true;
             }
             catch (Exception)
@@ -318,7 +307,6 @@ namespace Sprdef
                     multicolorToolStripMenuItem_Click(null, new EventArgs());
             }
         }
-
         private bool LoadSprites(string filename)
         {
             var multicolor = SpriteEditor.Multicolor;
@@ -346,7 +334,7 @@ namespace Sprdef
                     fs.Close();
                 }
                 Filename = filename;
-                Text = $"SPRDEF - {Filename}";
+                Text = $@"SPRDEF - {Filename}";
                 Invalidate();
                 return true;
             }
@@ -360,7 +348,6 @@ namespace Sprdef
                     multicolorToolStripMenuItem_Click(null, new EventArgs());
             }
         }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new OpenFileDialog())
@@ -371,10 +358,9 @@ namespace Sprdef
                     return;
                 if (LoadSprites(x.FileName))
                     return;
-                MessageBox.Show($"Failed to load \"{Filename}\".", @"Load sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Failed to load ""{Filename}"".", @"Load sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void exportToCBMPrgStudioDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new CbmPrgStudioDialog())
@@ -392,68 +378,60 @@ namespace Sprdef
                 x.ShowDialog(this);
             }
         }
-
         private void pickBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
             {
                 x.Prompt = "Select background color:";
                 x.ColorIndex = C64Sprite.BackgroundColorIndex;
-                if (x.ShowDialog(this) == DialogResult.OK)
-                {
-                    C64Sprite.BackgroundColorIndex = x.ColorIndex;
-                    for (var i = 0; i < 8; i++)
-                        Sprites[i].ResetPixels();
-                    Invalidate();
-                }
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                C64Sprite.BackgroundColorIndex = x.ColorIndex;
+                for (var i = 0; i < 8; i++)
+                    Sprites[i].ResetPixels();
+                Invalidate();
             }
         }
-
         private void pickForegroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
             {
                 x.Prompt = "Select foreground color:";
                 x.ColorIndex = C64Sprite.ForegroundColorIndex;
-                if (x.ShowDialog(this) == DialogResult.OK)
-                {
-                    C64Sprite.ForegroundColorIndex = x.ColorIndex;
-                    for (var i = 0; i < 8; i++)
-                        Sprites[i].ResetPixels();
-                    Invalidate();
-                }
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                C64Sprite.ForegroundColorIndex = x.ColorIndex;
+                for (var i = 0; i < 8; i++)
+                    Sprites[i].ResetPixels();
+                Invalidate();
             }
         }
-
         private void pickExtraColor1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
             {
                 x.Prompt = "Select first extra color:";
                 x.ColorIndex = C64Sprite.ExtraColor1Index;
-                if (x.ShowDialog(this) == DialogResult.OK)
-                {
-                    C64Sprite.ExtraColor1Index = x.ColorIndex;
-                    for (var i = 0; i < 8; i++)
-                        Sprites[i].ResetPixels();
-                    Invalidate();
-                }
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                C64Sprite.ExtraColor1Index = x.ColorIndex;
+                for (var i = 0; i < 8; i++)
+                    Sprites[i].ResetPixels();
+                Invalidate();
             }
         }
-
         private void pickExtraColor2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
             {
                 x.Prompt = "Select second extra color:";
                 x.ColorIndex = C64Sprite.ExtraColor2Index;
-                if (x.ShowDialog(this) == DialogResult.OK)
-                {
-                    C64Sprite.ExtraColor2Index = x.ColorIndex;
-                    for (var i = 0; i < 8; i++)
-                        Sprites[i].ResetPixels();
-                    Invalidate();
-                }
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                C64Sprite.ExtraColor2Index = x.ColorIndex;
+                for (var i = 0; i < 8; i++)
+                    Sprites[i].ResetPixels();
+                Invalidate();
             }
         }
         private void multicolorToolStripMenuItem_Click(object sender, EventArgs e)

@@ -89,19 +89,17 @@ namespace Sprdef
         }
         public int GetPixel(int x, int y)
         {
-            if (SpriteEditor.Multicolor)
-            {
-                if (x % 2 != 0)
-                    x -= 1;
-                if (!SpriteData[x, y] && SpriteData[x + 1, y])
-                    return ForegroundColorIndex;
-                if (SpriteData[x, y] && !SpriteData[x + 1, y])
-                    return ExtraColor1Index;
-                if (SpriteData[x, y] && SpriteData[x + 1, y])
-                    return ExtraColor2Index;
-                return BackgroundColorIndex;
-            }
-            return SpriteData[x, y] ? 1 : 0;
+            if (!SpriteEditor.Multicolor)
+                return SpriteData[x, y] ? 1 : 0;
+            if (x % 2 != 0)
+                x -= 1;
+            if (!SpriteData[x, y] && SpriteData[x + 1, y])
+                return ForegroundColorIndex;
+            if (SpriteData[x, y] && !SpriteData[x + 1, y])
+                return ExtraColor1Index;
+            if (SpriteData[x, y] && SpriteData[x + 1, y])
+                return ExtraColor2Index;
+            return BackgroundColorIndex;
         }
 
         public void Draw(Graphics g, int x, int y, bool doubleSize)
@@ -110,12 +108,10 @@ namespace Sprdef
             {
                 g.DrawImage(SpritePreviewData, x, y, 48, 43);
                 Bounds = new Rectangle(x, y, 48, 42);
+                return;
             }
-            else
-            {
-                g.DrawImage(SpritePreviewData, x, y);
-                Bounds = new Rectangle(x, y, 24, 21);
-            }
+            g.DrawImage(SpritePreviewData, x, y);
+            Bounds = new Rectangle(x, y, 24, 21);
         }
         public bool HitTest(int x, int y) => Bounds.IntersectsWith(new Rectangle(x, y, 1, 1));
         public byte[] GetBytes()
@@ -132,7 +128,6 @@ namespace Sprdef
                 }
             return ret;
         }
-
         private bool IsSet(int x, int y) => SpriteData[x, y];
         public  bool Load(BinaryReader sr)
         {

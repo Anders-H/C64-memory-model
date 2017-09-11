@@ -189,7 +189,6 @@
             this.MinimumSize = new System.Drawing.Size(640, 400);
             this.Name = "MainWindow";
             this.Text = "C64 Memory Visualizer";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragOver);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);

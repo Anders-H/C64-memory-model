@@ -59,11 +59,10 @@ namespace Sprdef
                 {
                     for (var sx = 0; sx < 24; sx++)
                     {
-                        if (sx % 2 == 0)
-                        {
-                            g.FillRectangle(brushes[Sprite.GetColorIndex(sx, sy)], physicalX, physicalY, pwidth - 1, ps);
-                            physicalX += pwidth;
-                        }
+                        if (sx % 2 != 0)
+                            continue;
+                        g.FillRectangle(brushes[Sprite.GetColorIndex(sx, sy)], physicalX, physicalY, pwidth - 1, ps);
+                        physicalX += pwidth;
                     }
                     physicalY += PixelSize;
                     physicalX = x;

@@ -18,8 +18,8 @@ namespace MemoryVisualizer
         private ScreenCharacterMap Characters { get; } = new ScreenCharacterMap();
         private bool RecalcGridFontSize { get; set; } = true;
         private Font GridFont { get; set; } = new Font("Courier New", 10);
-        private float FontXOffset { get; set; } = 0f;
-        private float FontYOffset { get; set; } = 0f;
+        private float FontXOffset { get; set; }
+        private float FontYOffset { get; set; }
         private int StepSize { get; set; }
         private int DisassemblyStartAddress { get; set; }
         private int LastPerformedDisassemblyStepSize { get; set; }
@@ -62,8 +62,8 @@ namespace MemoryVisualizer
                     }
                     else
                     {
-                        var characterWidth = (float)((double)InnerClient.Width / (double)ScreenCharacterMap.Columns);
-                        var characterHeight = (float)((double)InnerClient.Height / (double)ScreenCharacterMap.Rows);
+                        var characterWidth = (float)(InnerClient.Width / (double)ScreenCharacterMap.Columns);
+                        var characterHeight = (float)(InnerClient.Height / (double)ScreenCharacterMap.Rows);
                         if (RecalcGridFontSize)
                         {
                             RecalcGridFontSize = false;
@@ -83,7 +83,7 @@ namespace MemoryVisualizer
                                 e.Graphics.DrawString(Characters.GetCharacter(x, y).ToString(), GridFont, lightBlue, xPos + FontXOffset, yPos + FontYOffset);
                                 xPos += characterWidth;
                             }
-                            xPos = (float)InnerClient.Left;
+                            xPos = InnerClient.Left;
                             yPos += characterHeight;
                         }
                     }
@@ -109,7 +109,7 @@ namespace MemoryVisualizer
                 var temp = new Memory();
                 int start, length;
                 temp.Load(filename, out start, out length);
-                Text = $"C64 Memory Visualizer - {filename}";
+                Text = $@"C64 Memory Visualizer - {filename}";
                 Memory = temp;
                 DisplayPointer = start;
                 DisassemblyStartAddress = start;
@@ -134,9 +134,10 @@ namespace MemoryVisualizer
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
         }
-
         private void RenderScreen()
         {
+            if (Memory == null)
+                return;
             Characters.Clear();
             var displayPointer = DisplayPointer;
             switch (DisplayMode)
@@ -187,10 +188,11 @@ namespace MemoryVisualizer
                         Characters.SetCharacters(0, row, disassemblyRows[row]);
                     LastPerformedDisassemblyStepSize = Memory.GetBytePointer() - DisplayPointer;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
             Invalidate();
         }
-
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.PageUp)
@@ -198,7 +200,6 @@ namespace MemoryVisualizer
             else if (e.KeyCode == Keys.PageDown)
                 nextPageToolStripMenuItem_Click(sender, new EventArgs());
         }
-
         private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             switch (DisplayMode)
@@ -216,7 +217,6 @@ namespace MemoryVisualizer
             }
             RenderScreen();
         }
-
         private void nextPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             switch (DisplayMode)
@@ -237,7 +237,6 @@ namespace MemoryVisualizer
             }
             RenderScreen();
         }
-
         private void rawHexToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
@@ -246,7 +245,6 @@ namespace MemoryVisualizer
             DisplayMode = DisplayMode.HexRaw;
             RenderScreen();
         }
-
         private void rawDecToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
@@ -255,7 +253,6 @@ namespace MemoryVisualizer
             DisplayMode = DisplayMode.DecRaw;
             RenderScreen();
         }
-
         private void disassemblyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!SetDisassemblyStartAddress())
@@ -266,11 +263,8 @@ namespace MemoryVisualizer
             DisplayMode = DisplayMode.Disassembly;
             RenderScreen();
         }
-
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e) => setDisassemblyStartAddressToolStripMenuItem.Enabled = Memory != null && DisplayMode == DisplayMode.Disassembly;
-
         private void setDisassemblyStartAddressToolStripMenuItem_Click(object sender, EventArgs e) => SetDisassemblyStartAddress();
-
         private bool SetDisassemblyStartAddress()
         {
             using (var x = new DialogDisassemblyStartAddress())
@@ -289,11 +283,6 @@ namespace MemoryVisualizer
         {
             DisplayPointer = DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress : 0;
             RenderScreen();
-        }
-
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
