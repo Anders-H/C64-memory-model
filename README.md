@@ -1,7 +1,7 @@
-#Commodore 64 memory model
+# Commodore 64 memory model
 Backend for creating C64 tools.
 
-##Installation
+## Installation
 
 **The C# library:**
 
@@ -11,7 +11,7 @@ Backend for creating C64 tools.
 
 [Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe) version 1.2
 
-##Load .prg files
+## Load .prg files
 ```C#
 var m = new Memory();
 int startAddress, length;
@@ -19,7 +19,7 @@ m.Load(@"C:\Temp\MyProgram.prg", out startAddress, out length);
 Console.WriteLine($"{length} bytes loaded to {startAddress}.");
 ```
 
-##Create machine code programs
+## Create machine code programs
 A C64 program that makes the border purple.
 ```C#
 m.Clear();
@@ -31,13 +31,13 @@ m.SetWord(53280); //Border color
 m.SetByte(96); //RTS
 ```
 
-##Save .prg files
+## Save .prg files
 ```C#
 m.Save(@"C:\Temp\ChangeCol.prg", out startAddress, out length);
 Console.WriteLine($"{length} bytes saved from {startAddress}.");
 ```
 
-##Disassemble programs
+## Disassemble programs
 ```C#
 m.SetBytePointer(4096);
 Console.WriteLine(m.GetDisassembly(3, true));
@@ -50,7 +50,7 @@ Output:
 . 04101 $1005 60       RTS          ; Return from Subroutine
 ```
 
-##Bookmarks and locations
+## Bookmarks and locations
 A C64 program that makes the border purple.
 ```C#
 m.Clear();
@@ -60,7 +60,7 @@ m.SetWord(m.GetModelLocation(MemoryModelLocationName.BorderColor));
 m.SetByte(96); //RTS
 ```
 
-##String support
+## String support
 ```C#
 m.SetBytePointer(8192);
 m.SetString("simpleUppercase", "Hello, Computer!");
@@ -73,7 +73,7 @@ Output:
 HELLO, COMPUTER!
 ```
 
-##Hello, World!
+## Hello, World!
 The Hello World program for the C64.
 ```C#
 //The program.
@@ -127,7 +127,7 @@ m.SetBytePointer(4096);
 Console.WriteLine(m.GetDisassembly(7));
 ```
 
-##Sprites
+## Sprites
 Turn on two sprites and position the first:
 ```C#
 //Turn on first and second sprite.
@@ -159,7 +159,7 @@ m.Assembler.Sta(m.GetModelLocation(MemoryModelLocationName.SpriteLocations) + 1)
 m.Assembler.Rts();
 ```
 
-##Extended assembler
+## Extended assembler
 Using byte variables:
 ```C#
 //A program that sets the backgroud color to red.
