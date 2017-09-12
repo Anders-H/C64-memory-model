@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Sprdef
 {
@@ -12,8 +13,8 @@ namespace Sprdef
 
         public C64Sprite Sprite { get; set; }
 
-        public int InnerWidth => 24*PixelSize;
-        public int InnerHeight => 21*PixelSize;
+        public int InnerWidth => C64Sprite.Width*PixelSize;
+        public int InnerHeight => C64Sprite.Height*PixelSize;
         public void MoveCursor(int x, int y)
         {
             CursorX += x;
@@ -40,6 +41,46 @@ namespace Sprdef
         public int GetCursorX() => CursorX;
         public int GetCursorY() => CursorY;
         public void SetPixelAtCursor(int index) => Sprite.SetPixel(CursorX, CursorY, index);
+        public void SavePngMultiColorDoubleWidth(string filename, C64Sprite[] sprites, bool transparentBackground)
+        {
+            using (var b = new Bitmap(sprites.Length*C64Sprite.Width, C64Sprite.Height))
+            {
+                var x = 0;
+                foreach (var sprite in sprites)
+                {
+                    sprite.ExportMultiColorDoubleWidth(b, x, 0, transparentBackground);
+                    x += C64Sprite.Width;
+                }
+                b.Save(filename, ImageFormat.Png);
+            }
+        }
+        public void SavePngMultiColor(string filename, C64Sprite[] sprites, bool transparentBackground)
+        {
+            const int w = C64Sprite.Width/2;
+            using (var b = new Bitmap(sprites.Length*w, C64Sprite.Height))
+            {
+                var x = 0;
+                foreach (var sprite in sprites)
+                {
+                    sprite.ExportMultiColor(b, x, 0, transparentBackground);
+                    x += w;
+                }
+                b.Save(filename, ImageFormat.Png);
+            }
+        }
+        public void SavePng(string filename, C64Sprite[] sprites, bool transparentBackground)
+        {
+            using (var b = new Bitmap(sprites.Length*C64Sprite.Width, C64Sprite.Height))
+            {
+                var x = 0;
+                foreach (var sprite in sprites)
+                {
+                    sprite.Export(b, x, 0, transparentBackground);
+                    x += C64Sprite.Width;
+                }
+                b.Save(filename, ImageFormat.Png);
+            }
+        }
         public void Draw(Graphics g, int x, int y)
         {
             if (Sprite == null)
@@ -55,9 +96,9 @@ namespace Sprdef
             if (Multicolor)
             {
                 var pwidth = PixelSize * 2;
-                for (var sy = 0; sy < 21; sy++)
+                for (var sy = 0; sy < C64Sprite.Height; sy++)
                 {
-                    for (var sx = 0; sx < 24; sx++)
+                    for (var sx = 0; sx < C64Sprite.Width; sx++)
                     {
                         if (sx % 2 != 0)
                             continue;
@@ -74,9 +115,9 @@ namespace Sprdef
             }
             else
             {
-                for (var sy = 0; sy < 21; sy++)
+                for (var sy = 0; sy < C64Sprite.Height; sy++)
                 {
-                    for (var sx = 0; sx < 24; sx++)
+                    for (var sx = 0; sx < C64Sprite.Width; sx++)
                     {
                         g.FillRectangle(brushes[Sprite.GetPixel(sx, sy)], physicalX, physicalY, ps, ps);
                         physicalX += PixelSize;

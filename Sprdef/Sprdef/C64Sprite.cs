@@ -13,6 +13,8 @@ namespace Sprdef
         public static int ExtraColor1Index { get; set; }
         public static int ExtraColor2Index { get; set; }
         public Rectangle Bounds { get; private set; }
+        public const int Width = 24;
+        public const int Height = 21;
         static C64Sprite()
         {
             BackgroundColorIndex = 0;
@@ -22,20 +24,20 @@ namespace Sprdef
         }
         public C64Sprite()
         {
-            SpriteData = new bool[24, 21];
-            SpritePreviewData = new Bitmap(24, 21);
+            SpriteData = new bool[Width, Height];
+            SpritePreviewData = new Bitmap(Width, Height);
             using (var g = Graphics.FromImage(SpritePreviewData))
-                g.FillRectangle(Brushes.Black, 0, 0, 24, 21);
+                g.FillRectangle(Brushes.Black, 0, 0, Width, Height);
         }
         public void ResetPixels()
         {
             if (SpriteEditor.Multicolor)
-                for (var y = 0; y < 21; y++)
-                    for (var x = 0; x < 23; x += 2)
+                for (var y = 0; y < Height; y++)
+                    for (var x = 0; x < Width - 1; x += 2)
                         SetPixel(x, y, GetColorIndex(x, y));
             else
-                for (var y = 0; y < 21; y++)
-                    for (var x = 0; x < 24; x++)
+                for (var y = 0; y < Height; y++)
+                    for (var x = 0; x < Width; x++)
                         SetPixel(x, y, GetPixel(x, y));
         }
         public int GetColorIndex(int x, int y)
@@ -106,19 +108,61 @@ namespace Sprdef
         {
             if (doubleSize)
             {
-                g.DrawImage(SpritePreviewData, x, y, 48, 43);
-                Bounds = new Rectangle(x, y, 48, 42);
+                g.DrawImage(SpritePreviewData, x, y, Width * 2, Height * 2 + 1);
+                Bounds = new Rectangle(x, y, Width * 2, Height);
                 return;
             }
             g.DrawImage(SpritePreviewData, x, y);
-            Bounds = new Rectangle(x, y, 24, 21);
+            Bounds = new Rectangle(x, y, Width, Height);
+        }
+        public void Export(Bitmap b, int offsetX, int offsetY, bool transparentBackground)
+        {
+            for (var y = 0; y < Height; y++)
+                for (var x = 0; x < Width; x++)
+                {
+                    if (!SpriteData[x, y] && !transparentBackground)
+                        b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(BackgroundColorIndex));
+                    else if (SpriteData[x, y])
+                        b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(ForegroundColorIndex));
+                }
+        }
+        public void ExportMultiColor(Bitmap b, int offsetX, int offsetY, bool transparentBackground)
+        {
+            const int w = Width/2;
+            for (var y = 0; y < Height; y++)
+                for (var x = 0; x < w; x++)
+                {
+                    var colorIndex = GetPixel(x*2, y);
+                    if (colorIndex == BackgroundColorIndex && !transparentBackground)
+                        b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(BackgroundColorIndex));
+                    else if (colorIndex != BackgroundColorIndex)
+                        b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(colorIndex));
+                }
+        }
+        public void ExportMultiColorDoubleWidth(Bitmap b, int offsetX, int offsetY, bool transparentBackground)
+        {
+            for (var y = 0; y < Height; y++)
+                for (var x = 0; x < Width; x += 2)
+                {
+                    var colorIndex = GetPixel(x, y);
+                    if (colorIndex == BackgroundColorIndex && !transparentBackground)
+                    {
+                        b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(BackgroundColorIndex));
+                        b.SetPixel(x + offsetX + 1, y + offsetY, Palette.GetColor(BackgroundColorIndex));
+                    }
+                    else if (colorIndex != BackgroundColorIndex)
+                    {
+                        b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(colorIndex));
+                        b.SetPixel(x + offsetX + 1, y + offsetY, Palette.GetColor(colorIndex));
+                    }
+                }
         }
         public bool HitTest(int x, int y) => Bounds.IntersectsWith(new Rectangle(x, y, 1, 1));
         public byte[] GetBytes()
         {
             var ret = new byte[63];
             var i = 0;
-            for (var y = 0; y < 21; y++)
+            for (var y = 0; y < Height; y++)
                 for (var x = 0; x < 3; x++)
                 {
                     var physicalX = 8*x;

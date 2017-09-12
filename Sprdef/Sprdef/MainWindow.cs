@@ -54,8 +54,8 @@ namespace Sprdef
             }
             EditorX = 10;
             EditorY = ((Height/2) - (SpriteEditor.InnerHeight/2)) - menuStrip1.Height;
-            var pw = ((Width - 200)/24);
-            var ph = ((Height - 200)/21);
+            var pw = ((Width - 200)/C64Sprite.Width);
+            var ph = ((Height - 200)/C64Sprite.Height);
             SpriteEditor.PixelSize = Math.Min(pw, ph);
             SpriteEditor.PixelSize = SpriteEditor.PixelSize < 6 ? 6 : SpriteEditor.PixelSize;
 
@@ -455,9 +455,31 @@ namespace Sprdef
             using (var x = new ExportPngDialog())
             {
                 x.Multicolor = SpriteEditor.Multicolor;
-                if (x.DialogResult != DialogResult.OK)
+                if (x.ShowDialog(this) != DialogResult.OK)
                     return;
-
+                using (var y = new SaveFileDialog())
+                {
+                    y.Title = @"Export PNG";
+                    y.Filter = @"PNG files (*.png)|*.png|All files (*.*)|*.*";
+                    if (y.ShowDialog(this) != DialogResult.OK)
+                        return;
+                    try
+                    {
+                        if (SpriteEditor.Multicolor)
+                        {
+                            if (x.DoubleWidth)
+                                SpriteEditor.SavePngMultiColorDoubleWidth(y.FileName, Sprites, x.TransparentBackground);
+                            else
+                                SpriteEditor.SavePngMultiColor(y.FileName, Sprites, x.TransparentBackground);
+                        }
+                        else
+                            SpriteEditor.SavePng(y.FileName, Sprites, x.TransparentBackground);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, @"Export failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
     }
