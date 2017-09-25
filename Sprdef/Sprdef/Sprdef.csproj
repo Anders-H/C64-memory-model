@@ -89,6 +89,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteEditor.cs" />
+    <Compile Include="UndoBuffer.cs" />
     <EmbeddedResource Include="BasicDialog.resx">
       <DependentUpon>BasicDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,6 +113,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -128,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="polar_bear.ico" />
+    <None Include="Resources\112_ArrowReturnRight_Blue_16x16_72.png" />
+    <None Include="Resources\112_ArrowReturnLeft_Blue_16x16_72.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

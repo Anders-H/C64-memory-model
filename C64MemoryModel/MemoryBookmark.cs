@@ -10,7 +10,7 @@ namespace C64MemoryModel
         public string Name { get; set; }
         public ushort StartAddress { get; }
         public ushort EndAddress { get; }
-        public ushort Length => (ushort)((EndAddress - StartAddress) + 1);
+        public ushort Length => (ushort)(EndAddress - StartAddress + 1);
         public bool IsMemoyModel => false;
         public bool IsCustomBookmark => true;
         public MemoryBookmark(ushort address)

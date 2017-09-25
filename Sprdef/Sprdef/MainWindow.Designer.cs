@@ -37,6 +37,7 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToBASICToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToCBMPrgStudioDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spritesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +59,9 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.exportPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +70,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.spritesToolStripMenuItem,
             this.paletteToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -131,6 +135,13 @@
             this.exportToCBMPrgStudioDataToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.exportToCBMPrgStudioDataToolStripMenuItem.Text = "Export to CBM prg Studio data...";
             this.exportToCBMPrgStudioDataToolStripMenuItem.Click += new System.EventHandler(this.exportToCBMPrgStudioDataToolStripMenuItem_Click);
+            // 
+            // exportPNGToolStripMenuItem
+            // 
+            this.exportPNGToolStripMenuItem.Name = "exportPNGToolStripMenuItem";
+            this.exportPNGToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.exportPNGToolStripMenuItem.Text = "Export PNG...";
+            this.exportPNGToolStripMenuItem.Click += new System.EventHandler(this.exportPNGToolStripMenuItem_Click);
             // 
             // spritesToolStripMenuItem
             // 
@@ -300,12 +311,33 @@
             this.lblStatus.Size = new System.Drawing.Size(16, 17);
             this.lblStatus.Text = "   ";
             // 
-            // exportPNGToolStripMenuItem
+            // editToolStripMenuItem
             // 
-            this.exportPNGToolStripMenuItem.Name = "exportPNGToolStripMenuItem";
-            this.exportPNGToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.exportPNGToolStripMenuItem.Text = "Export PNG...";
-            this.exportPNGToolStripMenuItem.Click += new System.EventHandler(this.exportPNGToolStripMenuItem_Click);
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "&Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnLeft_Blue_16x16_72;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnRight_Blue_16x16_72;
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -370,6 +402,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportPNGToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }
 
