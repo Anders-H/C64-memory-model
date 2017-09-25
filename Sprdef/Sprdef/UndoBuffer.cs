@@ -15,7 +15,10 @@ namespace Sprdef
         public bool CanRedo { get; set; }
         public void PushState(C64Sprite[] sprites)
         {
-            
+            while (Buffer.Count > 0 && UndoPointer < Buffer.Count - 1)
+                Buffer.RemoveAt(Buffer.Count - 1);
+            Buffer.Add(sprites);
+            UndoPointer = Buffer.Count - 1;
         }
         public C64Sprite[] Undo()
         {
