@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using C64MemoryModel.Mem;
 
 namespace C64MemoryModel
 {

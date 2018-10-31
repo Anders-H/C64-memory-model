@@ -1,4 +1,4 @@
-﻿namespace C64MemoryModel
+﻿namespace C64MemoryModel.Mem
 {
     public enum MemoryModelLocationName
     {

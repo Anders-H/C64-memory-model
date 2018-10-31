@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace C64MemoryModel
+namespace C64MemoryModel.Mem
 {
     public class MemoryModelLocation : IMemoryLocation
     {

@@ -2,7 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using C64MemoryModel;
+using C64MemoryModel.Graphics;
+using C64MemoryModel.Mem;
 
 namespace MemoryVisualizer
 {

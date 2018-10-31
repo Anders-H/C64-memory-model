@@ -1,6 +1,6 @@
 ﻿using System;
-using C64MemoryModel;
 using System.Drawing;
+using C64MemoryModel.Mem;
 
 namespace MemoryVisualizer
 {

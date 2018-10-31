@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using C64MemoryModel.Mem;
 
 namespace C64MemoryModel.Asm
 {

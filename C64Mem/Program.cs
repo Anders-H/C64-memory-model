@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using C64MemoryModel;
+using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
 
 namespace C64Mem
@@ -9,7 +10,7 @@ namespace C64Mem
     {
         private static void Main()
         {
-            var m = new C64MemoryModel.Memory();
+            var m = new Memory();
             Console.WriteLine(m.GetByte(ushort.MaxValue));
 
             var t = new TextAdapter(new Memory());

@@ -1,4 +1,6 @@
-﻿namespace C64MemoryModel.Asm
+﻿using C64MemoryModel.Mem;
+
+namespace C64MemoryModel.Asm
 {
     public class ExtendedAssembler
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using C64MemoryModel.Mem;
 
 namespace C64MemoryModel.Asm
 {
@@ -6,7 +7,12 @@ namespace C64MemoryModel.Asm
     {
         internal Memory Memory { get; }
         public ExtendedAssembler Extended { get; }
-        internal Assembler(Memory memory) { Memory = memory; Extended = new ExtendedAssembler(this); }
+
+        internal Assembler(Memory memory)
+        {
+            Memory = memory; Extended = new ExtendedAssembler(this);
+        }
+
         //032 20 JSR
         public void Jsr(ushort address) => Absolute(23, address);
         //096 60 RTS
@@ -27,12 +33,15 @@ namespace C64MemoryModel.Asm
         public void Inx() => Memory.SetByte(232);
         //240 F0 BEQ
         public void Beq(ushort address) => Relative(240, address);
-        //--------------------------------------------------------------------------------------------------
+
+        //--------------------------------------------------------------------------------------------------//
+
         private void Immediate(byte opcode, byte value)
         {
             Memory.SetByte(opcode);
             Memory.SetByte(value);
         }
+
         private void Absolute(byte opcode, ushort address)
         {
             var bytes = BitConverter.GetBytes(address);
@@ -42,6 +51,7 @@ namespace C64MemoryModel.Asm
             Memory.SetByte(low);
             Memory.SetByte(high);
         }
+
         private void Relative(byte opcode, ushort address)
         {
             var currentAddress = Memory.GetBytePointer() + 2;

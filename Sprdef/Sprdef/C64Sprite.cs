@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
+using C64MemoryModel.Graphics;
 
 namespace Sprdef
 {
@@ -7,7 +8,7 @@ namespace Sprdef
     {
         private bool[,] SpriteData { get; }
         private Bitmap SpritePreviewData { get; }
-        public static C64MemoryModel.C64Palette Palette = new C64MemoryModel.C64Palette();
+        public static C64Palette Palette = new C64Palette();
         public static int BackgroundColorIndex { get; set; }
         public static int ForegroundColorIndex { get; set; }
         public static int ExtraColor1Index { get; set; }
