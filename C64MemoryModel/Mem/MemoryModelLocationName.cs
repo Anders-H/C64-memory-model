@@ -4,6 +4,9 @@
     {
         ZeroPage,
         ProcessorPort,
+        Unused,
+        CurrentExpressionType,
+        CurrentNumericalExpressionType,
         BasicAreaPointer,
         KeyboardBuffer,
         DefaultSpritePointerArea,

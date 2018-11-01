@@ -36,7 +36,10 @@ namespace C64MemoryModel.Mem
             CharacterSets.Add(new SimpleUppercaseCharacterSet());
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ZeroPage, 0));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ProcessorPort, 1));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicAreaPointer, 43,44));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.Unused, 2, 6));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.CurrentExpressionType, 13, 13));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.CurrentNumericalExpressionType, 14, 14));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicAreaPointer, 43, 44));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.KeyboardBuffer, 631, 640));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultSpritePointerArea, 2040, 2047));
             Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultBasicArea, 2049, 40959));
