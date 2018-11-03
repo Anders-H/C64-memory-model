@@ -2,12 +2,12 @@
 {
     public class Character
     {
-        // ReSharper disable once InconsistentNaming
-        public byte PETSCII { get; }
+        public byte Petscii { get; }
         public char Unicode { get; }
+
         public Character(byte petscii, char unicode)
         {
-            PETSCII = petscii;
+            Petscii = petscii;
             Unicode = unicode;
         }
     }

@@ -14,7 +14,7 @@ namespace C64MemoryModel.Asm
         }
 
         //032 20 JSR
-        public void Jsr(ushort address) => Absolute(23, address);
+        public void Jsr(ushort address) => Absolute(32, address);
         //096 60 RTS
         public void Rts() => Memory.SetByte(96);
         //141 8D STA Absolute

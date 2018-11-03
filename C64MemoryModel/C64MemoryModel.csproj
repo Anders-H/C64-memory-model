@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Asm\Assembler.cs" />
     <Compile Include="Asm\ByteVariable.cs" />
+    <Compile Include="Asm\IVariable.cs" />
     <Compile Include="Asm\VariableBase.cs" />
     <Compile Include="Asm\VariableList.cs" />
     <Compile Include="Asm\WordVariable.cs" />

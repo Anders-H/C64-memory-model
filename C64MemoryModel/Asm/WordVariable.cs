@@ -4,7 +4,10 @@ namespace C64MemoryModel.Asm
 {
     public class WordVariable : VariableBase<ushort>
     {
-        public WordVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address) { }
+        public WordVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address)
+        {
+        }
+
         public override void WriteAssign(ushort address, ushort value)
         {
             Value = value;
@@ -17,6 +20,7 @@ namespace C64MemoryModel.Asm
             Assembler.Lda(high);
             Assembler.Sta((ushort)(Address + 1));
         }
+
         public override void WriteDirect(ushort value)
         {
             Value = value;

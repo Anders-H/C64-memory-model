@@ -36,14 +36,18 @@ namespace Sprdef
             if (CursorY >= 20)
                 CursorY = 20;
         }
+
         public void SetCursorX(int x) => CursorX = x;
         public void SetCursorY(int y) => CursorY = y;
         public int GetCursorX() => CursorX;
         public int GetCursorY() => CursorY;
-        public void SetPixelAtCursor(int index) => Sprite.SetPixel(CursorX, CursorY, index);
-        public void SavePngMultiColorDoubleWidth(string filename, C64Sprite[] sprites, bool transparentBackground)
+
+        public void SetPixelAtCursor(int index) =>
+            Sprite.SetPixel(CursorX, CursorY, index);
+
+        public void SavePngMultiColorDoubleWidth(string filename, SpriteArray sprites, bool transparentBackground)
         {
-            using (var b = new Bitmap(sprites.Length*C64Sprite.Width, C64Sprite.Height))
+            using (var b = new Bitmap(sprites.TotalWidth, C64Sprite.Height))
             {
                 var x = 0;
                 foreach (var sprite in sprites)
@@ -54,10 +58,11 @@ namespace Sprdef
                 b.Save(filename, ImageFormat.Png);
             }
         }
-        public void SavePngMultiColor(string filename, C64Sprite[] sprites, bool transparentBackground)
+
+        public void SavePngMultiColor(string filename, SpriteArray sprites, bool transparentBackground)
         {
             const int w = C64Sprite.Width/2;
-            using (var b = new Bitmap(sprites.Length*w, C64Sprite.Height))
+            using (var b = new Bitmap(sprites.TotalMultiColorWidth, C64Sprite.Height))
             {
                 var x = 0;
                 foreach (var sprite in sprites)
@@ -68,9 +73,10 @@ namespace Sprdef
                 b.Save(filename, ImageFormat.Png);
             }
         }
-        public void SavePng(string filename, C64Sprite[] sprites, bool transparentBackground)
+
+        public void SavePng(string filename, SpriteArray sprites, bool transparentBackground)
         {
-            using (var b = new Bitmap(sprites.Length*C64Sprite.Width, C64Sprite.Height))
+            using (var b = new Bitmap(sprites.TotalWidth, C64Sprite.Height))
             {
                 var x = 0;
                 foreach (var sprite in sprites)
@@ -81,6 +87,7 @@ namespace Sprdef
                 b.Save(filename, ImageFormat.Png);
             }
         }
+
         public void Draw(Graphics g, int x, int y)
         {
             if (Sprite == null)

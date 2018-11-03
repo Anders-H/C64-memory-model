@@ -10,7 +10,12 @@ namespace C64MemoryModel
     {
         private Memory Memory { get; }
         public int BytePointer => Memory.BytePointer;
-        public TextAdapter(Memory memory) { Memory = memory; }
+
+        public TextAdapter(Memory memory)
+        {
+            Memory = memory;
+        }
+
         public string Ask(string input, out bool success)
         {
             success = false;
@@ -385,6 +390,7 @@ namespace C64MemoryModel
                 return "Invalid argument.";
             }
         }
+
         private static ushort GetWordHex(string s, out bool success)
         {
             s = s.StartsWith("$", StringComparison.Ordinal) ? s.Substring(1) : s;
@@ -395,30 +401,32 @@ namespace C64MemoryModel
                 success = false;
             return (ushort)result;
         }
+
         private static ushort GetWordDec(string s, out bool success)
         {
             success = true;
-            int result;
-            if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out result))
+            if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out var result))
                 result = result % (ushort.MaxValue + 1);
             else
                 success = false;
             return (ushort)result;
         }
+
         private static byte GetByteHex(string s, out bool success)
         {
             s = s.StartsWith("$", StringComparison.Ordinal) ? s.Substring(1) : s;
             success = true;
-            if (int.TryParse(s, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out int result))
+            if (int.TryParse(s, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out var result))
                 result = result % (byte.MaxValue + 1);
             else
                 success = false;
             return (byte)result;
         }
+
         private static byte GetByteDec(string s, out bool success)
         {
             success = true;
-            if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out int result))
+            if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out var result))
                 result = result % (byte.MaxValue + 1);
             else
                 success = false;

@@ -10,7 +10,8 @@ namespace Sprdef
         {
             InitializeComponent();
         }
-        public C64Sprite[] Sprites { get; set; }
+        public SpriteArray Sprites { get; set; }
+
         private void CbmPrgStudioDialog_Load(object sender, EventArgs e)
         {
             cboDecHex.Items.Add("Hex");

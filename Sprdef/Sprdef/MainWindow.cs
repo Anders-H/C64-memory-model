@@ -9,8 +9,8 @@ namespace Sprdef
     public partial class MainWindow : Form, ISpriteEditorWindow
     {
         private UndoBuffer UndoBuffer { get; set; } = new UndoBuffer();
-        private C64Sprite[] Sprites { get; set; } = new C64Sprite[8];
-        private int CurrentSpriteIndex { get; set; } = 0;
+        private SpriteArray Sprites { get; set; } = new SpriteArray();
+        private int CurrentSpriteIndex { get; } = 0;
         private C64Sprite CurrentSprite => Sprites[CurrentSpriteIndex];
         private SpriteEditor SpriteEditor { get; }
         private int EditorX { get; set; }
@@ -19,6 +19,7 @@ namespace Sprdef
         private ColorPicker ColorPicker { get; }
         private bool Active { get; set; }
         private string Filename { get; set; }
+
         public MainWindow()
         {
             SpriteEditor = new SpriteEditor();
@@ -26,9 +27,10 @@ namespace Sprdef
             Filename = "";
             InitializeComponent();
         }
+
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            for (var i = 0; i < Sprites.Length; i++)
+            for (var i = 0; i < Sprites.Count; i++)
                 Sprites[i] = new C64Sprite();
             sprite1ToolStripMenuItem.Click += PickSpriteClick;
             sprite2ToolStripMenuItem.Click += PickSpriteClick;
@@ -39,6 +41,7 @@ namespace Sprdef
             sprite7ToolStripMenuItem.Click += PickSpriteClick;
             sprite8ToolStripMenuItem.Click += PickSpriteClick;
         }
+
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
@@ -53,16 +56,16 @@ namespace Sprdef
                 RedrawBackgroundFlag = false;
             }
             EditorX = 10;
-            EditorY = ((Height/2) - (SpriteEditor.InnerHeight/2)) - menuStrip1.Height;
-            var pw = ((Width - 200)/C64Sprite.Width);
-            var ph = ((Height - 200)/C64Sprite.Height);
+            EditorY = Height/2 - SpriteEditor.InnerHeight/2 - menuStrip1.Height;
+            var pw = (Width - 200)/C64Sprite.Width;
+            var ph = (Height - 200)/C64Sprite.Height;
             SpriteEditor.PixelSize = Math.Min(pw, ph);
             SpriteEditor.PixelSize = SpriteEditor.PixelSize < 6 ? 6 : SpriteEditor.PixelSize;
 
-            var doubleSize = (Width*1.5) > Height;
+            var doubleSize = Width*1.5 > Height;
             var spritesHeight = doubleSize ? 336 : 168;
             var startX = doubleSize ? Width - 68 : Width - 44;
-            var startY = ((Height / 2) - (spritesHeight / 2)) - menuStrip1.Height; 
+            var startY = Height / 2 - spritesHeight / 2 - menuStrip1.Height; 
             for (var i = 0; i < 8; i++)
             {
                 Sprites[i].Draw(e.Graphics, startX, startY, doubleSize);
@@ -77,17 +80,20 @@ namespace Sprdef
             using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
                 e.Graphics.FillRectangle(shadow, 0, 0, Width, Height);
         }
+
         private void MainWindow_Shown(object sender, EventArgs e)
         {
             SpriteEditor.Sprite = CurrentSprite;
             Action x = DelayedRedraw;
             x.BeginInvoke(null, null);
         }
+
         private void MainWindow_Resize(object sender, EventArgs e)
         {
             RedrawBackgroundFlag = true;
             Refresh();
         }
+
         protected override void WndProc(ref Message m)
         {
             // Redraw on window state change.
@@ -98,11 +104,13 @@ namespace Sprdef
             Action x = DelayedRedraw;
             x.BeginInvoke(null, null);
         }
+
         private void DelayedRedraw()
         {
             System.Threading.Thread.Sleep(20);
             Invoke(new Action(Refresh));
         }
+
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             // ReSharper disable once ImplicitlyCapturedClosure
@@ -159,6 +167,7 @@ namespace Sprdef
                     break;
             }
         }
+
         private void PickSpriteClick(object sender, EventArgs e)
         {
             var item =sender as ToolStripMenuItem;
@@ -183,6 +192,7 @@ namespace Sprdef
             else if (item == sprite8ToolStripMenuItem) { SpriteEditor.Sprite = Sprites[7]; spritesToolStripMenuItem.Text = @"Sprite 8/8"; }
             Invalidate();
         }
+
         private void MainWindow_MouseClick(object sender, MouseEventArgs e)
         {
             var screenThing = GetScreenThing(e.X, e.Y);
@@ -230,6 +240,7 @@ namespace Sprdef
                     pickExtraColor2ToolStripMenuItem_Click(null, new EventArgs());
             }
         }
+
         private IScreenThing GetScreenThing(int x, int y)
         {
             for (var i = 0; i < 8; i++)
@@ -237,23 +248,35 @@ namespace Sprdef
                     return Sprites[i];
             return null;
         }
+
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e) =>
             MessageBox.Show(@"Use cursor keys to move cursor. Use keys 1 or 2 (1 to 4 in multi color mode) to set pixels. Happy spriting!",
                 @"Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void MainWindow_Activated(object sender, EventArgs e) { Active = true; Invalidate(); lblStatus.Text = @"Activated. Use keyboard to draw sprites."; }
-        private void MainWindow_Deactivate(object sender, EventArgs e) { Active = false; Invalidate(); lblStatus.Text = @"Paused. Activate window to enable program."; }
+
+        private void MainWindow_Activated(object sender, EventArgs e)
+        {
+            Active = true; Invalidate();
+            lblStatus.Text = @"Activated. Use keyboard to draw sprites.";
+        }
+
+        private void MainWindow_Deactivate(object sender, EventArgs e)
+        {
+            Active = false; Invalidate();
+            lblStatus.Text = @"Paused. Activate window to enable program.";
+        }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(@"Clear all sprites?", @"New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
                 return;
-            for (var i = 0; i < Sprites.Length; i++)
+            for (var i = 0; i < Sprites.Count; i++)
                 Sprites[i] = new C64Sprite();
             PickSpriteClick(sprite1ToolStripMenuItem, new EventArgs());
             Filename = "";
             Text = @"SPRDEF";
             Invalidate();
         }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Filename == "")
@@ -265,6 +288,7 @@ namespace Sprdef
                 MessageBox.Show($@"Failed to save ""{Filename}"".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new SaveFileDialog())
@@ -275,9 +299,10 @@ namespace Sprdef
                     return;
                 if (SaveSprites(x.FileName))
                     return;
-                MessageBox.Show($@"Failed to save ""{Filename}"".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageDisplayer.Fail($@"Failed to save ""{Filename}"".", @"Save sprites");
             }
         }
+
         private bool SaveSprites(string filename)
         {
             var multicolor = SpriteEditor.Multicolor;
@@ -287,13 +312,12 @@ namespace Sprdef
             {
                 using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
                 {
-                    using (var sw = new BinaryWriter(fs))
+                    using (var w = new BinaryWriter(fs))
                     {
-                        sw.Write(Encoding.UTF8.GetBytes("SPRDEF"));
-                        foreach (var sprite in Sprites)
-                            sw.Write(sprite.GetBytes());
-                        sw.Flush();
-                        sw.Close();
+                        w.Write(Encoding.UTF8.GetBytes("SPRDEF"));
+                        Sprites.WriteBytes(w);
+                        w.Flush();
+                        w.Close();
                     }
                     fs.Close();
                 }
@@ -311,6 +335,7 @@ namespace Sprdef
                     multicolorToolStripMenuItem_Click(null, new EventArgs());
             }
         }
+
         private bool LoadSprites(string filename)
         {
             var multicolor = SpriteEditor.Multicolor;
@@ -352,6 +377,7 @@ namespace Sprdef
                     multicolorToolStripMenuItem_Click(null, new EventArgs());
             }
         }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new OpenFileDialog())
@@ -365,9 +391,10 @@ namespace Sprdef
                     UndoBuffer = new UndoBuffer();
                     return;
                 }
-                MessageBox.Show($@"Failed to load ""{Filename}"".", @"Load sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageDisplayer.Fail($@"Failed to load ""{Filename}"".", @"Load sprites");
             }
         }
+
         private void exportToCBMPrgStudioDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new CbmPrgStudioDialog())
@@ -376,6 +403,7 @@ namespace Sprdef
                 x.ShowDialog(this);
             }
         }
+
         private void exportToBASICToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new BasicDialog())
@@ -384,6 +412,7 @@ namespace Sprdef
                 x.ShowDialog(this);
             }
         }
+
         private void pickBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
@@ -398,6 +427,7 @@ namespace Sprdef
                 Invalidate();
             }
         }
+
         private void pickForegroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
@@ -412,6 +442,7 @@ namespace Sprdef
                 Invalidate();
             }
         }
+
         private void pickExtraColor1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
@@ -426,6 +457,7 @@ namespace Sprdef
                 Invalidate();
             }
         }
+
         private void pickExtraColor2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new PaletteDialog())
@@ -440,12 +472,13 @@ namespace Sprdef
                 Invalidate();
             }
         }
+
         private void multicolorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var cursorX = SpriteEditor.GetCursorX();
             multicolorToolStripMenuItem.Checked = !multicolorToolStripMenuItem.Checked;
             SpriteEditor.Multicolor = multicolorToolStripMenuItem.Checked;
-            if (SpriteEditor.Multicolor && (cursorX % 2 != 0))
+            if (SpriteEditor.Multicolor && cursorX % 2 != 0)
             {
                 cursorX -= 1;
                 SpriteEditor.SetCursorX(cursorX);
@@ -455,7 +488,10 @@ namespace Sprdef
                 Sprites[i].ResetPixels();
             Invalidate();
         }
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) => MessageBox.Show($@"Sprdef version {System.Reflection.Assembly.GetEntryAssembly().GetName().Version}", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) =>
+            MessageBox.Show($@"Sprdef version {System.Reflection.Assembly.GetEntryAssembly().GetName().Version}", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         private void exportPNGToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var x = new ExportPngDialog())
@@ -483,16 +519,18 @@ namespace Sprdef
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, @"Export failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageDisplayer.Fail(ex.Message, @"Export failed");
                     }
                 }
             }
         }
+
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             undoToolStripMenuItem.Enabled = UndoBuffer.CanUndo;
             redoToolStripMenuItem.Enabled = UndoBuffer.CanRedo;
         }
+
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!UndoBuffer.CanUndo)
@@ -500,6 +538,7 @@ namespace Sprdef
             Sprites = UndoBuffer.Undo();
             Invalidate();
         }
+
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!UndoBuffer.CanRedo)

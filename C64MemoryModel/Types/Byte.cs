@@ -1,4 +1,6 @@
-﻿namespace C64MemoryModel.Types
+﻿using System;
+
+namespace C64MemoryModel.Types
 {
     public class Byte
     {
@@ -10,6 +12,21 @@
         public bool Bit2 { get; set; }
         public bool Bit1 { get; set; }
         public bool Bit0 { get; set; }
+
+        public Byte(string bytestring)
+        {
+            if (bytestring.Length != 8)
+                throw new ArgumentException("Expected a 8 character string, like \"00010011\".");
+            Bit7 = bytestring[7] == '1' ? true : (bytestring[7] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit6 = bytestring[6] == '1' ? true : (bytestring[6] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit5 = bytestring[5] == '1' ? true : (bytestring[5] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit4 = bytestring[4] == '1' ? true : (bytestring[4] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit3 = bytestring[3] == '1' ? true : (bytestring[3] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit2 = bytestring[2] == '1' ? true : (bytestring[2] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit1 = bytestring[1] == '1' ? true : (bytestring[1] == '0' ? false : throw new Exception("Expected 0 or 1."));
+            Bit0 = bytestring[0] == '1' ? true : (bytestring[0] == '0' ? false : throw new Exception("Expected 0 or 1."));
+        }
+
         public Byte(byte b)
         {
             Bit7 = (b & 128) == 128;
@@ -21,6 +38,7 @@
             Bit1 = (b & 2) == 2;
             Bit0 = (b & 1) == 1;
         }
+
         public Byte(bool b7, bool b6, bool b5, bool b4, bool b3, bool b2, bool b1, bool b0)
         {
             Bit7 = b7;
@@ -32,6 +50,7 @@
             Bit1 = b1;
             Bit0 = b0;
         }
+
         public void Modify(BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
         {
             Bit7 = (b7 == BitValue.Set || b7 != BitValue.NotSet && Bit7);
@@ -43,7 +62,10 @@
             Bit1 = (b1 == BitValue.Set || b1 != BitValue.NotSet && Bit1);
             Bit0 = (b0 == BitValue.Set || b0 != BitValue.NotSet && Bit0);
         }
-        public override string ToString() => $"{HighNibbleString()}{LowNibbleString()}";
+
+        public override string ToString() =>
+            $"{HighNibbleString()}{LowNibbleString()}";
+
         public byte ToByte()
         {
             var b = Bit7 ? 128 : 0;
@@ -56,8 +78,14 @@
             b += Bit0 ? 1 : 0;
             return (byte)b;
         }
-        private static char To01(bool b) => b ? '1' : '0';
-        public string HighNibbleString() => $"{To01(Bit7)}{To01(Bit6)}{To01(Bit5)}{To01(Bit4)}";
-        public string LowNibbleString() => $"{To01(Bit3)}{To01(Bit2)}{To01(Bit1)}{To01(Bit0)}";
+
+        private static char To01(bool b) =>
+            b ? '1' : '0';
+
+        public string HighNibbleString() =>
+            $"{To01(Bit7)}{To01(Bit6)}{To01(Bit5)}{To01(Bit4)}";
+
+        public string LowNibbleString() =>
+            $"{To01(Bit3)}{To01(Bit2)}{To01(Bit1)}{To01(Bit0)}";
     }
 }

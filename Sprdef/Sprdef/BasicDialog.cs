@@ -10,7 +10,7 @@ namespace Sprdef
         {
             InitializeComponent();
         }
-        public C64Sprite[] Sprites { get; set; }
+        public SpriteArray Sprites { get; set; }
         private void BasicDialog_Load(object sender, EventArgs e) => RefreshList();
         private void numLineNum_ValueChanged(object sender, EventArgs e) => RefreshList();
         private void numStep_ValueChanged(object sender, EventArgs e) => RefreshList();
