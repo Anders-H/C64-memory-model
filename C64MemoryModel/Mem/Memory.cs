@@ -5,6 +5,7 @@ using System.Text;
 using C64MemoryModel.Asm;
 using C64MemoryModel.Chr;
 using C64MemoryModel.Disasm;
+using C64MemoryModel.Types;
 
 namespace C64MemoryModel.Mem
 {
@@ -14,7 +15,7 @@ namespace C64MemoryModel.Mem
 
         private byte[] Bytes { get; } = new byte[ushort.MaxValue + 1];
 
-        internal int BytePointer { get; set; }
+        internal Address BytePointer { get; set; }
 
         public Assembler Assembler { get; }
 
@@ -34,31 +35,31 @@ namespace C64MemoryModel.Mem
         {
             Assembler = new Assembler(this);
             CharacterSets.Add(new SimpleUppercaseCharacterSet());
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ZeroPage, 0));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ProcessorPort, 1));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.Unused, 2, 6));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.CurrentExpressionType, 13, 13));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.CurrentNumericalExpressionType, 14, 14));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicAreaPointer, 43, 44));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.KeyboardBuffer, 631, 640));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultSpritePointerArea, 2040, 2047));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultBasicArea, 2049, 40959));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicRom, 40960, 49151));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.UpperRam, 49152, 53247));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteLocations, 53248, 53264));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteEnableRegister, 53269));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BorderColor, 53280));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BackgroundColor, 53281));
-            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ColdRestExecutionAddress, 65532, 65533));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ZeroPage, (Address)0));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ProcessorPort, (Address)1));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.Unused, (Address)2, (Address)6));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.CurrentExpressionType, (Address)13));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.CurrentNumericalExpressionType, (Address)14));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicAreaPointer, (Address)43, (Address)44));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.KeyboardBuffer, (Address)631, (Address)640));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultSpritePointerArea, (Address)2040, (Address)2047));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.DefaultBasicArea, (Address)2049, (Address)40959));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BasicRom, (Address)40960, (Address)49151));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.UpperRam, (Address)49152, (Address)53247));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteLocations, (Address)53248, (Address)53264));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.SpriteEnableRegister, (Address)53269));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BorderColor, (Address)53280));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.BackgroundColor, (Address)53281));
+            Locations.Add(new MemoryModelLocation(MemoryModelLocationName.ColdRestExecutionAddress, (Address)65532, (Address)65533));
         }
 
-        public void Load(string filename, out int startAddress, out int length)
+        public void Load(string filename, out Address startAddress, out ushort length)
         {
             var newBytes = File.ReadAllBytes(filename);
             var low = newBytes[0];
             var high = newBytes[1];
-            startAddress = BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
-            length = newBytes.Length - 2;
+            startAddress = (Address)BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
+            length = (ushort)(newBytes.Length - 2);
             SetBytePointer(startAddress);
             for (var i = 2; i < newBytes.Length; i++)
                 SetByte(newBytes[i]);
@@ -69,20 +70,20 @@ namespace C64MemoryModel.Mem
             Load(filename, out _, out _);
         }
 
-        public void Save(string filename, out int startAddress, out int length)
+        public void Save(string filename, out Address startAddress, out Word length)
         {
-            startAddress = 0;
+            startAddress = (Address)0;
             var end = ushort.MaxValue - 1;
-            while (Bytes[startAddress] == 0)
+            while (Bytes[startAddress.Value] == 0)
                 startAddress += 1;
             while (Bytes[end] == 0)
                 end -= 1;
-            length = end - startAddress + 1;
-            var startBytes = BitConverter.GetBytes(startAddress);
+            length = (Word)(end - startAddress.Value + 1);
+            var startBytes = BitConverter.GetBytes(startAddress.Value);
             using (var sw = new FileStream(filename, FileMode.Create))
             {
                 sw.Write(startBytes, 0, 2);
-                sw.Write(Bytes, startAddress, length);
+                sw.Write(Bytes, startAddress.Value, length.Value);
                 sw.Flush();
                 sw.Close();
             }
@@ -99,7 +100,7 @@ namespace C64MemoryModel.Mem
                 Bytes[i] = 0;
         }
 
-        public string Visualize(ushort address)
+        public string Visualize(Address address)
         {
             SetBytePointer(address); return Visualize();
         }
@@ -113,17 +114,17 @@ namespace C64MemoryModel.Mem
             return s.ToString();
         }
 
-        public void SetBytePointer(int address)
+        public void SetBytePointer(Address address)
         {
-            address = address < 0 ? ushort.MaxValue : address;
-            address = address > ushort.MaxValue ? 0 : address;
+            address = address < Address.MinValue ? Address.MaxValue : address;
+            address = address > Address.MaxValue ? Address.MinValue : address;
             BytePointer = address;
         }
 
         public void SetBytePointer(IMemoryLocation l, ushort offset) =>
             SetBytePointer(l.StartAddress + offset);
 
-        public ushort GetBytePointer() => (ushort)BytePointer;
+        public Address GetBytePointer() => BytePointer;
 
         private void IncreaseBytePointer() => IncreaseBytePointer(1);
 
@@ -147,21 +148,21 @@ namespace C64MemoryModel.Mem
             return s.ToString();
         }
 
-        public byte PeekByte() => Bytes[BytePointer];
+        public byte PeekByte() => Bytes[BytePointer.Value];
 
-        public byte PeekByte(ushort address) => Bytes[address];
+        public byte PeekByte(Address address) => Bytes[address.Value];
 
         public byte GetByte()
         {
-            var ret = Bytes[BytePointer];
+            var ret = Bytes[BytePointer.Value];
             IncreaseBytePointer();
             return ret;
         }
 
-        public byte GetByte(ushort address)
+        public byte GetByte(Address address)
         {
             SetBytePointer(address);
-            var ret = Bytes[BytePointer];
+            var ret = Bytes[BytePointer.Value];
             IncreaseBytePointer();
             return ret;
         }
@@ -169,28 +170,28 @@ namespace C64MemoryModel.Mem
         public byte GetByte(IMemoryLocation location, ushort offset)
         {
             SetBytePointer(location.StartAddress + offset);
-            var ret = Bytes[BytePointer];
+            var ret = Bytes[BytePointer.Value];
             IncreaseBytePointer();
             return ret;
         }
 
         public void SetByte(byte value)
         {
-            Bytes[BytePointer] = value;
+            Bytes[BytePointer.Value] = value;
             IncreaseBytePointer();
         }
 
-        public void SetByte(ushort address, byte value)
+        public void SetByte(Address address, byte value)
         {
             SetBytePointer(address);
-            Bytes[BytePointer] = value;
+            Bytes[BytePointer.Value] = value;
             IncreaseBytePointer();
         }
 
         public void SetByte(IMemoryLocation location, ushort offset, byte value)
         {
             SetBytePointer(location.StartAddress + offset);
-            Bytes[BytePointer] = value;
+            Bytes[BytePointer.Value] = value;
             IncreaseBytePointer();
         }
 
@@ -221,7 +222,7 @@ namespace C64MemoryModel.Mem
             return BitConverter.ToUInt16(new byte[] { low, high, 0, 0 }, 0);
         }
 
-        public ushort GetWord(ushort address)
+        public ushort GetWord(Address address)
         {
             var low = GetByte(address);
             var high = GetByte();
@@ -237,16 +238,16 @@ namespace C64MemoryModel.Mem
             SetByte(high);
         }
 
-        public void SetWord(ushort address, ushort value)
+        public void SetWord(Address address, Word value)
         {
-            var bytes = BitConverter.GetBytes(value);
+            var bytes = BitConverter.GetBytes(value.Value);
             var low = bytes[0];
             var high = bytes[1];
             SetByte(address, low);
             SetByte(high);
         }
 
-        public void SetBits(ushort address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
+        public void SetBits(Address address, BitValue b7, BitValue b6, BitValue b5, BitValue b4, BitValue b3, BitValue b2, BitValue b1, BitValue b0)
         {
             SetBytePointer(address);
             SetBits(b7, b6, b5, b4, b3, b2, b1, b0);
@@ -266,7 +267,7 @@ namespace C64MemoryModel.Mem
             SetByte(adr, b.ToByte());
         }
 
-        public Types.Byte GetBits(ushort address) =>
+        public Types.Byte GetBits(Address address) =>
             new Types.Byte(GetByte(address));
 
         public Types.Byte GetBits(IMemoryLocation location) =>
@@ -294,7 +295,7 @@ namespace C64MemoryModel.Mem
             SetString(set, text);
         }
 
-        public void SetString(ushort address, CharacterSetBase characterSet, string text)
+        public void SetString(Address address, CharacterSetBase characterSet, string text)
         {
             if (characterSet == null)
                 throw new SystemException("Character set must not be null.");
@@ -306,7 +307,7 @@ namespace C64MemoryModel.Mem
                 SetByte(b);
         }
 
-        public void SetString(ushort address, string characterSet, string text)
+        public void SetString(Address address, string characterSet, string text)
         {
             var set = CharacterSets.GetCharacterSet(characterSet);
             if (set == null)
@@ -314,19 +315,19 @@ namespace C64MemoryModel.Mem
             SetString(address, set, text);
         }
 
-        public string GetString(CharacterSetBase characterSet, int length)
+        public string GetString(CharacterSetBase characterSet, Word length)
         {
             if (characterSet == null)
                 throw new SystemException("Character set must not be null.");
             if (length <= 0)
                 throw new SystemException("Length must be > 0.");
-            var bytes = new byte[length];
-            for (var i = 0; i < length; i++)
+            var bytes = new byte[length.Value];
+            for (var i = 0; i < length.Value; i++)
                 bytes[i] = GetByte();
             return characterSet.TranslateString(bytes);
         }
 
-        public string GetString(string characterSet, int length)
+        public string GetString(string characterSet, Word length)
         {
             var set = CharacterSets.GetCharacterSet(characterSet);
             if (set == null)
@@ -334,20 +335,20 @@ namespace C64MemoryModel.Mem
             return GetString(set, length);
         }
 
-        public string GetString(ushort address, CharacterSetBase characterSet, int length)
+        public string GetString(Address address, CharacterSetBase characterSet, Word length)
         {
             if (characterSet == null)
                 throw new SystemException("Character set must not be null.");
             if (length <= 0)
                 throw new SystemException("Length must be > 0.");
             SetBytePointer(address);
-            var bytes = new byte[length];
-            for (var i = 0; i < length; i++)
+            var bytes = new byte[length.Value];
+            for (var i = 0; i < length.Value; i++)
                 bytes[i] = GetByte();
             return characterSet.TranslateString(bytes);
         }
 
-        public string GetString(ushort address, string characterSet, int length)
+        public string GetString(Address address, string characterSet, Word length)
         {
             var set = CharacterSets.GetCharacterSet(characterSet);
             if (set == null)
@@ -355,10 +356,10 @@ namespace C64MemoryModel.Mem
             return GetString(address, set, length);
         }
 
-        public void AddBookmark(string name, ushort address) =>
+        public void AddBookmark(string name, Address address) =>
             Bookmarks.Add(new MemoryBookmark(name, address));
 
-        public void AddBookmark(string name, ushort startAddress, ushort endAddress) =>
+        public void AddBookmark(string name, Address startAddress, Address endAddress) =>
             Bookmarks.Add(new MemoryBookmark(name, startAddress, endAddress));
 
         public MemoryModelLocation GetModelLocation(string name) =>
@@ -367,16 +368,16 @@ namespace C64MemoryModel.Mem
         public MemoryModelLocation GetModelLocation(MemoryModelLocationName name) =>
             Locations.GetLocation(name);
 
-        public MemoryModelLocation GetModelLocation(ushort address) =>
+        public MemoryModelLocation GetModelLocation(Address address) =>
             Locations.GetLocation(address);
 
         public MemoryBookmark GetBookmark(string name) =>
             Bookmarks.GetLocation(name);
 
-        public MemoryBookmark GetBookmark(ushort address) =>
+        public MemoryBookmark GetBookmark(Address address) =>
             Bookmarks.GetLocation(address);
 
-        public List<IMemoryLocation> GetLocations(ushort address)
+        public List<IMemoryLocation> GetLocations(Address address)
         {
             var ret = new List<IMemoryLocation>();
             ret.AddRange(Bookmarks.GetAll(address));

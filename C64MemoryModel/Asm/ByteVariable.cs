@@ -1,12 +1,14 @@
-﻿namespace C64MemoryModel.Asm
+﻿using C64MemoryModel.Types;
+
+namespace C64MemoryModel.Asm
 {
     public class ByteVariable : VariableBase<byte>
     {
-        public ByteVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address)
+        public ByteVariable(Assembler assembler, string name, Address address) : base(assembler, name, address)
         {
         }
 
-        public override void WriteAssign(ushort address, byte value)
+        public override void WriteAssign(Address address, byte value)
         {
             Value = value;
             Assembler.Memory.SetBytePointer(address); //From argument - where the assembler sould be written.

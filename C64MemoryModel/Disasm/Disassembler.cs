@@ -13,10 +13,8 @@ namespace C64MemoryModel.Disasm
             var b = m.GetByte();
             s.Append($"{b:X2} ");
             byte b2 = 0, b3 = 0;
-            int signedByte;
             void Write0() => s.Append($"      ");
             void Write1() => s.Append($"{b2:X2}    ");
-            byte low, high;
             byte[] bytes;
             void Write2() => s.Append($"{b2:X2} {b3:X2} ");
 
@@ -96,10 +94,10 @@ namespace C64MemoryModel.Disasm
             void WriteRel(string operation, string description)
             {
                 b2 = m.GetByte();
-                signedByte = b2 >= 128 ? b2 - 256 : b2;
-                bytes = BitConverter.GetBytes(m.BytePointer + signedByte);
-                low = bytes[0];
-                high = bytes[1];
+                var signedByte = b2 >= 128 ? b2 - 256 : b2;
+                bytes = BitConverter.GetBytes((ushort)m.BytePointer + signedByte);
+                var low = bytes[0];
+                var high = bytes[1];
                 Write1();
                 s.Append($"{operation} ${high:X2}{low:X2}{(withDescription ? $"    ; {description}" : "")}");
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using C64MemoryModel.Types;
 
 namespace C64MemoryModel.Mem
 {
@@ -10,13 +11,13 @@ namespace C64MemoryModel.Mem
         internal static MemoryModelLocationList List { private get; set; }
         public MemoryModelLocationName Name { get; }
         public string DisplayName { get; }
-        public ushort StartAddress { get; }
-        public ushort EndAddress { get; }
+        public Address StartAddress { get; }
+        public Address EndAddress { get; }
         public ushort Length => (ushort)(EndAddress - StartAddress + 1);
         public bool IsMemoyModel => true;
         public bool IsCustomBookmark => false;
 
-        internal MemoryModelLocation(MemoryModelLocationName name, ushort address)
+        internal MemoryModelLocation(MemoryModelLocationName name, Address address)
         {
             Name = name;
             DisplayName = name.ToString();
@@ -24,7 +25,7 @@ namespace C64MemoryModel.Mem
             EndAddress = address;
         }
 
-        internal MemoryModelLocation(MemoryModelLocationName name, ushort startAddress, ushort endAddress)
+        internal MemoryModelLocation(MemoryModelLocationName name, Address startAddress, Address endAddress)
         {
             if (startAddress > endAddress)
                 throw new SystemException($"Negative range: {startAddress} - {endAddress}");
@@ -37,16 +38,16 @@ namespace C64MemoryModel.Mem
         public override string ToString() =>
             Length > 1 ? $"{StartAddress:00000}-{EndAddress:00000} ({Length:0000}) : {DisplayName}" : $"{StartAddress:00000}       ({Length:0000}) : {DisplayName}";
 
-        public bool HitTest(ushort address) =>
+        public bool HitTest(Address address) =>
             address >= StartAddress && address <= EndAddress;
 
-        public static ushort operator +(MemoryModelLocation a, MemoryModelLocation b) =>
-            (ushort)(a.StartAddress + b.StartAddress);
+        public static Address operator +(MemoryModelLocation a, MemoryModelLocation b) =>
+            (Address)(a.StartAddress + b.StartAddress);
 
-        public static ushort operator +(MemoryModelLocation a, int b) =>
-            (ushort)(a.StartAddress + b);
+        public static Address operator +(MemoryModelLocation a, int b) =>
+            (Address)(a.StartAddress + b);
 
-        public static implicit operator ushort (MemoryModelLocation x) =>
+        public static implicit operator Address (MemoryModelLocation x) =>
             x.StartAddress;
 
         public static implicit operator MemoryModelLocation(MemoryModelLocationName x) =>
@@ -70,10 +71,10 @@ namespace C64MemoryModel.Mem
         public MemoryModelLocation GetLocation(MemoryModelLocationName name)
             => this.FirstOrDefault(x => name == x.Name);
 
-        public MemoryModelLocation GetLocation(ushort address)
+        public MemoryModelLocation GetLocation(Address address)
             => this.FirstOrDefault(x => x.HitTest(address));
 
-        public List<IMemoryLocation> GetAll(ushort address) =>
+        public List<IMemoryLocation> GetAll(Address address) =>
             this.Where(x => x.HitTest(address)).Cast<IMemoryLocation>().ToList();
 
         public List<IMemoryLocation> GetAll(string name) =>

@@ -3,13 +3,14 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using C64MemoryModel.Mem;
+using C64MemoryModel.Types;
 
 namespace C64MemoryModel
 {
     public class TextAdapter
     {
         private Memory Memory { get; }
-        public int BytePointer => Memory.BytePointer;
+        public Address BytePointer => Memory.BytePointer;
 
         public TextAdapter(Memory memory)
         {
@@ -40,7 +41,7 @@ namespace C64MemoryModel
                     var adr = Memory.BytePointer;
                     var theByte = Memory.GetByte();
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {theByte:000} ${theByte:X2}";
+                    return $"{adr} {adr.ToHexString()}: {theByte:000} ${theByte:X2}";
                 }
 
                 //GetByte 4096
@@ -48,12 +49,12 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var adrValue = match.Groups[1].Value;
-                    var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out var addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                    var adr = adrValue.StartsWith("$") ? GetAddressHex(adrValue, out var addressSuccess) : GetAddressDec(adrValue, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
                     var theByte = Memory.GetByte(adr);
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {theByte:000} ${theByte:X2}";
+                    return $"{adr} {adr.ToHexString()}: {theByte:000} ${theByte:X2}";
                 }
 
                 //GetWord
@@ -63,7 +64,7 @@ namespace C64MemoryModel
                     var adr = Memory.BytePointer;
                     var theWord = Memory.GetWord();
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {theWord:00000} ${theWord:X4}";
+                    return $"{adr} {adr.ToHexString()}: {theWord:00000} ${theWord:X4}";
                 }
 
                 //GetWord 4096
@@ -74,9 +75,9 @@ namespace C64MemoryModel
                     var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out var addressSuccess) : GetWordDec(adrValue, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
-                    var theWord = Memory.GetWord(adr);
+                    var theWord = Memory.GetWord((Address)adr);
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {theWord:00000} ${theWord:X4}";
+                    return $"{adr} {adr.ToHexString()}: {theWord:00000} ${theWord:X4}";
                 }
 
                 //SetByte 1
@@ -84,14 +85,14 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var value = match.Groups[1].Value;
-                    var adr = (ushort)Memory.BytePointer;
+                    var adr = Memory.BytePointer;
                     var oldByte = Memory.GetByte(adr);
                     var theByte = value.StartsWith("$") ? GetByteHex(value, out var byteSuccess) : GetByteDec(value, out byteSuccess);
                     if (!byteSuccess)
                         return "Invalid byte.";
                     Memory.SetByte(adr, theByte);
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {oldByte:000} ${oldByte:X2} --> {theByte:000} ${theByte:X2}";
+                    return $"{adr} {adr.ToHexString()}: {oldByte:000} ${oldByte:X2} --> {theByte:000} ${theByte:X2}";
                 }
 
                 //SetByte 4096, 1
@@ -99,7 +100,7 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var adrValue = match.Groups[1].Value;
-                    var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out var addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                    var adr = adrValue.StartsWith("$") ? GetAddressHex(adrValue, out var addressSuccess) : GetAddressDec(adrValue, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
                     var value = match.Groups[2].Value;
@@ -109,7 +110,7 @@ namespace C64MemoryModel
                         return "Invalid byte.";
                     Memory.SetByte(adr, theByte);
                     success = true;
-                    return $"{adr:00000} ${adr:X4}: {oldByte:000} ${oldByte:X2} --> {theByte:000} ${theByte:X2}";
+                    return $"{adr} {adr.ToHexString()}: {oldByte:000} ${oldByte:X2} --> {theByte:000} ${theByte:X2}";
                 }
 
                 //SetWord 400
@@ -117,10 +118,10 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var value = match.Groups[1].Value;
-                    var adr = (ushort)Memory.BytePointer;
+                    var adr = Memory.BytePointer;
                     var oldByte1 = Memory.GetByte(adr);
                     var oldByte2 = Memory.GetByte();
-                    var theWord = value.StartsWith("$") ? GetWordHex(value, out var wordSuccess) : GetWordDec(value, out wordSuccess);
+                    var theWord = value.StartsWith("$") ? GetAddressHex(value, out var wordSuccess) : GetAddressDec(value, out wordSuccess);
                     if (!wordSuccess)
                         return "Invalid word.";
                     Memory.SetWord(adr, theWord);
@@ -128,9 +129,9 @@ namespace C64MemoryModel
                     var s = new StringBuilder();
                     var newByte1 = Memory.GetByte(adr);
                     var adr2 = Memory.BytePointer;
-                    s.AppendLine($"{adr:00000} ${adr:X4}: {oldByte1:000} ${oldByte1:X2} --> {newByte1:000} ${newByte1:X2}");
+                    s.AppendLine($"{adr} {adr.ToHexString()}: {oldByte1:000} ${oldByte1:X2} --> {newByte1:000} ${newByte1:X2}");
                     var newByte2 = Memory.GetByte();
-                    s.Append($"{adr2:00000} ${adr2:X4}: {oldByte2:000} ${oldByte2:X2} --> {newByte2:000} ${newByte2:X2}");
+                    s.Append($"{adr2} {adr2.ToHexString()}: {oldByte2:000} ${oldByte2:X2} --> {newByte2:000} ${newByte2:X2}");
                     return s.ToString();
                 }
 
@@ -139,7 +140,7 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var adrValue = match.Groups[1].Value;
-                    var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out var addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                    var adr = adrValue.StartsWith("$") ? GetAddressHex(adrValue, out var addressSuccess) : GetAddressDec(adrValue, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
                     var value = match.Groups[2].Value;
@@ -153,9 +154,9 @@ namespace C64MemoryModel
                     var s = new StringBuilder();
                     var newByte1 = Memory.GetByte(adr);
                     var adr2 = Memory.BytePointer;
-                    s.AppendLine($"{adr:00000} ${adr:X4}: {oldByte1:000} ${oldByte1:X2} --> {newByte1:000} ${newByte1:X2}");
+                    s.AppendLine($"{adr} {adr.ToHexString()}: {oldByte1:000} ${oldByte1:X2} --> {newByte1:000} ${newByte1:X2}");
                     var newByte2 = Memory.GetByte();
-                    s.Append($"{adr2:00000} ${adr2:X4}: {oldByte2:000} ${oldByte2:X2} --> {newByte2:000} ${newByte2:X2}");
+                    s.Append($"{adr2} {adr2.ToHexString()}: {oldByte2:000} ${oldByte2:X2} --> {newByte2:000} ${newByte2:X2}");
                     return s.ToString();
                 }
 
@@ -166,7 +167,7 @@ namespace C64MemoryModel
                     try
                     {
                         var adrValue = match.Groups[1].Value;
-                        var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out var addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                        var adr = adrValue.StartsWith("$") ? GetAddressHex(adrValue, out var addressSuccess) : GetAddressDec(adrValue, out addressSuccess);
                         if (!addressSuccess)
                             return "Invalid address.";
                         var value = match.Groups[2].Value;
@@ -210,7 +211,7 @@ namespace C64MemoryModel
                     try
                     {
                         var adrValue = match.Groups[1].Value;
-                        var adr = adrValue.StartsWith("$") ? GetWordHex(adrValue, out var addressSuccess) : GetWordDec(adrValue, out addressSuccess);
+                        var adr = adrValue.StartsWith("$") ? GetAddressHex(adrValue, out var addressSuccess) : GetAddressDec(adrValue, out addressSuccess);
                         if (!addressSuccess)
                             return "Invalid address.";
                         var lenValue = match.Groups[2].Value;
@@ -292,7 +293,7 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var value = match.Groups[1].Value;
-                    var address = value.StartsWith("$") ? GetWordHex(match.Groups[1].Value, out var addressSuccess) : GetWordDec(match.Groups[1].Value, out addressSuccess);
+                    var address = value.StartsWith("$") ? GetAddressHex(match.Groups[1].Value, out var addressSuccess) : GetAddressDec(match.Groups[1].Value, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
                     var s = new StringBuilder();
@@ -317,7 +318,7 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var value = match.Groups[1].Value;
-                    var address = value.StartsWith("$") ? GetWordHex(value, out var addressSuccess) : GetWordDec(value, out addressSuccess);
+                    var address = value.StartsWith("$") ? GetAddressHex(value, out var addressSuccess) : GetAddressDec(value, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
                     Memory.SetBytePointer(address);
@@ -331,7 +332,7 @@ namespace C64MemoryModel
                 if (match.Success)
                 {
                     var value = match.Groups[1].Value;
-                    var address = value.StartsWith("$") ? GetWordHex(value, out var addressSuccess) : GetWordDec(value, out addressSuccess);
+                    var address = value.StartsWith("$") ? GetAddressHex(value, out var addressSuccess) : GetAddressDec(value, out addressSuccess);
                     if (!addressSuccess)
                         return "Invalid address.";
                     Memory.SetBytePointer(address);
@@ -388,7 +389,7 @@ namespace C64MemoryModel
             }
         }
 
-        private static ushort GetWordHex(string s, out bool success)
+        private static Word GetWordHex(string s, out bool success)
         {
             s = s.StartsWith("$", StringComparison.Ordinal) ? s.Substring(1) : s;
             success = true;
@@ -396,17 +397,38 @@ namespace C64MemoryModel
                 result = result % (ushort.MaxValue + 1);
             else
                 success = false;
-            return (ushort)result;
+            return (Word)result;
         }
 
-        private static ushort GetWordDec(string s, out bool success)
+        private static Word GetWordDec(string s, out bool success)
         {
             success = true;
             if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out var result))
                 result = result % (ushort.MaxValue + 1);
             else
                 success = false;
-            return (ushort)result;
+            return (Word)result;
+        }
+
+        private static Address GetAddressHex(string s, out bool success)
+        {
+            s = s.StartsWith("$", StringComparison.Ordinal) ? s.Substring(1) : s;
+            success = true;
+            if (int.TryParse(s, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out var result))
+                result = result % (ushort.MaxValue + 1);
+            else
+                success = false;
+            return (Address)result;
+        }
+
+        private static Address GetAddressDec(string s, out bool success)
+        {
+            success = true;
+            if (int.TryParse(s, NumberStyles.Integer, CultureInfo.CurrentCulture, out var result))
+                result = result % (ushort.MaxValue + 1);
+            else
+                success = false;
+            return (Address)result;
         }
 
         private static byte GetByteHex(string s, out bool success)

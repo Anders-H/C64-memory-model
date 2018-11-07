@@ -1,14 +1,15 @@
 ﻿using System;
+using C64MemoryModel.Types;
 
 namespace C64MemoryModel.Asm
 {
     public class WordVariable : VariableBase<ushort>
     {
-        public WordVariable(Assembler assembler, string name, ushort address) : base(assembler, name, address)
+        public WordVariable(Assembler assembler, string name, Address address) : base(assembler, name, address)
         {
         }
 
-        public override void WriteAssign(ushort address, ushort value)
+        public override void WriteAssign(Address address, ushort value)
         {
             Value = value;
             var bytes = BitConverter.GetBytes(value);
@@ -18,7 +19,7 @@ namespace C64MemoryModel.Asm
             Assembler.Lda(low);
             Assembler.Sta(Address);
             Assembler.Lda(high);
-            Assembler.Sta((ushort)(Address + 1));
+            Assembler.Sta((Address)(Address + 1));
         }
 
         public override void WriteDirect(ushort value)

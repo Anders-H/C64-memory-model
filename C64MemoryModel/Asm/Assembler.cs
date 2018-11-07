@@ -1,5 +1,6 @@
 ﻿using System;
 using C64MemoryModel.Mem;
+using C64MemoryModel.Types;
 
 namespace C64MemoryModel.Asm
 {
@@ -10,29 +11,34 @@ namespace C64MemoryModel.Asm
 
         internal Assembler(Memory memory)
         {
-            Memory = memory; Extended = new ExtendedAssembler(this);
+            Memory = memory;
+            Extended = new ExtendedAssembler(this);
         }
 
+        //000 00 BRK
+        public void Brk() => Memory.SetByte(0);
+        //001 01 ORA
+        public void Ora(byte value) => Immediate(1, value);
         //032 20 JSR
-        public void Jsr(ushort address) => Absolute(32, address);
+        public void Jsr(Address address) => Absolute(32, address);
         //096 60 RTS
         public void Rts() => Memory.SetByte(96);
         //141 8D STA Absolute
-        public void Sta(ushort address) => Absolute(141, address);
+        public void Sta(Address address) => Absolute(141, address);
         //162 A2 LDX Immediate
         public void Ldx(byte value) => Immediate(162, value);
         //169 A9 LDA Immediate
         public void Lda(byte value) => Immediate(169, value);
         //173 AD LDA Absolute
-        public void Lda(ushort address) => Absolute(173, address);
+        public void Lda(Address address) => Absolute(173, address);
         //189 BD LDA Absolute,X
-        public void LdaAbsX(ushort address) => Absolute(189, address);
+        public void LdaAbsX(Address address) => Absolute(189, address);
         //208 D0 BNE
-        public void Bne(ushort address) => Relative(208, address);
+        public void Bne(Address address) => Relative(208, address);
         //232 E8 INX
         public void Inx() => Memory.SetByte(232);
         //240 F0 BEQ
-        public void Beq(ushort address) => Relative(240, address);
+        public void Beq(Address address) => Relative(240, address);
 
         //--------------------------------------------------------------------------------------------------//
 
@@ -42,9 +48,9 @@ namespace C64MemoryModel.Asm
             Memory.SetByte(value);
         }
 
-        private void Absolute(byte opcode, ushort address)
+        private void Absolute(byte opcode, Address address)
         {
-            var bytes = BitConverter.GetBytes(address);
+            var bytes = BitConverter.GetBytes(address.Value);
             var low = bytes[0];
             var high = bytes[1];
             Memory.SetByte(opcode);
@@ -52,10 +58,10 @@ namespace C64MemoryModel.Asm
             Memory.SetByte(high);
         }
 
-        private void Relative(byte opcode, ushort address)
+        private void Relative(byte opcode, Address address)
         {
             var currentAddress = Memory.GetBytePointer() + 2;
-            var diff = address - currentAddress;
+            var diff = (int)(address - currentAddress);
             if (diff > 127 || diff < -128)
                 throw new SystemException($"Jump from {currentAddress} to {address} is too long.");
             diff = diff < 0 ? diff + 256 : diff;
