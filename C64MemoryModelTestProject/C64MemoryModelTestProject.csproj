@@ -52,6 +52,7 @@
     <Compile Include="TextAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\Address.cs" />
+    <Compile Include="Types\Word.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

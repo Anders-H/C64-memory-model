@@ -18,9 +18,9 @@
         {
         }
 
-        public static Address MinValue => new Address(0);
+        public static ushort MinValue => ushort.MinValue;
 
-        public static Address MaxValue => new Address(ushort.MaxValue);
+        public static ushort MaxValue => ushort.MaxValue;
 
         public static explicit operator Address(int x) =>
             new Address((ushort)x);
@@ -48,5 +48,7 @@
 
         public static Address operator +(Address x, int y) =>
             (Address)(x.Value + y);
+
+        
     }
 }

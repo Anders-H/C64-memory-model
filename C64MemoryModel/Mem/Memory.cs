@@ -116,9 +116,7 @@ namespace C64MemoryModel.Mem
 
         public void SetBytePointer(Address address)
         {
-            address = address < Address.MinValue ? Address.MaxValue : address;
-            address = address > Address.MaxValue ? Address.MinValue : address;
-            BytePointer = address;
+            BytePointer.FromInt(address.Value);
         }
 
         public void SetBytePointer(IMemoryLocation l, ushort offset) =>
@@ -264,7 +262,7 @@ namespace C64MemoryModel.Mem
             var adr = GetBytePointer();
             var b = new Types.Byte(GetByte(adr));
             b.Modify(b7, b6, b5, b4, b3, b2, b1, b0);
-            SetByte(adr, b.ToByte());
+            SetByte(adr, b.Value);
         }
 
         public Types.Byte GetBits(Address address) =>

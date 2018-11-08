@@ -1,17 +1,119 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace C64MemoryModel.Types
 {
-    public class Byte
+    public class Byte : INotifyPropertyChanged
     {
-        public bool Bit7 { get; set; }
-        public bool Bit6 { get; set; }
-        public bool Bit5 { get; set; }
-        public bool Bit4 { get; set; }
-        public bool Bit3 { get; set; }
-        public bool Bit2 { get; set; }
-        public bool Bit1 { get; set; }
-        public bool Bit0 { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _bit7;
+        private bool _bit6;
+        private bool _bit5;
+        private bool _bit4;
+        private bool _bit3;
+        private bool _bit2;
+        private bool _bit1;
+        private bool _bit0;
+
+        public string Name { get; set; }
+
+        public bool Bit7
+        {
+            get => _bit7;
+            set
+            {
+                if (_bit7 == value)
+                    return;
+                _bit7 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit7" : Name);
+            }
+        }
+
+        public bool Bit6
+        {
+            get => _bit6;
+            set
+            {
+                if (_bit6 == value)
+                    return;
+                _bit6 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit6" : Name);
+            }
+        }
+
+        public bool Bit5
+        {
+            get => _bit5;
+            set
+            {
+                if (_bit5 == value)
+                    return;
+                _bit5 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit5" : Name);
+            }
+        }
+
+        public bool Bit4
+        {
+            get => _bit4;
+            set
+            {
+                if (_bit4 == value)
+                    return;
+                _bit4 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit4" : Name);
+            }
+        }
+
+        public bool Bit3
+        {
+            get => _bit3;
+            set
+            {
+                if (_bit3 == value)
+                    return;
+                _bit3 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit3" : Name);
+            }
+        }
+
+
+        public bool Bit2
+        {
+            get => _bit2;
+            set
+            {
+                if (_bit2 == value)
+                    return;
+                _bit2 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit2" : Name);
+            }
+        }
+
+        public bool Bit1
+        {
+            get => _bit1;
+            set
+            {
+                if (_bit1 == value)
+                    return;
+                _bit1 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit1" : Name);
+            }
+        }
+
+        public bool Bit0
+        {
+            get => _bit0;
+            set
+            {
+                if (_bit0 == value)
+                    return;
+                _bit0 = value;
+                OnPropertyChanged(string.IsNullOrWhiteSpace(Name) ? "Bit0" : Name);
+            }
+        }
 
         public Byte(string bytestring)
         {
@@ -66,17 +168,23 @@ namespace C64MemoryModel.Types
         public override string ToString() =>
             $"{HighNibbleString()}{LowNibbleString()}";
 
-        public byte ToByte()
+        public string ToDecString() =>
+            Value.ToString("000");
+
+        public byte Value
         {
-            var b = Bit7 ? 128 : 0;
-            b += Bit6 ? 64 : 0;
-            b += Bit5 ? 32 : 0;
-            b += Bit4 ? 16 : 0;
-            b += Bit3 ? 8 : 0;
-            b += Bit2 ? 4 : 0;
-            b += Bit1 ? 2 : 0;
-            b += Bit0 ? 1 : 0;
-            return (byte)b;
+            get
+            {
+                var b = Bit7 ? 128 : 0;
+                b += Bit6 ? 64 : 0;
+                b += Bit5 ? 32 : 0;
+                b += Bit4 ? 16 : 0;
+                b += Bit3 ? 8 : 0;
+                b += Bit2 ? 4 : 0;
+                b += Bit1 ? 2 : 0;
+                b += Bit0 ? 1 : 0;
+                return (byte) b;
+            }
         }
 
         private static char To01(bool b) =>
@@ -87,5 +195,8 @@ namespace C64MemoryModel.Types
 
         public string LowNibbleString() =>
             $"{To01(Bit3)}{To01(Bit2)}{To01(Bit1)}{To01(Bit0)}";
+
+        protected virtual void OnPropertyChanged(string propertyName = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

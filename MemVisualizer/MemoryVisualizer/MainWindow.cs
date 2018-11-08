@@ -4,17 +4,18 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using C64MemoryModel.Graphics;
 using C64MemoryModel.Mem;
+using C64MemoryModel.Types;
 
 namespace MemoryVisualizer
 {
     public partial class MainWindow : Form
     {
         private MemOverview MemOverview { get; set; }
-        private static C64Palette Palette { get; }
+        private static C64Palette Palette { get; } = new C64Palette();
         private Rectangle OuterClient { get; set; }
         private Rectangle InnerClient { get; set; }
         private Memory Memory { get; set; }
-        private int DisplayPointer { get; set; }
+        private Address DisplayPointer { get; } = new Address(0);
         private DisplayMode DisplayMode { get; set; }
         private ScreenCharacterMap Characters { get; } = new ScreenCharacterMap();
         private bool RecalcGridFontSize { get; set; } = true;
@@ -22,17 +23,15 @@ namespace MemoryVisualizer
         private float FontXOffset { get; set; }
         private float FontYOffset { get; set; }
         private int StepSize { get; set; }
-        private int DisassemblyStartAddress { get; set; }
+        private Address DisassemblyStartAddress { get; } = new Address(0);
         private int LastPerformedDisassemblyStepSize { get; set; }
         private Stack<int> DisassemblyStepSize { get; } = new Stack<int>();
+
         public MainWindow()
         {
             InitializeComponent();
         }
-        static MainWindow()
-        {
-            Palette = new C64Palette();
-        }
+
         private void MainWindow_Resize(object sender, EventArgs e)
         {
             RecalcGridFontSize = true;
@@ -108,8 +107,7 @@ namespace MemoryVisualizer
             try
             {
                 var temp = new Memory();
-                int start, length;
-                temp.Load(filename, out start, out length);
+                temp.Load(filename, out var start, out _);
                 Text = $@"C64 Memory Visualizer - {filename}";
                 Memory = temp;
                 DisplayPointer = start;
@@ -148,14 +146,14 @@ namespace MemoryVisualizer
                     {
                         if (displayPointer > ushort.MaxValue)
                             break;
-                        Characters.SetCharacters(0, row, displayPointer.ToString("00000"));
-                        Characters.SetCharacters(6, row, displayPointer.ToString("X4"));
+                        Characters.SetCharacters(0, row, displayPointer.ToString());
+                        Characters.SetCharacters(6, row, displayPointer.ToHexString());
                         var x = 11;
                         for (var col = 0; col < 8; col++)
                         {
                             if (displayPointer > ushort.MaxValue)
                                 break;
-                            Characters.SetCharacters(x, row, Memory.GetByte((ushort)displayPointer).ToString("X2"));
+                            Characters.SetCharacters(x, row, Memory.GetByte(displayPointer).ToString("X2"));
                             x += 3;
                             displayPointer++;
                         }
@@ -167,14 +165,14 @@ namespace MemoryVisualizer
                     {
                         if (displayPointer > ushort.MaxValue)
                             break;
-                        Characters.SetCharacters(0, row, displayPointer.ToString("00000"));
-                        Characters.SetCharacters(6, row, displayPointer.ToString("X4"));
+                        Characters.SetCharacters(0, row, displayPointer.ToString());
+                        Characters.SetCharacters(6, row, displayPointer.ToHexString());
                         var x = 11;
                         for (var col = 0; col < 4; col++)
                         {
                             if (displayPointer > ushort.MaxValue)
                                 break;
-                            Characters.SetCharacters(x, row, Memory.GetByte((ushort)displayPointer).ToString("000"));
+                            Characters.SetCharacters(x, row, Memory.GetByte(displayPointer).ToString("000"));
                             x += 4;
                             displayPointer++;
                         }
@@ -264,18 +262,23 @@ namespace MemoryVisualizer
             DisplayMode = DisplayMode.Disassembly;
             RenderScreen();
         }
-        private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e) => setDisassemblyStartAddressToolStripMenuItem.Enabled = Memory != null && DisplayMode == DisplayMode.Disassembly;
-        private void setDisassemblyStartAddressToolStripMenuItem_Click(object sender, EventArgs e) => SetDisassemblyStartAddress();
+
+        private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e) =>
+            setDisassemblyStartAddressToolStripMenuItem.Enabled = Memory != null && DisplayMode == DisplayMode.Disassembly;
+
+        private void setDisassemblyStartAddressToolStripMenuItem_Click(object sender, EventArgs e) =>
+            SetDisassemblyStartAddress();
+
         private bool SetDisassemblyStartAddress()
         {
             using (var x = new DialogDisassemblyStartAddress())
             {
-                x.StartAddress = DisassemblyStartAddress;
+                x.StartAddress = DisassemblyStartAddress.Value;
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return false;
-                DisassemblyStartAddress = x.StartAddress;
+                DisassemblyStartAddress.FromInt(x.StartAddress);
                 DisassemblyStepSize.Clear();
-                DisplayPointer = x.StartAddress;
+                DisplayPointer.FromInt(x.StartAddress);
                 RenderScreen();
                 return true;
             }
@@ -285,5 +288,7 @@ namespace MemoryVisualizer
             DisplayPointer = DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress : 0;
             RenderScreen();
         }
+
+        
     }
 }

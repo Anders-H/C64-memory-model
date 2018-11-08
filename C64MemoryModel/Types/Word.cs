@@ -2,12 +2,12 @@
 
 namespace C64MemoryModel.Types
 {
-    public class Word
+    public class Word : IDisposable
     {
         private string _toString;
         private string _toHexString;
 
-        public ushort Value { get; }
+        public ushort Value { get; private set; }
         public Byte HighByte { get; }
         public Byte LowByte { get; }
 
@@ -17,6 +17,7 @@ namespace C64MemoryModel.Types
             var bytes = BitConverter.GetBytes(value);
             HighByte = new Byte(bytes[1]);
             LowByte = new Byte(bytes[0]);
+            BindEvents();
         }
 
         public Word(byte highByte, byte lowByte)
@@ -24,20 +25,59 @@ namespace C64MemoryModel.Types
             HighByte = new Byte(highByte);
             LowByte = new Byte(lowByte);
             Value = ToUshort();
+            BindEvents();
         }
 
         public Word(Byte highByte, Byte lowByte)
         {
-            HighByte = new Byte(highByte.ToByte());
-            LowByte = new Byte(lowByte.ToByte());
+            HighByte = new Byte(highByte.Value);
+            LowByte = new Byte(lowByte.Value);
             Value = ToUshort();
+            BindEvents();
         }
 
         public Word(bool b15, bool b14, bool b13, bool b12, bool b11, bool b10, bool b9, bool b8, bool b7, bool b6, bool b5, bool b4, bool b3, bool b2, bool b1, bool b0)
         {
             HighByte = new Byte(b15, b14, b13, b12, b11, b10, b9, b8);
             LowByte = new Byte(b7, b6, b5, b4, b3, b2, b1, b0);
+            BindEvents();
         }
+
+        private void BindEvents()
+        {
+            HighByte.Name = nameof(HighByte);
+            LowByte.Name = nameof(LowByte);
+            HighByte.PropertyChanged += ByteChanged;
+            LowByte.PropertyChanged += ByteChanged;
+        }
+
+        public void FromInt(int i)
+        {
+            var value = (ushort)i;
+            Value = value;
+            var bytes = BitConverter.GetBytes(value);
+            var b = bytes[1];
+            HighByte.Bit7 = (b & 128) == 128;
+            HighByte.Bit6 = (b & 64) == 64;
+            HighByte.Bit5 = (b & 32) == 32;
+            HighByte.Bit4 = (b & 16) == 16;
+            HighByte.Bit3 = (b & 8) == 8;
+            HighByte.Bit2 = (b & 4) == 4;
+            HighByte.Bit1 = (b & 2) == 2;
+            HighByte.Bit0 = (b & 1) == 1;
+            b = bytes[0];
+            LowByte.Bit7 = (b & 128) == 128;
+            LowByte.Bit6 = (b & 64) == 64;
+            LowByte.Bit5 = (b & 32) == 32;
+            LowByte.Bit4 = (b & 16) == 16;
+            LowByte.Bit3 = (b & 8) == 8;
+            LowByte.Bit2 = (b & 4) == 4;
+            LowByte.Bit1 = (b & 2) == 2;
+            LowByte.Bit0 = (b & 1) == 1;
+        }
+
+        private void ByteChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) =>
+            Value = ToUshort();
 
         public ushort AsUshort() =>
             Value;
@@ -65,7 +105,7 @@ namespace C64MemoryModel.Types
         }
 
         private ushort ToUshort() =>
-            BitConverter.ToUInt16(new [] {LowByte.ToByte(), HighByte.ToByte() }, 0);
+            BitConverter.ToUInt16(new [] {LowByte.Value, HighByte.Value }, 0);
 
         public static explicit operator Word(int x) =>
             new Word((ushort)x);
@@ -90,5 +130,12 @@ namespace C64MemoryModel.Types
 
         public static bool operator <=(Word x, int y) =>
             x.Value <= y;
+
+        public void Dispose()
+        {
+            HighByte.PropertyChanged -= ByteChanged;
+            LowByte.PropertyChanged -= ByteChanged;
+        }
+
     }
 }
