@@ -168,7 +168,7 @@ namespace Sprdef
                 {
                     var physicalX = 8*x;
                     var b = new C64MemoryModel.Types.Byte(IsSet(physicalX, y), IsSet(physicalX + 1, y), IsSet(physicalX + 2, y), IsSet(physicalX + 3, y), IsSet(physicalX + 4, y), IsSet(physicalX + 5, y), IsSet(physicalX + 6, y), IsSet(physicalX + 7, y));
-                    ret[i] = b.ToByte();
+                    ret[i] = b.Value;
                     i++;
                 }
             return ret;

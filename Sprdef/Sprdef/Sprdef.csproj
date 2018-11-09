@@ -36,7 +36,8 @@
     <ApplicationIcon>polar_bear.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C64MemoryModel">
+    <Reference Include="C64MemoryModel, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\C64MemoryModel\bin\Release\C64MemoryModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
