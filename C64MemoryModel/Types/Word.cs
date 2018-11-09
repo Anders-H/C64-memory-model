@@ -74,6 +74,8 @@ namespace C64MemoryModel.Types
 			LowByte.Bit2 = (b & 4) == 4;
 			LowByte.Bit1 = (b & 2) == 2;
 			LowByte.Bit0 = (b & 1) == 1;
+			_toString = null;
+			_toHexString = null;
 		}
 
 		public bool CanInc() =>
@@ -166,6 +168,5 @@ namespace C64MemoryModel.Types
 			HighByte.PropertyChanged -= ByteChanged;
 			LowByte.PropertyChanged -= ByteChanged;
 		}
-
 	}
 }

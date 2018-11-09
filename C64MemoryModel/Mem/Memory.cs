@@ -110,15 +110,17 @@ namespace C64MemoryModel.Mem
             return s.ToString();
         }
 
-        public void SetBytePointer(Address address)
-        {
+        public void SetBytePointer(Address address) =>
             BytePointer.FromInt(address.Value);
-        }
+
+        public void SetBytePointer(ushort address) =>
+            BytePointer.FromInt(address);
 
         public void SetBytePointer(IMemoryLocation l, ushort offset) =>
             SetBytePointer(l.StartAddress + offset);
 
-        public Address GetBytePointer() => BytePointer;
+        public Address GetBytePointer() =>
+            BytePointer;
 
         private void IncreaseBytePointer() => IncreaseBytePointer(1);
 
@@ -148,6 +150,14 @@ namespace C64MemoryModel.Mem
 
         public byte GetByte()
         {
+            var ret = Bytes[BytePointer.Value];
+            IncreaseBytePointer();
+            return ret;
+        }
+
+        public byte GetByte(ushort address)
+        {
+            SetBytePointer(address);
             var ret = Bytes[BytePointer.Value];
             IncreaseBytePointer();
             return ret;
