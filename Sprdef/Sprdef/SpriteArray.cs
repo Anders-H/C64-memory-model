@@ -6,7 +6,13 @@ namespace Sprdef
 {
     public class SpriteArray : IEnumerable<C64Sprite>
     {
-        private readonly C64Sprite[] _sprites = new C64Sprite[Length];
+        private readonly List<C64Sprite> _sprites = new List<C64Sprite>();
+
+	    public SpriteArray()
+	    {
+		    for(var i = 0; i < Length; i++)
+				_sprites.Add(null);
+	    }
 
         public C64Sprite this[int i]
         {
@@ -19,7 +25,7 @@ namespace Sprdef
         public int Count => Length;
 
         public IEnumerator<C64Sprite> GetEnumerator() =>
-            (IEnumerator<C64Sprite>)_sprites.GetEnumerator();
+            _sprites.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() =>
             _sprites.GetEnumerator();
