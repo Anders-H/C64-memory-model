@@ -76,11 +76,29 @@ namespace C64MemoryModel.Types
 			LowByte.Bit0 = (b & 1) == 1;
 		}
 
+		public bool CanInc() =>
+			CanInc(1);
+
+		public bool CanInc(int amt)
+		{
+			var current = (int)Value;
+			return current + amt <= ushort.MaxValue;
+		}
+
 		public void Inc() =>
 			FromInt(Value + 1);
 
 		public void Inc(int amt) =>
 			FromInt(Value + amt);
+
+		public bool CanDec() =>
+			CanDec(1);
+
+		public bool CanDec(int amt)
+		{
+			var current = (int)Value;
+			return current - amt >= ushort.MinValue;
+		}
 
 		public void Dec() =>
 			FromInt(Value - 1);

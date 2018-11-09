@@ -148,7 +148,7 @@ namespace MemoryVisualizer
 							break;
 						Characters.SetCharacters(0, row, displayPointer.ToString());
 						Characters.SetCharacters(6, row, displayPointer.ToHexString());
-						var x = 11;
+						var x = 12;
 						for (var col = 0; col < 8; col++)
 						{
 							if (displayPointer > ushort.MaxValue)
@@ -167,7 +167,7 @@ namespace MemoryVisualizer
 							break;
 						Characters.SetCharacters(0, row, displayPointer.ToString());
 						Characters.SetCharacters(6, row, displayPointer.ToHexString());
-						var x = 11;
+						var x = 12;
 						for (var col = 0; col < 4; col++)
 						{
 							if (displayPointer > ushort.MaxValue)
@@ -205,13 +205,15 @@ namespace MemoryVisualizer
 			{
 				case DisplayMode.Disassembly:
 					if (DisassemblyStepSize.Count > 0)
-						DisplayPointer.Dec(DisassemblyStepSize.Pop());
+					{
+						var step = DisassemblyStepSize.Pop();
+						if (DisplayPointer.CanDec(step))
+							DisplayPointer.Dec(step);
+					}
 					break;
 				default:
-					if (DisplayPointer > 0)
+					if (DisplayPointer.CanDec(StepSize))
 						DisplayPointer.Dec(StepSize);
-					if (DisplayPointer < 0)
-						DisplayPointer.FromInt(0);
 					break;
 			}
 			RenderScreen();
@@ -228,10 +230,8 @@ namespace MemoryVisualizer
 					}
 					break;
 				default:
-					if (DisplayPointer + StepSize <= ushort.MaxValue)
+					if (DisplayPointer.CanInc(StepSize))
 						DisplayPointer.Inc(StepSize);
-					if (DisplayPointer > ushort.MaxValue)
-						DisplayPointer.FromInt(ushort.MaxValue);
 					break;
 			}
 			RenderScreen();

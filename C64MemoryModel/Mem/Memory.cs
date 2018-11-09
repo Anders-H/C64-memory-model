@@ -15,7 +15,7 @@ namespace C64MemoryModel.Mem
 
         private byte[] Bytes { get; } = new byte[ushort.MaxValue + 1];
 
-        internal Address BytePointer { get; set; }
+        internal Address BytePointer { get; } = new Address(0);
 
         public Assembler Assembler { get; }
 
@@ -65,10 +65,8 @@ namespace C64MemoryModel.Mem
                 SetByte(newBytes[i]);
         }
 
-        public void Load(string filename)
-        {
+        public void Load(string filename) =>
             Load(filename, out _, out _);
-        }
 
         public void Save(string filename, out Address startAddress, out Word length)
         {
@@ -89,10 +87,8 @@ namespace C64MemoryModel.Mem
             }
         }
 
-        public void Save(string filename)
-        {
+        public void Save(string filename) =>
             Save(filename, out _, out _);
-        }
 
         public void Clear()
         {
