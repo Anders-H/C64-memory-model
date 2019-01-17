@@ -13,10 +13,13 @@ namespace C64MemoryModel.Disasm
             var b = m.GetByte();
             s.Append($"{b:X2} ");
             byte b2 = 0, b3 = 0;
-            void Write0() => s.Append($"      ");
-            void Write1() => s.Append($"{b2:X2}    ");
+            void Write0() =>
+                s.Append("      ");
+            void Write1() =>
+                s.Append($"{b2:X2}    ");
             byte[] bytes;
-            void Write2() => s.Append($"{b2:X2} {b3:X2} ");
+            void Write2() =>
+                s.Append($"{b2:X2} {b3:X2} ");
 
             void WriteNoArg(string operation, string description)
             {

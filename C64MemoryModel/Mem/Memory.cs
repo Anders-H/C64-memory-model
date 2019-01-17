@@ -144,9 +144,11 @@ namespace C64MemoryModel.Mem
             return s.ToString();
         }
 
-        public byte PeekByte() => Bytes[BytePointer.Value];
+        public byte PeekByte() =>
+            Bytes[BytePointer.Value];
 
-        public byte PeekByte(Address address) => Bytes[address.Value];
+        public byte PeekByte(Address address) =>
+            Bytes[address.Value];
 
         public byte GetByte()
         {
@@ -388,6 +390,7 @@ namespace C64MemoryModel.Mem
             ret.AddRange(Locations.GetAll(address));
             return ret;
         }
+
         public List<IMemoryLocation> GetLocations(string name)
         {
             var ret = new List<IMemoryLocation>();

@@ -38,6 +38,9 @@
             this.exportToBASICToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToCBMPrgStudioDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spritesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,9 +62,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -143,6 +143,34 @@
             this.exportPNGToolStripMenuItem.Text = "Export PNG...";
             this.exportPNGToolStripMenuItem.Click += new System.EventHandler(this.exportPNGToolStripMenuItem_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "&Edit";
+            this.editToolStripMenuItem.DropDownOpening += new System.EventHandler(this.editToolStripMenuItem_DropDownOpening);
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnLeft_Blue_16x16_72;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnRight_Blue_16x16_72;
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            // 
             // spritesToolStripMenuItem
             // 
             this.spritesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -164,56 +192,56 @@
             this.sprite1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.sprite1ToolStripMenuItem.Name = "sprite1ToolStripMenuItem";
             this.sprite1ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.sprite1ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite1ToolStripMenuItem.Text = "Sprite 1";
             // 
             // sprite2ToolStripMenuItem
             // 
             this.sprite2ToolStripMenuItem.Name = "sprite2ToolStripMenuItem";
             this.sprite2ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.sprite2ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite2ToolStripMenuItem.Text = "Sprite 2";
             // 
             // sprite3ToolStripMenuItem
             // 
             this.sprite3ToolStripMenuItem.Name = "sprite3ToolStripMenuItem";
             this.sprite3ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-            this.sprite3ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite3ToolStripMenuItem.Text = "Sprite 3";
             // 
             // sprite4ToolStripMenuItem
             // 
             this.sprite4ToolStripMenuItem.Name = "sprite4ToolStripMenuItem";
             this.sprite4ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
-            this.sprite4ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite4ToolStripMenuItem.Text = "Sprite 4";
             // 
             // sprite5ToolStripMenuItem
             // 
             this.sprite5ToolStripMenuItem.Name = "sprite5ToolStripMenuItem";
             this.sprite5ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
-            this.sprite5ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite5ToolStripMenuItem.Text = "Sprite 5";
             // 
             // sprite6ToolStripMenuItem
             // 
             this.sprite6ToolStripMenuItem.Name = "sprite6ToolStripMenuItem";
             this.sprite6ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6)));
-            this.sprite6ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite6ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite6ToolStripMenuItem.Text = "Sprite 6";
             // 
             // sprite7ToolStripMenuItem
             // 
             this.sprite7ToolStripMenuItem.Name = "sprite7ToolStripMenuItem";
             this.sprite7ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D7)));
-            this.sprite7ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite7ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite7ToolStripMenuItem.Text = "Sprite 7";
             // 
             // sprite8ToolStripMenuItem
             // 
             this.sprite8ToolStripMenuItem.Name = "sprite8ToolStripMenuItem";
             this.sprite8ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D8)));
-            this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite8ToolStripMenuItem.Text = "Sprite 8";
             // 
             // paletteToolStripMenuItem
@@ -310,34 +338,6 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(16, 17);
             this.lblStatus.Text = "   ";
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "&Edit";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnLeft_Blue_16x16_72;
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.undoToolStripMenuItem.Text = "Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnRight_Blue_16x16_72;
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.redoToolStripMenuItem.Text = "Redo";
-            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

@@ -24,7 +24,11 @@ namespace C64MemoryModel.Graphics
             Colors[14] = Color.FromArgb(0, 136, 255);
             Colors[15] = Color.FromArgb(187, 187, 187);
         }
-        public Color GetColor(int index) => Colors[index];
-        public Color GetColor(C64Color color) => Colors[(int)color];
+
+        public Color GetColor(int index) =>
+            Colors[index];
+
+        public Color GetColor(C64Color color) =>
+            Colors[(int)color];
     }
 }

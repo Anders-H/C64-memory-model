@@ -50,6 +50,7 @@
     <Compile Include="BitValue.cs" />
     <Compile Include="Graphics\C64Color.cs" />
     <Compile Include="Graphics\C64Palette.cs" />
+    <Compile Include="Mem\MemoryModelLocationList.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Types\Address.cs" />
     <Compile Include="Types\Byte.cs" />

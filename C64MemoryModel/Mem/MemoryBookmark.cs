@@ -55,6 +55,7 @@ namespace C64MemoryModel.Mem
             ForEach(x => s.AppendLine(x.ToString()));
             return s.ToString();
         }
+
         public MemoryBookmark GetLocation(string name)
             => this.FirstOrDefault(x => string.Compare(name, x.Name, StringComparison.CurrentCultureIgnoreCase) == 0);
 
