@@ -548,7 +548,10 @@ namespace Sprdef
         {
             if (!UndoBuffers[CurrentSpriteIndex].CanUndo)
                 return;
-            Sprites[CurrentSpriteIndex] = UndoBuffers[CurrentSpriteIndex].Undo();
+            var undoResult = UndoBuffers[CurrentSpriteIndex].Undo(SpriteEditor.Sprite);
+            if (undoResult == null)
+                return;
+            Sprites[CurrentSpriteIndex] = undoResult;
             SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             RedrawBackgroundFlag = true;
             Invalidate();

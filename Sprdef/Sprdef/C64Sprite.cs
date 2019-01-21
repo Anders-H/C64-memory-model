@@ -47,6 +47,15 @@ namespace Sprdef
             }
         }
 
+        public bool CompareTo(C64Sprite other)
+        {
+            for (var y = 0; y < Height; y++)
+                for (var x = 0; x < Width; x++)
+                    if (SpriteData[x, y] != other.SpriteData[x, y])
+                        return false;
+            return true;
+        }
+
         public void ResetPixels()
         {
             if (SpriteEditor.Multicolor)

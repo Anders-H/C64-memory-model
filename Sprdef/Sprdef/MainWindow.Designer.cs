@@ -166,7 +166,7 @@
             // 
             this.redoToolStripMenuItem.Image = global::Sprdef.Properties.Resources._112_ArrowReturnRight_Blue_16x16_72;
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.redoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
@@ -192,56 +192,56 @@
             this.sprite1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.sprite1ToolStripMenuItem.Name = "sprite1ToolStripMenuItem";
             this.sprite1ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.sprite1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite1ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite1ToolStripMenuItem.Text = "Sprite 1";
             // 
             // sprite2ToolStripMenuItem
             // 
             this.sprite2ToolStripMenuItem.Name = "sprite2ToolStripMenuItem";
             this.sprite2ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.sprite2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite2ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite2ToolStripMenuItem.Text = "Sprite 2";
             // 
             // sprite3ToolStripMenuItem
             // 
             this.sprite3ToolStripMenuItem.Name = "sprite3ToolStripMenuItem";
             this.sprite3ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-            this.sprite3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite3ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite3ToolStripMenuItem.Text = "Sprite 3";
             // 
             // sprite4ToolStripMenuItem
             // 
             this.sprite4ToolStripMenuItem.Name = "sprite4ToolStripMenuItem";
             this.sprite4ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
-            this.sprite4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite4ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite4ToolStripMenuItem.Text = "Sprite 4";
             // 
             // sprite5ToolStripMenuItem
             // 
             this.sprite5ToolStripMenuItem.Name = "sprite5ToolStripMenuItem";
             this.sprite5ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
-            this.sprite5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite5ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite5ToolStripMenuItem.Text = "Sprite 5";
             // 
             // sprite6ToolStripMenuItem
             // 
             this.sprite6ToolStripMenuItem.Name = "sprite6ToolStripMenuItem";
             this.sprite6ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6)));
-            this.sprite6ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite6ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite6ToolStripMenuItem.Text = "Sprite 6";
             // 
             // sprite7ToolStripMenuItem
             // 
             this.sprite7ToolStripMenuItem.Name = "sprite7ToolStripMenuItem";
             this.sprite7ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D7)));
-            this.sprite7ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite7ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite7ToolStripMenuItem.Text = "Sprite 7";
             // 
             // sprite8ToolStripMenuItem
             // 
             this.sprite8ToolStripMenuItem.Name = "sprite8ToolStripMenuItem";
             this.sprite8ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D8)));
-            this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.sprite8ToolStripMenuItem.Text = "Sprite 8";
             // 
             // paletteToolStripMenuItem
