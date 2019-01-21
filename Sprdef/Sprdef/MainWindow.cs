@@ -11,7 +11,6 @@ namespace Sprdef
         private UndoBuffer[] UndoBuffers { get; set; }
         private SpriteArray Sprites { get; } = new SpriteArray();
         private int CurrentSpriteIndex { get; } = 0;
-        private C64Sprite CurrentSprite => Sprites[CurrentSpriteIndex];
         private SpriteEditor SpriteEditor { get; }
         private int EditorX { get; set; }
         private int EditorY { get; set; }
@@ -26,10 +25,10 @@ namespace Sprdef
             ColorPicker = new ColorPicker();
             Filename = "";
             InitializeComponent();
-            CreateUndoBuffer();
+            CreateUndoBuffers();
         }
 
-        private void CreateUndoBuffer()
+        private void CreateUndoBuffers()
         {
             UndoBuffers = new UndoBuffer[8];
             for (var i = 0; i < Sprites.Count; i++)
@@ -91,7 +90,7 @@ namespace Sprdef
 
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-            SpriteEditor.Sprite = CurrentSprite;
+            SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             Action x = DelayedRedraw;
             x.BeginInvoke(null, null);
         }
@@ -275,13 +274,15 @@ namespace Sprdef
 
         private void MainWindow_Activated(object sender, EventArgs e)
         {
-            Active = true; Invalidate();
+            Active = true;
+            Invalidate();
             lblStatus.Text = @"Activated. Use keyboard to draw sprites.";
         }
 
         private void MainWindow_Deactivate(object sender, EventArgs e)
         {
-            Active = false; Invalidate();
+            Active = false;
+            Invalidate();
             lblStatus.Text = @"Paused. Activate window to enable program.";
         }
 
@@ -393,7 +394,7 @@ namespace Sprdef
             }
             finally
             {
-                CreateUndoBuffer();
+                CreateUndoBuffers();
                 if (multicolor)
                     multicolorToolStripMenuItem_Click(null, new EventArgs());
             }
@@ -548,6 +549,7 @@ namespace Sprdef
             if (!UndoBuffers[CurrentSpriteIndex].CanUndo)
                 return;
             Sprites[CurrentSpriteIndex] = UndoBuffers[CurrentSpriteIndex].Undo();
+            SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             RedrawBackgroundFlag = true;
             Invalidate();
         }
@@ -557,6 +559,7 @@ namespace Sprdef
             if (!UndoBuffers[CurrentSpriteIndex].CanRedo)
                 return;
             Sprites[CurrentSpriteIndex] = UndoBuffers[CurrentSpriteIndex].Redo();
+            SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             RedrawBackgroundFlag = true;
             Invalidate();
         }
