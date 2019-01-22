@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +70,13 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnInputKeyboard = new System.Windows.Forms.ToolStripButton();
             this.btnInputMouse = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.copyFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnUndo = new System.Windows.Forms.ToolStripButton();
+            this.btnRedo = new System.Windows.Forms.ToolStripButton();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.cBMPrgStudioDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -157,6 +165,8 @@
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
             this.toolStripMenuItem2,
+            this.copyFromToolStripMenuItem,
+            this.toolStripMenuItem3,
             this.controlToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
@@ -232,56 +242,56 @@
             this.sprite1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.sprite1ToolStripMenuItem.Name = "sprite1ToolStripMenuItem";
             this.sprite1ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.sprite1ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite1ToolStripMenuItem.Text = "Sprite 1";
             // 
             // sprite2ToolStripMenuItem
             // 
             this.sprite2ToolStripMenuItem.Name = "sprite2ToolStripMenuItem";
             this.sprite2ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.sprite2ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite2ToolStripMenuItem.Text = "Sprite 2";
             // 
             // sprite3ToolStripMenuItem
             // 
             this.sprite3ToolStripMenuItem.Name = "sprite3ToolStripMenuItem";
             this.sprite3ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-            this.sprite3ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite3ToolStripMenuItem.Text = "Sprite 3";
             // 
             // sprite4ToolStripMenuItem
             // 
             this.sprite4ToolStripMenuItem.Name = "sprite4ToolStripMenuItem";
             this.sprite4ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
-            this.sprite4ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite4ToolStripMenuItem.Text = "Sprite 4";
             // 
             // sprite5ToolStripMenuItem
             // 
             this.sprite5ToolStripMenuItem.Name = "sprite5ToolStripMenuItem";
             this.sprite5ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
-            this.sprite5ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite5ToolStripMenuItem.Text = "Sprite 5";
             // 
             // sprite6ToolStripMenuItem
             // 
             this.sprite6ToolStripMenuItem.Name = "sprite6ToolStripMenuItem";
             this.sprite6ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6)));
-            this.sprite6ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite6ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite6ToolStripMenuItem.Text = "Sprite 6";
             // 
             // sprite7ToolStripMenuItem
             // 
             this.sprite7ToolStripMenuItem.Name = "sprite7ToolStripMenuItem";
             this.sprite7ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D7)));
-            this.sprite7ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite7ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite7ToolStripMenuItem.Text = "Sprite 7";
             // 
             // sprite8ToolStripMenuItem
             // 
             this.sprite8ToolStripMenuItem.Name = "sprite8ToolStripMenuItem";
             this.sprite8ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D8)));
-            this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.sprite8ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sprite8ToolStripMenuItem.Text = "Sprite 8";
             // 
             // paletteToolStripMenuItem
@@ -383,6 +393,9 @@
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnUndo,
+            this.btnRedo,
+            this.toolStripSeparator1,
             this.btnInputKeyboard,
             this.btnInputMouse});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
@@ -410,6 +423,58 @@
             this.btnInputMouse.Size = new System.Drawing.Size(23, 22);
             this.btnInputMouse.Text = "Mouse input";
             this.btnInputMouse.Click += new System.EventHandler(this.btnInputMouse_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // copyFromToolStripMenuItem
+            // 
+            this.copyFromToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cBMPrgStudioDataToolStripMenuItem});
+            this.copyFromToolStripMenuItem.Name = "copyFromToolStripMenuItem";
+            this.copyFromToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyFromToolStripMenuItem.Text = "Copy from";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnUndo
+            // 
+            this.btnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnUndo.Enabled = false;
+            this.btnUndo.Image = global::Sprdef.Properties.Resources._112_ArrowReturnLeft_Blue_16x16_72;
+            this.btnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnUndo.Name = "btnUndo";
+            this.btnUndo.Size = new System.Drawing.Size(23, 22);
+            this.btnUndo.Text = "Undo";
+            this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
+            // 
+            // btnRedo
+            // 
+            this.btnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRedo.Enabled = false;
+            this.btnRedo.Image = global::Sprdef.Properties.Resources._112_ArrowReturnRight_Blue_16x16_72;
+            this.btnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(23, 22);
+            this.btnRedo.Text = "Redo";
+            this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 3000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // cBMPrgStudioDataToolStripMenuItem
+            // 
+            this.cBMPrgStudioDataToolStripMenuItem.Name = "cBMPrgStudioDataToolStripMenuItem";
+            this.cBMPrgStudioDataToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.cBMPrgStudioDataToolStripMenuItem.Text = "CBM prg Studio data...";
+            this.cBMPrgStudioDataToolStripMenuItem.Click += new System.EventHandler(this.cBMPrgStudioDataToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -488,6 +553,13 @@
         private System.Windows.Forms.ToolStripMenuItem mouseToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnInputKeyboard;
         private System.Windows.Forms.ToolStripButton btnInputMouse;
+        private System.Windows.Forms.ToolStripMenuItem copyFromToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripButton btnUndo;
+        private System.Windows.Forms.ToolStripButton btnRedo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem cBMPrgStudioDataToolStripMenuItem;
     }
 }
 

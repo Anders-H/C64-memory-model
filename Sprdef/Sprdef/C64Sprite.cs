@@ -19,6 +19,7 @@ namespace Sprdef
         public Rectangle Bounds { get; private set; }
         public const int Width = 24;
         public const int Height = 21;
+        public const int BytesWidth = 3;
 
         static C64Sprite()
         {
@@ -66,6 +67,17 @@ namespace Sprdef
                 for (var y = 0; y < Height; y++)
                     for (var x = 0; x < Width; x++)
                         SetPixel(x, y, GetPixel(x, y));
+        }
+
+        public void SetBytes(C64MemoryModel.Types.Byte[] bytes)
+        {
+            if (bytes == null || bytes.Length != 63)
+                throw new ArgumentException();
+            for (var x = 0; x < BytesWidth; x++)
+                for (var y = 0; y < Height; y++)
+                {
+                    //TODO
+                }
         }
 
         public int GetColorIndex(int x, int y)

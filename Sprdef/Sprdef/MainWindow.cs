@@ -108,6 +108,7 @@ namespace Sprdef
             SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             Action x = DelayedRedraw;
             x.BeginInvoke(null, null);
+            timer1.Enabled = true;
         }
 
         private void MainWindow_Resize(object sender, EventArgs e)
@@ -617,6 +618,8 @@ namespace Sprdef
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            btnUndo.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
+            btnRedo.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
             if (!UndoBuffers[CurrentSpriteIndex].CanUndo)
                 return;
             var undoResult = UndoBuffers[CurrentSpriteIndex].Undo(SpriteEditor.Sprite);
@@ -626,22 +629,37 @@ namespace Sprdef
             SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             RedrawBackgroundFlag = true;
             Invalidate();
+            btnUndo.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
+            btnRedo.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            btnUndo.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
+            btnRedo.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
             if (!UndoBuffers[CurrentSpriteIndex].CanRedo)
                 return;
             Sprites[CurrentSpriteIndex] = UndoBuffers[CurrentSpriteIndex].Redo();
             SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             RedrawBackgroundFlag = true;
             Invalidate();
+            btnUndo.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
+            btnRedo.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
         }
+
+        private void btnUndo_Click(object sender, EventArgs e) =>
+            undoToolStripMenuItem_Click(sender, e);
+
+        private void btnRedo_Click(object sender, EventArgs e) =>
+            redoToolStripMenuItem_Click(sender, e);
+
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             undoToolStripMenuItem.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
+            btnUndo.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
             redoToolStripMenuItem.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
+            btnRedo.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
         }
 
         private void keyboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -681,10 +699,33 @@ namespace Sprdef
             ed.SetCursorX(position.Value.X);
             ed.SetCursorY(position.Value.Y);
             if ((e.Button & MouseButtons.Left) > 0)
+            {
+                UndoBuffers[CurrentSpriteIndex].PushState(Sprites[CurrentSpriteIndex]);
                 ed.SetPixelAtCursor(ColorPicker.SelectedColor);
+            }
             else if ((e.Button & MouseButtons.Right) > 0)
+            {
+                UndoBuffers[CurrentSpriteIndex].PushState(Sprites[CurrentSpriteIndex]);
                 ed.SetPixelAtCursor(0);
+            }
             Invalidate();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            btnUndo.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
+            btnRedo.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
+        }
+
+        private void cBMPrgStudioDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new FromCbmPrgStudioDialog())
+            {
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                UndoBuffers[CurrentSpriteIndex].PushState(Sprites[CurrentSpriteIndex]);
+
+            }
         }
     }
 }
