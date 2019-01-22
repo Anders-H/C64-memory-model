@@ -12,8 +12,6 @@ namespace Sprdef
         private SpriteArray Sprites { get; } = new SpriteArray();
         private int CurrentSpriteIndex { get; } = 0;
         private SpriteEditor SpriteEditor { get; }
-        private int EditorX { get; set; }
-        private int EditorY { get; set; }
         private bool RedrawBackgroundFlag { get; set; } = true;
         private ColorPicker ColorPicker { get; }
         private bool Active { get; set; }
@@ -47,6 +45,24 @@ namespace Sprdef
             sprite6ToolStripMenuItem.Click += PickSpriteClick;
             sprite7ToolStripMenuItem.Click += PickSpriteClick;
             sprite8ToolStripMenuItem.Click += PickSpriteClick;
+
+            switch (Configuration.InputMethod)
+            {
+                case InputMethod.MouseInputMethod:
+                    mouseToolStripMenuItem.Checked = true;
+                    btnInputMouse.Checked = true;
+                    keyboardToolStripMenuItem.Checked = false;
+                    btnInputKeyboard.Checked = false;
+                    break;
+                case InputMethod.KeyboardInputMethod:
+                    mouseToolStripMenuItem.Checked = false;
+                    btnInputMouse.Checked = false;
+                    keyboardToolStripMenuItem.Checked = true;
+                    btnInputKeyboard.Checked = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void MainWindow_Paint(object sender, PaintEventArgs e)
@@ -62,26 +78,25 @@ namespace Sprdef
                 e.Graphics.Clear(BackColor);
                 RedrawBackgroundFlag = false;
             }
-            EditorX = 10;
-            EditorY = Height / 2 - SpriteEditor.InnerHeight / 2 - menuStrip1.Height;
+            SpriteEditor.X = 10;
+            SpriteEditor.Y = 10 + ColorPicker.ColorCell.Size + menuStrip1.Height + toolStrip1.Height;
             var pw = (Width - 200) / C64Sprite.Width;
             var ph = (Height - 200) / C64Sprite.Height;
             SpriteEditor.PixelSize = Math.Min(pw, ph);
             SpriteEditor.PixelSize = SpriteEditor.PixelSize < 6 ? 6 : SpriteEditor.PixelSize;
 
             var doubleSize = Width * 1.5 > Height;
-            var spritesHeight = doubleSize ? 336 : 168;
-            var startX = doubleSize ? Width - 68 : Width - 44;
-            var startY = Height / 2 - spritesHeight / 2 - menuStrip1.Height;
+            var spritesStartX = doubleSize ? Width - 68 : Width - 44;
+            var spritesStartY = SpriteEditor.Y;
             for (var i = 0; i < 8; i++)
             {
-                Sprites[i].Draw(e.Graphics, startX, startY, doubleSize);
-                startY += doubleSize ? 44 : 22;
+                Sprites[i].Draw(e.Graphics, spritesStartX, spritesStartY, doubleSize);
+                spritesStartY += doubleSize ? 44 : 22;
             }
 
-            SpriteEditor.Draw(e.Graphics, EditorX, EditorY);
+            SpriteEditor.Draw(e.Graphics);
             ColorPicker.ColorCell.Size = SpriteEditor.PixelSize * 2;
-            ColorPicker.Draw(e.Graphics, EditorX, EditorY - (ColorPicker.ColorCell.Size + 8), SpriteEditor.Multicolor);
+            ColorPicker.Draw(e.Graphics, SpriteEditor.X, SpriteEditor.Y - (ColorPicker.ColorCell.Size + 8), SpriteEditor.Multicolor);
             if (Active || Width < 4)
                 return;
             using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
@@ -114,7 +129,9 @@ namespace Sprdef
 
         private void DelayedRedraw()
         {
+            Application.DoEvents();
             System.Threading.Thread.Sleep(20);
+            Application.DoEvents();
             Invoke(new Action(Refresh));
         }
 
@@ -233,35 +250,65 @@ namespace Sprdef
                 }
             }
             screenThing = ColorPicker.HitTest(e.X, e.Y);
-            if ((e.Button & MouseButtons.Left) > 0)
-            {
-                Action<int> setCol = i => { SpriteEditor.SetPixelAtCursor(i); ColorPicker.SelectedColor = i; Invalidate(); };
-                var c = (ColorPicker.ColorCell)screenThing;
-                if (c == ColorPicker.GetColorCell(0))
-                    setCol(0);
-                if (c == ColorPicker.GetColorCell(1))
-                    setCol(1);
-                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
-                    setCol(2);
-                if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
-                    setCol(3);
-            }
-            else if ((e.Button & MouseButtons.Right) > 0)
+            if (screenThing != null)
             {
                 var c = (ColorPicker.ColorCell)screenThing;
-                if (c == ColorPicker.GetColorCell(0))
-                    pickBackgroundColorToolStripMenuItem_Click(null, new EventArgs());
-                if (c == ColorPicker.GetColorCell(1))
-                    pickForegroundColorToolStripMenuItem_Click(null, new EventArgs());
-                if (c == ColorPicker.GetColorCell(2))
-                    pickExtraColor1ToolStripMenuItem_Click(null, new EventArgs());
-                if (c == ColorPicker.GetColorCell(3))
-                    pickExtraColor2ToolStripMenuItem_Click(null, new EventArgs());
+                if ((e.Button & MouseButtons.Left) > 0)
+                {
+                    void SetCol(int i)
+                    {
+                        if (Configuration.InputMethod == InputMethod.KeyboardInputMethod)
+                            SpriteEditor.SetPixelAtCursor(i);
+                        ColorPicker.SelectedColor = i;
+                        Invalidate();
+                    }
+
+                    if (c == ColorPicker.GetColorCell(0))
+                        SetCol(0);
+                    if (c == ColorPicker.GetColorCell(1))
+                        SetCol(1);
+                    if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(2))
+                        SetCol(2);
+                    if (SpriteEditor.Multicolor && c == ColorPicker.GetColorCell(3))
+                        SetCol(3);
+                }
+                else if ((e.Button & MouseButtons.Right) > 0)
+                {
+                    if (c == ColorPicker.GetColorCell(0))
+                    {
+                        if (Configuration.InputMethod == InputMethod.MouseInputMethod)
+                            ColorPicker.SelectedColor = 0;
+                        pickBackgroundColorToolStripMenuItem_Click(null, new EventArgs());
+                    }
+
+                    if (c == ColorPicker.GetColorCell(1))
+                    {
+                        if (Configuration.InputMethod == InputMethod.MouseInputMethod)
+                            ColorPicker.SelectedColor = 1;
+                        pickForegroundColorToolStripMenuItem_Click(null, new EventArgs());
+                    }
+
+                    if (c == ColorPicker.GetColorCell(2))
+                    {
+                        if (Configuration.InputMethod == InputMethod.MouseInputMethod && SpriteEditor.Multicolor)
+                            ColorPicker.SelectedColor = 2;
+                        pickExtraColor1ToolStripMenuItem_Click(null, new EventArgs());
+                    }
+
+                    if (c == ColorPicker.GetColorCell(3))
+                    {
+                        if (Configuration.InputMethod == InputMethod.MouseInputMethod && SpriteEditor.Multicolor)
+                            ColorPicker.SelectedColor = 3;
+                        pickExtraColor2ToolStripMenuItem_Click(null, new EventArgs());
+                    }
+                }
             }
         }
 
         private IScreenThing GetScreenThing(int x, int y)
         {
+            if (SpriteEditor.HitTest(x, y))
+                return SpriteEditor;
             for (var i = 0; i < 8; i++)
                 if (Sprites[i].HitTest(x, y))
                     return Sprites[i];
@@ -274,16 +321,38 @@ namespace Sprdef
 
         private void MainWindow_Activated(object sender, EventArgs e)
         {
-            Active = true;
-            Invalidate();
-            lblStatus.Text = @"Activated. Use keyboard to draw sprites.";
+            switch (Configuration.InputMethod)
+            {
+                case InputMethod.MouseInputMethod:
+                    Active = true;
+                    Invalidate();
+                    lblStatus.Text = @"Sprite editor activated.";
+                    break;
+                case InputMethod.KeyboardInputMethod:
+                    Active = true;
+                    Invalidate();
+                    lblStatus.Text = @"Activated. Use keyboard to draw sprites.";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void MainWindow_Deactivate(object sender, EventArgs e)
         {
-            Active = false;
-            Invalidate();
-            lblStatus.Text = @"Paused. Activate window to enable program.";
+            switch (Configuration.InputMethod)
+            {
+                case InputMethod.MouseInputMethod:
+                    lblStatus.Text = @"Waiting for focus...";
+                    break;
+                case InputMethod.KeyboardInputMethod:
+                    Active = false;
+                    Invalidate();
+                    lblStatus.Text = @"Paused. Activate window to enable program.";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -497,6 +566,8 @@ namespace Sprdef
             var cursorX = SpriteEditor.GetCursorX();
             multicolorToolStripMenuItem.Checked = !multicolorToolStripMenuItem.Checked;
             SpriteEditor.Multicolor = multicolorToolStripMenuItem.Checked;
+            if (!multicolorToolStripMenuItem.Checked && ColorPicker.SelectedColor > 1)
+                ColorPicker.SelectedColor = 1;
             if (SpriteEditor.Multicolor && cursorX % 2 != 0)
             {
                 cursorX -= 1;
@@ -571,6 +642,49 @@ namespace Sprdef
         {
             undoToolStripMenuItem.Enabled = UndoBuffers[CurrentSpriteIndex].CanUndo;
             redoToolStripMenuItem.Enabled = UndoBuffers[CurrentSpriteIndex].CanRedo;
+        }
+
+        private void keyboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mouseToolStripMenuItem.Checked = false;
+            btnInputMouse.Checked = false;
+            keyboardToolStripMenuItem.Checked = true;
+            btnInputKeyboard.Checked = true;
+            Configuration.InputMethod = InputMethod.KeyboardInputMethod;
+            lblStatus.Text = @"Input method is set to keyboard.";
+        }
+
+        private void mouseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            keyboardToolStripMenuItem.Checked = false;
+            btnInputKeyboard.Checked = false;
+            mouseToolStripMenuItem.Checked = true;
+            btnInputMouse.Checked = true;
+            Configuration.InputMethod = InputMethod.MouseInputMethod;
+            lblStatus.Text = @"Input method is set to mouse.";
+        }
+
+        private void btnInputKeyboard_Click(object sender, EventArgs e) =>
+            keyboardToolStripMenuItem_Click(sender, e);
+
+        private void btnInputMouse_Click(object sender, EventArgs e) =>
+            mouseToolStripMenuItem_Click(sender, e);
+
+        private void MainWindow_MouseDown(object sender, MouseEventArgs e)
+        {
+            var screenThing = GetScreenThing(e.X, e.Y);
+            if (Configuration.InputMethod != InputMethod.MouseInputMethod || !(screenThing is SpriteEditor ed))
+                return;
+            var position = ed.GetPixelPositionFromPhysicalPosition(SpriteEditor.Multicolor, e.X, e.Y);
+            if (position == null)
+                return;
+            ed.SetCursorX(position.Value.X);
+            ed.SetCursorY(position.Value.Y);
+            if ((e.Button & MouseButtons.Left) > 0)
+                ed.SetPixelAtCursor(ColorPicker.SelectedColor);
+            else if ((e.Button & MouseButtons.Right) > 0)
+                ed.SetPixelAtCursor(0);
+            Invalidate();
         }
     }
 }

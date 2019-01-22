@@ -29,7 +29,6 @@ namespace Sprdef
             while (Buffer.Count > 100)
                 Buffer.RemoveAt(0);
             UndoPointer = Buffer.Count - 1;
-            System.Diagnostics.Debug.WriteLine(Buffer.Count + " - " + UndoPointer);
         }
 
         public C64Sprite Undo(C64Sprite currentState)
@@ -45,7 +44,6 @@ namespace Sprdef
                 result = Buffer[UndoPointer];
                 UndoPointer--;
             }
-            System.Diagnostics.Debug.WriteLine(Buffer.Count + " - " + UndoPointer);
             return result;
         }
 
@@ -56,7 +54,6 @@ namespace Sprdef
             if (UndoPointer < 0)
                 UndoPointer++;
             UndoPointer++;
-            System.Diagnostics.Debug.WriteLine(Buffer.Count + " - " + UndoPointer);
             return Buffer[UndoPointer];
         }
     }

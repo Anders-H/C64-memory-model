@@ -67,12 +67,14 @@
       <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorPicker.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="ExportPngDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ExportPngDialog.Designer.cs">
       <DependentUpon>ExportPngDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputMethod.cs" />
     <Compile Include="IScreenThing.cs" />
     <Compile Include="ISpriteEditorWindow.cs" />
     <Compile Include="MainWindow.cs">
@@ -133,6 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="polar_bear.ico" />
+    <None Include="Resources\key.png" />
+    <None Include="Resources\mouse.png" />
     <None Include="Resources\112_ArrowReturnRight_Blue_16x16_72.png" />
     <None Include="Resources\112_ArrowReturnLeft_Blue_16x16_72.png" />
   </ItemGroup>

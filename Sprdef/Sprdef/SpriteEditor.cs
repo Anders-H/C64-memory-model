@@ -3,18 +3,19 @@ using System.Drawing.Imaging;
 
 namespace Sprdef
 {
-    public class SpriteEditor
+    public class SpriteEditor : IScreenThing
     {
         private int CursorX { get; set; }
         private int CursorY { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
         public static bool Multicolor { get; set; } = false;
-
+        public Rectangle Bounds => new Rectangle(X, Y, InnerWidth, InnerHeight);
         public int PixelSize { get; set; } = 10;
-
         public C64Sprite Sprite { get; set; }
-
         public int InnerWidth => C64Sprite.Width*PixelSize;
         public int InnerHeight => C64Sprite.Height*PixelSize;
+
         public void MoveCursor(int x, int y)
         {
             CursorX += x;
@@ -37,10 +38,17 @@ namespace Sprdef
                 CursorY = 20;
         }
 
-        public void SetCursorX(int x) => CursorX = x;
-        public void SetCursorY(int y) => CursorY = y;
-        public int GetCursorX() => CursorX;
-        public int GetCursorY() => CursorY;
+        public void SetCursorX(int x) =>
+            CursorX = x;
+
+        public void SetCursorY(int y) =>
+            CursorY = y;
+
+        public int GetCursorX() =>
+            CursorX;
+
+        public int GetCursorY() =>
+            CursorY;
 
         public void SetPixelAtCursor(int index) =>
             Sprite.SetPixel(CursorX, CursorY, index);
@@ -88,12 +96,12 @@ namespace Sprdef
             }
         }
 
-        public void Draw(Graphics g, int x, int y)
+        public void Draw(Graphics g)
         {
             if (Sprite == null)
                 return;
-            var physicalX = x;
-            var physicalY = y;
+            var physicalX = X;
+            var physicalY = Y;
             var ps = PixelSize - 1;
             var brushes = new SolidBrush[4];
             brushes[0] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.BackgroundColorIndex));
@@ -113,12 +121,12 @@ namespace Sprdef
                         physicalX += pwidth;
                     }
                     physicalY += PixelSize;
-                    physicalX = x;
+                    physicalX = X;
                 }
                 for (var i = 0; i < 4; i++)
                     brushes[i].Dispose();
-                g.DrawRectangle(Pens.White, x + (CursorX * PixelSize), y + (CursorY * PixelSize), pwidth - 2, PixelSize - 2);
-                g.DrawRectangle(Pens.Black, x + (CursorX * PixelSize) + 1, y + (CursorY * PixelSize) + 1, pwidth - 4, PixelSize - 4);
+                g.DrawRectangle(Pens.White, X + (CursorX * PixelSize), Y + (CursorY * PixelSize), pwidth - 2, PixelSize - 2);
+                g.DrawRectangle(Pens.Black, X + (CursorX * PixelSize) + 1, Y + (CursorY * PixelSize) + 1, pwidth - 4, PixelSize - 4);
             }
             else
             {
@@ -130,17 +138,37 @@ namespace Sprdef
                         physicalX += PixelSize;
                     }
                     physicalY += PixelSize;
-                    physicalX = x;
+                    physicalX = X;
                 }
                 for (var i = 0; i < 4; i++)
                     brushes[i].Dispose();
-                g.DrawRectangle(Pens.White, x + (CursorX * PixelSize), y + (CursorY * PixelSize), PixelSize - 2, PixelSize - 2);
-                g.DrawRectangle(Pens.Black, x + (CursorX * PixelSize) + 1, y + (CursorY * PixelSize) + 1, PixelSize - 4, PixelSize - 4);
+                g.DrawRectangle(Pens.White, X + (CursorX * PixelSize), Y + (CursorY * PixelSize), PixelSize - 2, PixelSize - 2);
+                g.DrawRectangle(Pens.Black, X + (CursorX * PixelSize) + 1, Y + (CursorY * PixelSize) + 1, PixelSize - 4, PixelSize - 4);
             }
             brushes[0].Dispose();
             brushes[1].Dispose();
             brushes[2].Dispose();
             brushes[3].Dispose();
+        }
+
+        public bool HitTest(int x, int y) =>
+            x >= X && x < X + InnerWidth && y >= Y && y < Y + InnerHeight;
+
+        public Point? GetPixelPositionFromPhysicalPosition(bool multicolor, int x, int y)
+        {
+            x -= X;
+            y -= Y;
+            if (multicolor)
+            {
+                x /= (PixelSize * 2);
+                x *= 2;
+            }
+            else
+                x /= PixelSize;
+            y /= PixelSize;
+            if (x >= 0 && x < C64Sprite.Width && y >= 0 && y < C64Sprite.Height)
+                return new Point(x, y);
+            return null;
         }
     }
 }

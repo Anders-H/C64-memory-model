@@ -41,6 +41,10 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.controlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.keyboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spritesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,8 +66,12 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnInputKeyboard = new System.Windows.Forms.ToolStripButton();
+            this.btnInputMouse = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -147,7 +155,9 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
+            this.redoToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.controlToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -170,6 +180,36 @@
             this.redoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // controlToolStripMenuItem
+            // 
+            this.controlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.keyboardToolStripMenuItem,
+            this.mouseToolStripMenuItem});
+            this.controlToolStripMenuItem.Name = "controlToolStripMenuItem";
+            this.controlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.controlToolStripMenuItem.Text = "Control";
+            // 
+            // keyboardToolStripMenuItem
+            // 
+            this.keyboardToolStripMenuItem.Image = global::Sprdef.Properties.Resources.key;
+            this.keyboardToolStripMenuItem.Name = "keyboardToolStripMenuItem";
+            this.keyboardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.keyboardToolStripMenuItem.Text = "Keyboard";
+            this.keyboardToolStripMenuItem.Click += new System.EventHandler(this.keyboardToolStripMenuItem_Click);
+            // 
+            // mouseToolStripMenuItem
+            // 
+            this.mouseToolStripMenuItem.Image = global::Sprdef.Properties.Resources.mouse;
+            this.mouseToolStripMenuItem.Name = "mouseToolStripMenuItem";
+            this.mouseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mouseToolStripMenuItem.Text = "Mouse";
+            this.mouseToolStripMenuItem.Click += new System.EventHandler(this.mouseToolStripMenuItem_Click);
             // 
             // spritesToolStripMenuItem
             // 
@@ -339,12 +379,45 @@
             this.lblStatus.Size = new System.Drawing.Size(16, 17);
             this.lblStatus.Text = "   ";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnInputKeyboard,
+            this.btnInputMouse});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(717, 25);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnInputKeyboard
+            // 
+            this.btnInputKeyboard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnInputKeyboard.Image = global::Sprdef.Properties.Resources.key;
+            this.btnInputKeyboard.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnInputKeyboard.Name = "btnInputKeyboard";
+            this.btnInputKeyboard.Size = new System.Drawing.Size(23, 22);
+            this.btnInputKeyboard.Text = "Keyboard input";
+            this.btnInputKeyboard.Click += new System.EventHandler(this.btnInputKeyboard_Click);
+            // 
+            // btnInputMouse
+            // 
+            this.btnInputMouse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnInputMouse.Image = global::Sprdef.Properties.Resources.mouse;
+            this.btnInputMouse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnInputMouse.Name = "btnInputMouse";
+            this.btnInputMouse.Size = new System.Drawing.Size(23, 22);
+            this.btnInputMouse.Text = "Mouse input";
+            this.btnInputMouse.Click += new System.EventHandler(this.btnInputMouse_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(717, 565);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
@@ -360,11 +433,14 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainWindow_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainWindow_MouseDown);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,6 +481,13 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem controlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem keyboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mouseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnInputKeyboard;
+        private System.Windows.Forms.ToolStripButton btnInputMouse;
     }
 }
 

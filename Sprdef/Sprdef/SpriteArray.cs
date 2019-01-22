@@ -8,11 +8,11 @@ namespace Sprdef
     {
         private readonly List<C64Sprite> _sprites = new List<C64Sprite>();
 
-	    public SpriteArray()
-	    {
-		    for(var i = 0; i < Length; i++)
-				_sprites.Add(null);
-	    }
+        public SpriteArray()
+        {
+            for(var i = 0; i < Length; i++)
+                _sprites.Add(null);
+        }
 
         public C64Sprite this[int i]
         {
