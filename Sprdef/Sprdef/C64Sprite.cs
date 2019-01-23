@@ -73,11 +73,24 @@ namespace Sprdef
         {
             if (bytes == null || bytes.Length != 63)
                 throw new ArgumentException();
+            var multicolor = SpriteEditor.Multicolor;
+            SpriteEditor.Multicolor = false;
+            var i = 0;
             for (var x = 0; x < BytesWidth; x++)
                 for (var y = 0; y < Height; y++)
                 {
-                    //TODO
+                    var b = bytes[i];
+                    SetPixel(x * 8, y, b.Bit0 ? 0 : 1);
+                    SetPixel(x * 8 + 1, y, b.Bit1 ? 0 : 1);
+                    SetPixel(x * 8 + 2, y, b.Bit2 ? 0 : 1);
+                    SetPixel(x * 8 + 3, y, b.Bit3 ? 0 : 1);
+                    SetPixel(x * 8 + 4, y, b.Bit4 ? 0 : 1);
+                    SetPixel(x * 8 + 5, y, b.Bit5 ? 0 : 1);
+                    SetPixel(x * 8 + 6, y, b.Bit6 ? 0 : 1);
+                    SetPixel(x * 8 + 7, y, b.Bit7 ? 0 : 1);
+                    i++;
                 }
+            SpriteEditor.Multicolor = multicolor;
         }
 
         public int GetColorIndex(int x, int y)
