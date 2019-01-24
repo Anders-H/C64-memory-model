@@ -724,7 +724,8 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 UndoBuffers[CurrentSpriteIndex].PushState(Sprites[CurrentSpriteIndex]);
-
+                Sprites[CurrentSpriteIndex].SetBytes(x.Sprite.GetBytes());
+                Invalidate();
             }
         }
     }

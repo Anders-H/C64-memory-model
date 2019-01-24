@@ -7,9 +7,17 @@ Backend for creating C64 tools.
 
 `Install-Package C64MemModel`
 
-**Tools (requires .NET Framework 4.6 or later):**
+**Standalone tools:**
 
-[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe) version 1.2
+***[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe) version 1.3***
+
+Features:
+- Keyboard first or mouse first control option
+- Single color or multicolor
+- Undo/redo
+- BASIC import/export
+- CBM prg Studio import/export
+- Free/open source
 
 ## Load .prg files
 ```C#

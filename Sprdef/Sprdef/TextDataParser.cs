@@ -8,7 +8,7 @@ namespace Sprdef
 {
     public class TextDataParser
     {
-        private string _source;
+        private readonly string _source;
 
         public TextDataParser(string source)
         {
@@ -51,7 +51,26 @@ namespace Sprdef
             if (string.IsNullOrWhiteSpace(part))
                 return false;
             var s = new StringBuilder();
-            //TODO
+            for (var i = 0; i < part.Length; i++)
+            {
+                if ("0123456789$abcdef".IndexOf(part.Substring(i, 1), StringComparison.CurrentCultureIgnoreCase) > -1)
+                    s.Append(part.Substring(i, 1));
+            }
+
+            var raw = s.ToString();
+            if (!raw.StartsWith("$"))
+                return int.TryParse(raw, out result);
+            raw = raw.Substring(1).Trim();
+            try
+            {
+                var parsed = Convert.ToInt32(raw, 16);
+                result = parsed;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

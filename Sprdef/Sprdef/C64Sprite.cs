@@ -69,6 +69,16 @@ namespace Sprdef
                         SetPixel(x, y, GetPixel(x, y));
         }
 
+        public void SetBytes(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length != 63)
+                throw new ArgumentException();
+            var b = new C64MemoryModel.Types.Byte[63];
+            for (var i = 0; i < 63; i++)
+                b[i] = new C64MemoryModel.Types.Byte(bytes[i]);
+            SetBytes(b);
+        }
+
         public void SetBytes(C64MemoryModel.Types.Byte[] bytes)
         {
             if (bytes == null || bytes.Length != 63)
@@ -76,18 +86,18 @@ namespace Sprdef
             var multicolor = SpriteEditor.Multicolor;
             SpriteEditor.Multicolor = false;
             var i = 0;
-            for (var x = 0; x < BytesWidth; x++)
-                for (var y = 0; y < Height; y++)
+            for (var y = 0; y < Height; y++)
+                for (var x = 0; x < BytesWidth; x++)
                 {
                     var b = bytes[i];
-                    SetPixel(x * 8, y, b.Bit0 ? 0 : 1);
-                    SetPixel(x * 8 + 1, y, b.Bit1 ? 0 : 1);
-                    SetPixel(x * 8 + 2, y, b.Bit2 ? 0 : 1);
-                    SetPixel(x * 8 + 3, y, b.Bit3 ? 0 : 1);
-                    SetPixel(x * 8 + 4, y, b.Bit4 ? 0 : 1);
-                    SetPixel(x * 8 + 5, y, b.Bit5 ? 0 : 1);
-                    SetPixel(x * 8 + 6, y, b.Bit6 ? 0 : 1);
-                    SetPixel(x * 8 + 7, y, b.Bit7 ? 0 : 1);
+                    SetPixel(x * 8, y, b.Bit0 ? 1 : 0);
+                    SetPixel(x * 8 + 1, y, b.Bit1 ? 1 : 0);
+                    SetPixel(x * 8 + 2, y, b.Bit2 ? 1 : 0);
+                    SetPixel(x * 8 + 3, y, b.Bit3 ? 1 : 0);
+                    SetPixel(x * 8 + 4, y, b.Bit4 ? 1 : 0);
+                    SetPixel(x * 8 + 5, y, b.Bit5 ? 1 : 0);
+                    SetPixel(x * 8 + 6, y, b.Bit6 ? 1 : 0);
+                    SetPixel(x * 8 + 7, y, b.Bit7 ? 1 : 0);
                     i++;
                 }
             SpriteEditor.Multicolor = multicolor;

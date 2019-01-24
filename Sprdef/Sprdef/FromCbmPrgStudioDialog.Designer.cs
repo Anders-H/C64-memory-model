@@ -92,6 +92,7 @@
             // 
             // picPreview
             // 
+            this.picPreview.BackColor = System.Drawing.Color.DimGray;
             this.picPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picPreview.Location = new System.Drawing.Point(332, 200);
             this.picPreview.Name = "picPreview";
@@ -118,6 +119,7 @@
             this.btnOk.TabIndex = 13;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
