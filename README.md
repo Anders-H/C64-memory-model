@@ -9,7 +9,7 @@ Backend for creating C64 tools.
 
 **Standalone tools:**
 
-***[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe) version 1.3***
+***[Sprdef Sprite Editor](http://winsoft.se/files/SetupSprdef.exe) version 1.5***
 
 Features:
 - Keyboard first or mouse first control option
