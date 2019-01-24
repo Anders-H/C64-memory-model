@@ -20,7 +20,7 @@ namespace Sprdef
             set => _sprites[i] = value;
         }
 
-        public static int Length { get; } = 8;
+        public const int Length = 8;
 
         public int Count => Length;
 
@@ -30,13 +30,9 @@ namespace Sprdef
         IEnumerator IEnumerable.GetEnumerator() =>
             _sprites.GetEnumerator();
 
-        public int SpriteWidth => 24;
+        public const int TotalWidth = 192;
 
-        public int SpriteHeight => 21;
-
-        public int TotalWidth => 24*Length;
-
-        public int TotalMultiColorWidth => TotalWidth/2;
+        public int TotalMultiColorWidth = 96;
 
         public void WriteBytes(BinaryWriter w)
         {

@@ -39,7 +39,7 @@ namespace Sprdef
                 }
             }
             var returnvalue = new List<Byte>();
-            for (var i = 0; i < 63; i++)
+            for (var i = 0; i < C64Sprite.TotalBytes; i++)
                 returnvalue.Add(i < bytes.Count ? bytes[i] : new Byte(0));
             return returnvalue.ToArray();
         }

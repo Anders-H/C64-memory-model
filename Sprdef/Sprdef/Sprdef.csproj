@@ -66,6 +66,7 @@
     <Compile Include="CbmPrgStudioDialog.Designer.cs">
       <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorPickerCell.cs" />
     <Compile Include="ColorPicker.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ExportPngDialog.cs">
@@ -102,6 +103,7 @@
     <Compile Include="SpriteEditor.cs" />
     <Compile Include="TextDataParser.cs" />
     <Compile Include="UndoBuffer.cs" />
+    <Compile Include="WindowPainter.cs" />
     <EmbeddedResource Include="BasicDialog.resx">
       <DependentUpon>BasicDialog.cs</DependentUpon>
     </EmbeddedResource>

@@ -20,6 +20,7 @@ namespace Sprdef
         public const int Width = 24;
         public const int Height = 21;
         public const int BytesWidth = 3;
+        public const int TotalBytes = 63;
 
         static C64Sprite()
         {
@@ -71,17 +72,17 @@ namespace Sprdef
 
         public void SetBytes(byte[] bytes)
         {
-            if (bytes == null || bytes.Length != 63)
+            if (bytes == null || bytes.Length != TotalBytes)
                 throw new ArgumentException();
-            var b = new C64MemoryModel.Types.Byte[63];
-            for (var i = 0; i < 63; i++)
+            var b = new C64MemoryModel.Types.Byte[TotalBytes];
+            for (var i = 0; i < TotalBytes; i++)
                 b[i] = new C64MemoryModel.Types.Byte(bytes[i]);
             SetBytes(b);
         }
 
         public void SetBytes(C64MemoryModel.Types.Byte[] bytes)
         {
-            if (bytes == null || bytes.Length != 63)
+            if (bytes == null || bytes.Length != TotalBytes)
                 throw new ArgumentException();
             var multicolor = SpriteEditor.Multicolor;
             SpriteEditor.Multicolor = false;
@@ -230,7 +231,7 @@ namespace Sprdef
 
         public byte[] GetBytes()
         {
-            var ret = new byte[63];
+            var ret = new byte[TotalBytes];
             var i = 0;
             for (var y = 0; y < Height; y++)
                 for (var x = 0; x < 3; x++)
@@ -248,7 +249,7 @@ namespace Sprdef
         public bool Load(BinaryReader sr)
         {
             int x = 0, y = 0;
-            for (var i = 0; i < 63; i++)
+            for (var i = 0; i < TotalBytes; i++)
             {
                 var b = new C64MemoryModel.Types.Byte(sr.ReadByte());
                 var physicalX = x*8;

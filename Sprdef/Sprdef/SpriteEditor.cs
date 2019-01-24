@@ -55,7 +55,7 @@ namespace Sprdef
 
         public void SavePngMultiColorDoubleWidth(string filename, SpriteArray sprites, bool transparentBackground)
         {
-            using (var b = new Bitmap(sprites.TotalWidth, C64Sprite.Height))
+            using (var b = new Bitmap(SpriteArray.TotalWidth, C64Sprite.Height))
             {
                 var x = 0;
                 foreach (var sprite in sprites)
@@ -84,7 +84,7 @@ namespace Sprdef
 
         public void SavePng(string filename, SpriteArray sprites, bool transparentBackground)
         {
-            using (var b = new Bitmap(sprites.TotalWidth, C64Sprite.Height))
+            using (var b = new Bitmap(SpriteArray.TotalWidth, C64Sprite.Height))
             {
                 var x = 0;
                 foreach (var sprite in sprites)

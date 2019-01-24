@@ -19,7 +19,7 @@ namespace Sprdef
             var lineNumber = (int)numLineNum.Value;
             var step = (int)numStep.Value;
             var s = new StringBuilder();
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < SpriteArray.Length; i++)
             {
                 if (i > 0)
                     s.AppendLine();

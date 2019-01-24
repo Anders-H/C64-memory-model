@@ -28,7 +28,7 @@ namespace Sprdef
 
         private void CreateUndoBuffers()
         {
-            UndoBuffers = new UndoBuffer[8];
+            UndoBuffers = new UndoBuffer[SpriteArray.Length];
             for (var i = 0; i < Sprites.Count; i++)
                 UndoBuffers[i] = new UndoBuffer();
         }
@@ -79,42 +79,20 @@ namespace Sprdef
 
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.AssumeLinear;
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
-
-            if (RedrawBackgroundFlag)
-            {
-                e.Graphics.Clear(BackColor);
-                RedrawBackgroundFlag = false;
-            }
-
-            SpriteEditor.X = 10;
-            SpriteEditor.Y = 10 + ColorPicker.ColorCell.Size + menuStrip1.Height + toolStrip1.Height;
-            var pw = (Width - 200) / C64Sprite.Width;
-            var ph = (Height - 200) / C64Sprite.Height;
-            SpriteEditor.PixelSize = Math.Min(pw, ph);
-            SpriteEditor.PixelSize = SpriteEditor.PixelSize < 6 ? 6 : SpriteEditor.PixelSize;
-
-            var doubleSize = Width * 1.5 > Height;
-            var spritesStartX = doubleSize ? Width - 68 : Width - 44;
-            var spritesStartY = SpriteEditor.Y;
-            for (var i = 0; i < 8; i++)
-            {
-                Sprites[i].Draw(e.Graphics, spritesStartX, spritesStartY, doubleSize);
-                spritesStartY += doubleSize ? 44 : 22;
-            }
-
-            SpriteEditor.Draw(e.Graphics);
-            ColorPicker.ColorCell.Size = SpriteEditor.PixelSize * 2;
-            ColorPicker.Draw(e.Graphics, SpriteEditor.X, SpriteEditor.Y - (ColorPicker.ColorCell.Size + 8),
-                SpriteEditor.Multicolor);
-            if (Active || Width < 4)
-                return;
-            using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
-                e.Graphics.FillRectangle(shadow, 0, 0, Width, Height);
+            WindowPainter.Paint(
+                e.Graphics,
+                RedrawBackgroundFlag,
+                BackColor,
+                Width,
+                Height,
+                menuStrip1.Height + toolStrip1.Height,
+                SpriteEditor,
+                Sprites,
+                ColorPicker);
+            if (!Active)
+                using (var shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
+                    e.Graphics.FillRectangle(shadow, 0, 0, Width, Height);
+            RedrawBackgroundFlag = false;
         }
 
         private void MainWindow_Shown(object sender, EventArgs e)
@@ -385,7 +363,7 @@ namespace Sprdef
             screenThing = ColorPicker.HitTest(e.X, e.Y);
             if (screenThing != null)
             {
-                var c = (ColorPicker.ColorCell)screenThing;
+                var c = (ColorPickerCell)screenThing;
                 if ((e.Button & MouseButtons.Left) > 0)
                 {
                     void SetCol(int i)
@@ -441,7 +419,7 @@ namespace Sprdef
         {
             if (SpriteEditor.HitTest(x, y))
                 return SpriteEditor;
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < SpriteArray.Length; i++)
                 if (Sprites[i].HitTest(x, y))
                     return Sprites[i];
             return null;
@@ -592,7 +570,7 @@ namespace Sprdef
                         var header = sr.ReadBytes(6);
                         if (Encoding.UTF8.GetString(header) == "SPRDEF")
                         {
-                            for (var i = 0; i < 8; i++)
+                            for (var i = 0; i < SpriteArray.Length; i++)
                                 Sprites[i].Load(sr);
                         }
                         sr.Close();
@@ -657,7 +635,7 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 C64Sprite.BackgroundColorIndex = x.ColorIndex;
-                for (var i = 0; i < 8; i++)
+                for (var i = 0; i < SpriteArray.Length; i++)
                     Sprites[i].ResetPixels();
                 Invalidate();
             }
@@ -672,7 +650,7 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 C64Sprite.ForegroundColorIndex = x.ColorIndex;
-                for (var i = 0; i < 8; i++)
+                for (var i = 0; i < SpriteArray.Length; i++)
                     Sprites[i].ResetPixels();
                 Invalidate();
             }
@@ -687,7 +665,7 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 C64Sprite.ExtraColor1Index = x.ColorIndex;
-                for (var i = 0; i < 8; i++)
+                for (var i = 0; i < SpriteArray.Length; i++)
                     Sprites[i].ResetPixels();
                 Invalidate();
             }
@@ -702,7 +680,7 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 C64Sprite.ExtraColor2Index = x.ColorIndex;
-                for (var i = 0; i < 8; i++)
+                for (var i = 0; i < SpriteArray.Length; i++)
                     Sprites[i].ResetPixels();
                 Invalidate();
             }
@@ -721,7 +699,7 @@ namespace Sprdef
                 SpriteEditor.SetCursorX(cursorX);
             }
             SpriteEditor.SetCursorX(cursorX);
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < SpriteArray.Length; i++)
                 Sprites[i].ResetPixels();
             Invalidate();
         }
@@ -908,6 +886,15 @@ namespace Sprdef
                 Sprites[CurrentSpriteIndex] = Sprites[7].Clone();
             SpriteEditor.Sprite = Sprites[CurrentSpriteIndex];
             Invalidate();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) =>
+            Close();
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!MessageDisplayer.Ask("Quit?", Text))
+                e.Cancel = true;
         }
     }
 }

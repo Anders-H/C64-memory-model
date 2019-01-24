@@ -6,11 +6,12 @@ namespace Sprdef
 {
     public partial class CbmPrgStudioDialog : Form
     {
+        public SpriteArray Sprites { get; set; }
+
         public CbmPrgStudioDialog()
         {
             InitializeComponent();
         }
-        public SpriteArray Sprites { get; set; }
 
         private void CbmPrgStudioDialog_Load(object sender, EventArgs e)
         {
@@ -18,6 +19,7 @@ namespace Sprdef
             cboDecHex.Items.Add("Dec");
             cboDecHex.SelectedIndex = 0;
         }
+
         private void cboDecHex_SelectedIndexChanged(object sender, EventArgs e)
         {
             var s = new StringBuilder();
@@ -47,7 +49,10 @@ namespace Sprdef
             textBox1.ScrollToCaret();
         }
 
-        private void btnCopy_Click(object sender, EventArgs e) => Clipboard.SetText(textBox1.Text);
-        private void btnClose_Click(object sender, EventArgs e) => Close();
+        private void btnCopy_Click(object sender, EventArgs e) =>
+            Clipboard.SetText(textBox1.Text);
+
+        private void btnClose_Click(object sender, EventArgs e) =>
+            Close();
     }
 }
