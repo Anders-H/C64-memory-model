@@ -147,6 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="polar_bear.ico" />
+    <None Include="Resources\112_LeftArrowLong_Blue_16x16_72.png" />
+    <None Include="Resources\112_DownArrowLong_Blue_16x16_72.png" />
+    <None Include="Resources\112_RightArrowLong_Blue_16x16_72.png" />
+    <None Include="Resources\112_UpArrowLong_Blue_16x16_72.png" />
     <None Include="Resources\key.png" />
     <None Include="Resources\mouse.png" />
     <None Include="Resources\112_ArrowReturnRight_Blue_16x16_72.png" />

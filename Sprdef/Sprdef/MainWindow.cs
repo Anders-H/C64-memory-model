@@ -896,5 +896,37 @@ namespace Sprdef
             if (!MessageDisplayer.Ask("Quit?", Text))
                 e.Cancel = true;
         }
+
+        private void upToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void leftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnScrollUp_Click(object sender, EventArgs e) =>
+            upToolStripMenuItem_Click(sender, e);
+
+        private void btnScrollRight_Click(object sender, EventArgs e) =>
+            rightToolStripMenuItem_Click(sender, e);
+
+        private void btnScrollDown_Click(object sender, EventArgs e) =>
+            downToolStripMenuItem_Click(sender, e);
+
+        private void btnScrollLeft_Click(object sender, EventArgs e) =>
+            leftToolStripMenuItem_Click(sender, e);
     }
 }

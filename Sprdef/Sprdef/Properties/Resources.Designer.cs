@@ -83,6 +83,46 @@ namespace Sprdef.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _112_DownArrowLong_Blue_16x16_72 {
+            get {
+                object obj = ResourceManager.GetObject("112_DownArrowLong_Blue_16x16_72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _112_LeftArrowLong_Blue_16x16_72 {
+            get {
+                object obj = ResourceManager.GetObject("112_LeftArrowLong_Blue_16x16_72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _112_RightArrowLong_Blue_16x16_72 {
+            get {
+                object obj = ResourceManager.GetObject("112_RightArrowLong_Blue_16x16_72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _112_UpArrowLong_Blue_16x16_72 {
+            get {
+                object obj = ResourceManager.GetObject("112_UpArrowLong_Blue_16x16_72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap key {
             get {
                 object obj = ResourceManager.GetObject("key", resourceCulture);
