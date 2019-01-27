@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -155,6 +156,9 @@ namespace Sprdef
             }
         }
 
+        public void SetBit(int x, int y, bool v) =>
+            SpriteData[x, y] = v;
+
         public int GetPixel(int x, int y)
         {
             if (!SpriteEditor.Multicolor)
@@ -169,6 +173,9 @@ namespace Sprdef
                 return ExtraColor2Index;
             return BackgroundColorIndex;
         }
+
+        private bool GetBit(int x, int y) =>
+            SpriteData[x, y];
 
         public void Draw(Graphics g, int x, int y, bool doubleSize)
         {
@@ -268,6 +275,48 @@ namespace Sprdef
                 y++;
             }
             return true;
+        }
+
+        private bool[] GetRow(int y)
+        {
+            var row = new bool[Width];
+            for (var x = 0; x < Width; x++)
+                row[x] = GetBit(x, y);
+            return row;
+        }
+
+        private void SetRow(int y, bool[] row)
+        {
+            for (var x = 0; x < Width; x++)
+                SetBit(x, y, row[x]);
+        }
+
+        public void ScrollUp()
+        {
+            var row = GetRow(0);
+            for (var y = 1; y < Height; y++)
+                for (var x = 0; x < Width; x++)
+                    SetPixel(x, y - 1, GetPixel(x, y));
+            SetRow(Height - 1, row);
+        }
+
+        public void ScrollDown()
+        {
+            var row = GetRow(Height - 1);
+            for (var y = Height - 2; y >= 0; y--)
+                for (var x = 0; x < Width; x++)
+                    SetPixel(x, y + 1, GetPixel(x, y));
+            SetRow(0, row);
+        }
+
+        public void ScrollLeft()
+        {
+
+        }
+
+        public void ScrollRight()
+        {
+
         }
     }
 }

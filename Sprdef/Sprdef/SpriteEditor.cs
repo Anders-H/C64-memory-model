@@ -170,5 +170,25 @@ namespace Sprdef
                 return new Point(x, y);
             return null;
         }
+
+        public void ScrollUp() =>
+            Sprite.ScrollUp();
+
+        public void ScrollDown() =>
+            Sprite.ScrollDown();
+
+        public void ScrollLeft()
+        {
+            Sprite.ScrollLeft();
+            if (Multicolor)
+                Sprite.ScrollLeft();
+        }
+
+        public void ScrollRight()
+        {
+            Sprite.ScrollRight();
+            if (Multicolor)
+                Sprite.ScrollRight();
+        }
     }
 }
