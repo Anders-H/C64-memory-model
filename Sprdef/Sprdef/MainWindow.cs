@@ -899,22 +899,30 @@ namespace Sprdef
 
         private void upToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            PushUndoState();
+            SpriteEditor.ScrollUp();
+            Invalidate();
         }
 
         private void rightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            PushUndoState();
+            SpriteEditor.ScrollRight();
+            Invalidate();
         }
 
         private void downToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            PushUndoState();
+            SpriteEditor.ScrollDown();
+            Invalidate();
         }
 
         private void leftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            PushUndoState();
+            SpriteEditor.ScrollLeft();
+            Invalidate();
         }
 
         private void btnScrollUp_Click(object sender, EventArgs e) =>
