@@ -9,7 +9,7 @@ namespace Sprdef
         private int CursorY { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public static bool Multicolor { get; set; } = false;
+        public static bool Multicolor { get; set; }
         public Rectangle Bounds => new Rectangle(X, Y, InnerWidth, InnerHeight);
         public int PixelSize { get; set; } = 10;
         public C64Sprite Sprite { get; set; }
@@ -171,24 +171,40 @@ namespace Sprdef
             return null;
         }
 
-        public void ScrollUp() =>
+        public void ScrollUp()
+        {
+            var multicolor = Multicolor;
+            Multicolor = false;
             Sprite.ScrollUp();
+            Multicolor = multicolor;
+        }
 
-        public void ScrollDown() =>
+        public void ScrollDown()
+        {
+            var multicolor = Multicolor;
+            Multicolor = false;
             Sprite.ScrollDown();
+            Multicolor = multicolor;
+        }
 
         public void ScrollLeft()
         {
+            var multicolor = Multicolor;
+            Multicolor = false;
             Sprite.ScrollLeft();
-            if (Multicolor)
+            if (multicolor)
                 Sprite.ScrollLeft();
+            Multicolor = multicolor;
         }
 
         public void ScrollRight()
         {
+            var multicolor = Multicolor;
+            Multicolor = false;
             Sprite.ScrollRight();
-            if (Multicolor)
+            if (multicolor)
                 Sprite.ScrollRight();
+            Multicolor = multicolor;
         }
     }
 }
