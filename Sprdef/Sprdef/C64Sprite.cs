@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -285,10 +286,24 @@ namespace Sprdef
             return row;
         }
 
-        private void SetRow(int y, bool[] row)
+        private void SetRow(int y, IReadOnlyList<bool> row)
         {
             for (var x = 0; x < Width; x++)
                 SetBit(x, y, row[x]);
+        }
+
+        private bool[] GetColumn(int x)
+        {
+            var column = new bool[Height];
+            for (var y = 0; y < Height; y++)
+                column[y] = GetBit(x, y);
+            return column;
+        }
+
+        public void SetColumn(int x, IReadOnlyList<bool> column)
+        {
+            for (var y = 0; y < Height; y++)
+                SetBit(x, y, column[y]);
         }
 
         public void ScrollUp()
@@ -311,12 +326,20 @@ namespace Sprdef
 
         public void ScrollLeft()
         {
-
+            var column = GetColumn(0);
+            for (var x = 1; x < Width; x++)
+                for (var y = 0; y < Height; y++)
+                    SetPixel(x - 1, y, GetPixel(x, y));
+            SetColumn(Width - 1, column);
         }
 
         public void ScrollRight()
         {
-
+            var column = GetColumn(Width - 1);
+            for (var x = Width - 2; x >= 0; x--)
+                for (var y = 0; y < Height; y++)
+                    SetPixel(x + 1, y, GetPixel(x, y));
+            SetColumn(0, column);
         }
     }
 }
