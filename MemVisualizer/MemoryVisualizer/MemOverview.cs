@@ -7,6 +7,7 @@ namespace MemoryVisualizer
     public class MemOverview
     {
         private int[] Data { get; set; }
+
         public static MemOverview Create(Memory memory, int height)
         {
             //Create the overview.
@@ -21,6 +22,7 @@ namespace MemoryVisualizer
             //TODO!
             return x;
         }
+
         public void Draw(Graphics g, int displayPointer)
         {
 

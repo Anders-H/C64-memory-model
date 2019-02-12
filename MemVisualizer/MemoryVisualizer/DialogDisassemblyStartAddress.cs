@@ -7,6 +7,7 @@ namespace MemoryVisualizer
     public partial class DialogDisassemblyStartAddress : Form
     {
         public int StartAddress { get; set; }
+
         public DialogDisassemblyStartAddress()
         {
             InitializeComponent();
@@ -14,20 +15,23 @@ namespace MemoryVisualizer
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Action invalidAddress = () => MessageBox.Show($@"Invalid start address. Must be integer (0 to {ushort.MaxValue}).",Text,MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if (!int.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out int startAddress))
+            void InvalidAddress() =>
+                MessageBox.Show($@"Invalid start address. Must be integer (0 to {ushort.MaxValue}).", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (!int.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var startAddress))
             {
-                invalidAddress();
+                InvalidAddress();
                 return;
             }
             if (startAddress < 0 || startAddress > ushort.MaxValue)
             {
-                invalidAddress();
+                InvalidAddress();
                 return;
             }
             StartAddress = startAddress;
             DialogResult = DialogResult.OK;
         }
-        private void DialogDisassemblyStartAddress_Load(object sender, EventArgs e) => textBox1.Text = StartAddress.ToString(CultureInfo.InvariantCulture);
+
+        private void DialogDisassemblyStartAddress_Load(object sender, EventArgs e) =>
+            textBox1.Text = StartAddress.ToString(CultureInfo.InvariantCulture);
     }
 }

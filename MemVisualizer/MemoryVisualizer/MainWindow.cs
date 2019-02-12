@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
+using MemoryVisualizer.Renderer;
 
 namespace MemoryVisualizer
 {
@@ -166,6 +167,7 @@ namespace MemoryVisualizer
 			_screenRenderer = new HexRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
 			RenderScreen();
 		}
+
 		private void rawDecToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
@@ -175,6 +177,7 @@ namespace MemoryVisualizer
 			_screenRenderer = new DecRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
 			RenderScreen();
 		}
+
 		private void disassemblyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (!SetDisassemblyStartAddress())
@@ -208,12 +211,9 @@ namespace MemoryVisualizer
 			}
 		}
 		private void homeToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (DisplayMode == DisplayMode.Disassembly)
-				DisplayPointer.FromInt(DisassemblyStartAddress.Value);
-			else
-				DisplayPointer.FromInt(0);
-			RenderScreen();
-		}
+        {
+            DisplayPointer.FromInt(DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
+            RenderScreen();
+        }
 	}
 }

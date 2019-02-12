@@ -2,6 +2,8 @@
 {
     public enum DisplayMode
     {
-        HexRaw, DecRaw, Disassembly
+        HexRaw,
+        DecRaw,
+        Disassembly
     }
 }

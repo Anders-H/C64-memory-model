@@ -69,9 +69,13 @@
     <Compile Include="MemOverview.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\DecRawScreenRenderer.cs" />
+    <Compile Include="Renderer\DisassemblyScreenRenderer.cs" />
+    <Compile Include="Renderer\HexRawScreenRenderer.cs" />
+    <Compile Include="Renderer\IScreenRenderer.cs" />
+    <Compile Include="Renderer\ScreenRenterer.cs" />
     <Compile Include="ScreenCharacterMap.cs" />
     <Compile Include="ScreenPainter.cs" />
-    <Compile Include="ScreenRenderer.cs" />
     <EmbeddedResource Include="DialogDisassemblyStartAddress.resx">
       <DependentUpon>DialogDisassemblyStartAddress.cs</DependentUpon>
     </EmbeddedResource>
