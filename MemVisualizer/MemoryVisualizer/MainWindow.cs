@@ -33,6 +33,7 @@ namespace MemoryVisualizer
             if (Memory != null)
                 MemOverview = MemOverview.Create(Memory);
             Invalidate();
+            System.Diagnostics.Debug.WriteLine($"Width: {Width}, Height: {Height}");
         }
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
@@ -215,5 +216,8 @@ namespace MemoryVisualizer
             DisplayPointer.FromInt(DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             RenderScreen();
         }
+
+        private void MainWindow_Load(object sender, EventArgs e) =>
+            System.Diagnostics.Debug.WriteLine($"Width: {Width}, Height: {Height}");
     }
 }

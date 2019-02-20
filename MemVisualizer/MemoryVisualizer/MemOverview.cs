@@ -14,7 +14,7 @@ namespace MemoryVisualizer
         private static int _bytesPerPixel = 128;
         private static int _width = 16;
 
-        public static MemOverview Create(Memory memory)
+        public static MemOverview Create(Memory memory, int actualHeight)
         {
             //Create the overview.
             var x = new MemOverview {
@@ -57,6 +57,14 @@ namespace MemoryVisualizer
 
         private void CreateBitmap()
         {
+            try
+            {
+                Bitmap?.Dispose();
+            }
+            catch
+            {
+                // Ignored.
+            }
             Bitmap = new Bitmap(_width, _height);
             using (var g = Graphics.FromImage(Bitmap))
             {
