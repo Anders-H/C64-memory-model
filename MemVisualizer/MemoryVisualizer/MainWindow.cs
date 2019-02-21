@@ -30,8 +30,8 @@ namespace MemoryVisualizer
         private void MainWindow_Resize(object sender, EventArgs e)
         {
             _screenPainter.RecalcGridFontSize = true;
-            if (Memory != null)
-                MemOverview = MemOverview.Create(Memory);
+            if (Memory != null && (MemOverview?.NeedsRecreating(Height) ?? false))
+                MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             Invalidate();
             System.Diagnostics.Debug.WriteLine($"Width: {Width}, Height: {Height}");
         }
@@ -67,7 +67,7 @@ namespace MemoryVisualizer
                 DisassemblyStartAddress.FromInt(start.Value);
                 DisplayMode = DisplayMode.HexRaw;
                 if (Memory != null)
-                    MemOverview = MemOverview.Create(Memory);
+                    MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
                 RenderScreen();
             }
             catch (Exception)
@@ -166,6 +166,7 @@ namespace MemoryVisualizer
             rawHexToolStripMenuItem.Checked = true;
             DisplayMode = DisplayMode.HexRaw;
             _screenRenderer = new HexRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
+            MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             RenderScreen();
         }
 
@@ -176,6 +177,7 @@ namespace MemoryVisualizer
             rawDecToolStripMenuItem.Checked = true;
             DisplayMode = DisplayMode.DecRaw;
             _screenRenderer = new DecRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
+            MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             RenderScreen();
         }
 
@@ -188,6 +190,7 @@ namespace MemoryVisualizer
             disassemblyToolStripMenuItem.Checked = true;
             DisplayMode = DisplayMode.Disassembly;
             _screenRenderer = new DisassemblyScreenRenderer(ScreenCharacterMap.Rows, Characters);
+            MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             RenderScreen();
         }
 

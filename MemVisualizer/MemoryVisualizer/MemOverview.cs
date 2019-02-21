@@ -10,18 +10,22 @@ namespace MemoryVisualizer
     {
         private int[] Data { get; set; }
         private Bitmap Bitmap { get; set; }
-        private static int _height = 512;
+        private static int _actualHeight;
+        private static int Height => ushort.MaxValue/_bytesPerPixel;
         private static int _bytesPerPixel = 128;
         private static int _width = 16;
+        private static int _disassembly;
 
-        public static MemOverview Create(Memory memory, int actualHeight)
+        public static MemOverview Create(Memory memory, int actualHeight, int disassembly)
         {
-            //Create the overview.
+            _actualHeight = actualHeight;
+            _disassembly = disassembly;
+            _bytesPerPixel = GetDivFactorFromHeight(actualHeight);
             var x = new MemOverview {
-                Data = new int[_height]
+                Data = new int[Height]
             };
             var memIndex = 0;
-            for (var yIndex = 0; yIndex < _height; yIndex++)
+            for (var yIndex = 0; yIndex < Height; yIndex++)
             {
                 var byteSum = 0;
                 for (var y = 0; y < _bytesPerPixel; y++)
@@ -34,6 +38,13 @@ namespace MemoryVisualizer
             x.NormalizeData();
             x.CreateBitmap();
             return x;
+        }
+
+        public bool NeedsRecreating(int actualHeight)
+        {
+            var f1 = GetDivFactorFromHeight(actualHeight);
+            var f2 = GetDivFactorFromHeight(_actualHeight);
+            return f1 != f2;
         }
 
         private void NormalizeData()
@@ -65,7 +76,7 @@ namespace MemoryVisualizer
             {
                 // Ignored.
             }
-            Bitmap = new Bitmap(_width, _height);
+            Bitmap = new Bitmap(_width, Height);
             using (var g = Graphics.FromImage(Bitmap))
             {
                 g.SmoothingMode = SmoothingMode.None;
@@ -73,6 +84,15 @@ namespace MemoryVisualizer
                 {
                     using (var p = new Pen(Color.FromArgb(Data[i], Data[i], Data[i])))
                         g.DrawLine(p, 0, i, _width, i);
+                    if (_disassembly <= 0)
+                        continue;
+                    {
+                        var mem = i * _bytesPerPixel;
+                        if (mem > _disassembly)
+                            continue;
+                        using (var p = new Pen(Color.FromArgb(140, 255, 0, 0)))
+                            g.DrawLine(p, 0, i, _width, i);
+                    }
                 }
             }
         }
@@ -82,6 +102,13 @@ namespace MemoryVisualizer
             g.DrawImage(Bitmap, x, y);
             var ypos = y + (displayPointer / _bytesPerPixel);
             g.DrawLine(Pens.Red, x + 7, ypos, x + 20, ypos);
+        }
+
+        private static int GetDivFactorFromHeight(int height)
+        {
+            if (height >= 1200)
+                return 64;
+            return height >= 600 ? 128 : 256;
         }
     }
 }
