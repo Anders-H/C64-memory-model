@@ -4,6 +4,7 @@
     {
         HexRaw,
         DecRaw,
-        Disassembly
+        Disassembly,
+        Sprite
     }
 }

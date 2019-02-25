@@ -74,6 +74,7 @@
     <Compile Include="Renderer\HexRawScreenRenderer.cs" />
     <Compile Include="Renderer\IScreenRenderer.cs" />
     <Compile Include="Renderer\ScreenRenterer.cs" />
+    <Compile Include="Renderer\SpriteScreenRenderer.cs" />
     <Compile Include="ScreenCharacterMap.cs" />
     <Compile Include="ScreenPainter.cs" />
     <EmbeddedResource Include="DialogDisassemblyStartAddress.resx">

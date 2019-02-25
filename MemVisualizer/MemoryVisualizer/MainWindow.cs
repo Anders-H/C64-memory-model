@@ -99,6 +99,7 @@ namespace MemoryVisualizer
             {
                 case DisplayMode.HexRaw:
                 case DisplayMode.DecRaw:
+                case DisplayMode.Sprite:
                     StepSize = _screenRenderer.Render(ref displayPointer, Memory);
                     break;
                 case DisplayMode.Disassembly:
@@ -190,6 +191,17 @@ namespace MemoryVisualizer
             disassemblyToolStripMenuItem.Checked = true;
             DisplayMode = DisplayMode.Disassembly;
             _screenRenderer = new DisassemblyScreenRenderer(ScreenCharacterMap.Rows, Characters);
+            MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
+            RenderScreen();
+        }
+
+        private void spriteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
+                item.Checked = false;
+            spriteToolStripMenuItem.Checked = true;
+            DisplayMode = DisplayMode.Sprite;
+            _screenRenderer = new SpriteScreenRenderer(ScreenCharacterMap.Rows, Characters);
             MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             RenderScreen();
         }

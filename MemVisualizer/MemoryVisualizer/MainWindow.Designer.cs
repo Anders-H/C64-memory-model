@@ -45,6 +45,7 @@
             this.rawHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rawDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disassemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -147,7 +148,8 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rawHexToolStripMenuItem,
             this.rawDecToolStripMenuItem,
-            this.disassemblyToolStripMenuItem});
+            this.disassemblyToolStripMenuItem,
+            this.spriteToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -157,23 +159,30 @@
             this.rawHexToolStripMenuItem.Checked = true;
             this.rawHexToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rawHexToolStripMenuItem.Name = "rawHexToolStripMenuItem";
-            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rawHexToolStripMenuItem.Text = "Raw (Hex)";
             this.rawHexToolStripMenuItem.Click += new System.EventHandler(this.rawHexToolStripMenuItem_Click);
             // 
             // rawDecToolStripMenuItem
             // 
             this.rawDecToolStripMenuItem.Name = "rawDecToolStripMenuItem";
-            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rawDecToolStripMenuItem.Text = "Raw (Dec)";
             this.rawDecToolStripMenuItem.Click += new System.EventHandler(this.rawDecToolStripMenuItem_Click);
             // 
             // disassemblyToolStripMenuItem
             // 
             this.disassemblyToolStripMenuItem.Name = "disassemblyToolStripMenuItem";
-            this.disassemblyToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.disassemblyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.disassemblyToolStripMenuItem.Text = "Disassembly";
             this.disassemblyToolStripMenuItem.Click += new System.EventHandler(this.disassemblyToolStripMenuItem_Click);
+            // 
+            // spriteToolStripMenuItem
+            // 
+            this.spriteToolStripMenuItem.Name = "spriteToolStripMenuItem";
+            this.spriteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spriteToolStripMenuItem.Text = "Sprite";
+            this.spriteToolStripMenuItem.Click += new System.EventHandler(this.spriteToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -220,6 +229,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem homeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spriteToolStripMenuItem;
     }
 }
 
