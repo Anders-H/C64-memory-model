@@ -13,6 +13,7 @@ namespace MemoryVisualizer
         private IScreenRenderer _screenRenderer;
         private Memory Memory { get; set; }
         private Address DisplayPointer { get; } = new Address(0);
+        private int _lastRenderedDisplayPointer;
         private DisplayMode DisplayMode { get; set; }
         private ScreenCharacterMap Characters { get; } = new ScreenCharacterMap();
         private int StepSize { get; set; }
@@ -38,6 +39,7 @@ namespace MemoryVisualizer
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
             _screenPainter.Paint(e.Graphics, Memory, ClientSize, menuStrip1.Height, ScreenCharacterMap.Rows, ScreenCharacterMap.Columns, Characters);
+            _screenRenderer.DrawGraphics(e.Graphics, Size, Memory, _lastRenderedDisplayPointer);
             MemOverview?.Draw(e.Graphics, DisplayPointer.Value, 10, menuStrip1.Height + 10);
         }
 
@@ -94,16 +96,17 @@ namespace MemoryVisualizer
             if (Memory == null)
                 return;
             Characters.Clear();
-            var displayPointer = (int)DisplayPointer.Value;
+            _lastRenderedDisplayPointer = DisplayPointer.Value;
+            var p = _lastRenderedDisplayPointer;
             switch (DisplayMode)
             {
                 case DisplayMode.HexRaw:
                 case DisplayMode.DecRaw:
                 case DisplayMode.Sprite:
-                    StepSize = _screenRenderer.Render(ref displayPointer, Memory);
+                    StepSize = _screenRenderer.RenderText(ref p, Memory);
                     break;
                 case DisplayMode.Disassembly:
-                    LastPerformedDisassemblyStepSize = StepSize = _screenRenderer.Render(ref displayPointer, Memory);
+                    LastPerformedDisassemblyStepSize = StepSize = _screenRenderer.RenderText(ref p, Memory);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -113,10 +116,21 @@ namespace MemoryVisualizer
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.PageUp)
-                previousPageToolStripMenuItem_Click(sender, new EventArgs());
-            else if (e.KeyCode == Keys.PageDown)
-                nextPageToolStripMenuItem_Click(sender, new EventArgs());
+            switch (e.KeyCode)
+            {
+                case Keys.PageUp:
+                    previousPageToolStripMenuItem_Click(sender, new EventArgs());
+                    break;
+                case Keys.PageDown:
+                    nextPageToolStripMenuItem_Click(sender, new EventArgs());
+                    break;
+                case Keys.OemMinus:
+                    previousByteToolStripMenuItem_Click(sender, new EventArgs());
+                    break;
+                case Keys.Oemplus:
+                    nextByteToolStripMenuItem_Click(sender, new EventArgs());
+                    break;
+            }
         }
 
         private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -165,6 +179,8 @@ namespace MemoryVisualizer
             foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
                 item.Checked = false;
             rawHexToolStripMenuItem.Checked = true;
+            previousByteToolStripMenuItem.Enabled = true;
+            nextByteToolStripMenuItem.Enabled = true;
             DisplayMode = DisplayMode.HexRaw;
             _screenRenderer = new HexRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
             MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
@@ -176,6 +192,8 @@ namespace MemoryVisualizer
             foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
                 item.Checked = false;
             rawDecToolStripMenuItem.Checked = true;
+            previousByteToolStripMenuItem.Enabled = true;
+            nextByteToolStripMenuItem.Enabled = true;
             DisplayMode = DisplayMode.DecRaw;
             _screenRenderer = new DecRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
             MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
@@ -189,6 +207,8 @@ namespace MemoryVisualizer
             foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
                 item.Checked = false;
             disassemblyToolStripMenuItem.Checked = true;
+            previousByteToolStripMenuItem.Enabled = false;
+            nextByteToolStripMenuItem.Enabled = false;
             DisplayMode = DisplayMode.Disassembly;
             _screenRenderer = new DisassemblyScreenRenderer(ScreenCharacterMap.Rows, Characters);
             MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
@@ -200,6 +220,8 @@ namespace MemoryVisualizer
             foreach (ToolStripMenuItem item in viewToolStripMenuItem.DropDownItems)
                 item.Checked = false;
             spriteToolStripMenuItem.Checked = true;
+            previousByteToolStripMenuItem.Enabled = true;
+            nextByteToolStripMenuItem.Enabled = true;
             DisplayMode = DisplayMode.Sprite;
             _screenRenderer = new SpriteScreenRenderer(ScreenCharacterMap.Rows, Characters);
             MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
@@ -234,5 +256,25 @@ namespace MemoryVisualizer
 
         private void MainWindow_Load(object sender, EventArgs e) =>
             System.Diagnostics.Debug.WriteLine($"Width: {Width}, Height: {Height}");
+
+        private void previousByteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DisplayMode == DisplayMode.Disassembly)
+                return;
+            if (DisplayPointer.CanDec(1))
+                DisplayPointer.Dec(1);
+            else
+                DisplayPointer.FromInt(0);
+            RenderScreen();
+        }
+
+        private void nextByteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DisplayMode == DisplayMode.Disassembly)
+                return;
+            if (DisplayPointer.CanInc(1))
+                DisplayPointer.Inc(1);
+            RenderScreen();
+        }
     }
 }

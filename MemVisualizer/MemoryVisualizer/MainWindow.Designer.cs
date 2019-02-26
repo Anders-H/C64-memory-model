@@ -46,6 +46,9 @@
             this.rawDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disassemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.previousByteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextByteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,6 +93,9 @@
             this.previousPageToolStripMenuItem,
             this.nextPageToolStripMenuItem,
             this.toolStripMenuItem2,
+            this.previousByteToolStripMenuItem,
+            this.nextByteToolStripMenuItem,
+            this.toolStripMenuItem3,
             this.homeToolStripMenuItem,
             this.endToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -184,6 +190,25 @@
             this.spriteToolStripMenuItem.Text = "Sprite";
             this.spriteToolStripMenuItem.Click += new System.EventHandler(this.spriteToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(232, 6);
+            // 
+            // previousByteToolStripMenuItem
+            // 
+            this.previousByteToolStripMenuItem.Name = "previousByteToolStripMenuItem";
+            this.previousByteToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.previousByteToolStripMenuItem.Text = "Previous byte (-)";
+            this.previousByteToolStripMenuItem.Click += new System.EventHandler(this.previousByteToolStripMenuItem_Click);
+            // 
+            // nextByteToolStripMenuItem
+            // 
+            this.nextByteToolStripMenuItem.Name = "nextByteToolStripMenuItem";
+            this.nextByteToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.nextByteToolStripMenuItem.Text = "Next byte (+)";
+            this.nextByteToolStripMenuItem.Click += new System.EventHandler(this.nextByteToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -230,6 +255,9 @@
         private System.Windows.Forms.ToolStripMenuItem homeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spriteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previousByteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nextByteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
     }
 }
 

@@ -1,9 +1,11 @@
-﻿using C64MemoryModel.Mem;
+﻿using System.Drawing;
+using C64MemoryModel.Mem;
 
 namespace MemoryVisualizer.Renderer
 {
     public interface IScreenRenderer
     {
-        int Render(ref int displayPointer, Memory memory);
+        int RenderText(ref int displayPointer, Memory memory);
+        void DrawGraphics(Graphics g, Size size, Memory memory, int start);
     }
 }

@@ -1,4 +1,5 @@
-﻿using C64MemoryModel.Mem;
+﻿using System.Drawing;
+using C64MemoryModel.Mem;
 
 namespace MemoryVisualizer.Renderer
 {
@@ -13,6 +14,8 @@ namespace MemoryVisualizer.Renderer
             Characters = characters;
         }
 
-        public abstract int Render(ref int displayPointer, Memory memory);
+        public abstract int RenderText(ref int displayPointer, Memory memory);
+
+        public abstract void DrawGraphics(Graphics g, Size size, Memory memory, int start);
     }
 }

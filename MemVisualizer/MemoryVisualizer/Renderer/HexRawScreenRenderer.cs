@@ -1,4 +1,5 @@
-﻿using C64MemoryModel.Mem;
+﻿using System.Drawing;
+using C64MemoryModel.Mem;
 
 namespace MemoryVisualizer.Renderer
 {
@@ -8,7 +9,7 @@ namespace MemoryVisualizer.Renderer
         {
         }
 
-        public override int Render(ref int displayPointer, Memory memory)
+        public override int RenderText(ref int displayPointer, Memory memory)
         {
             for (var row = 0; row < RowCount; row++)
             {
@@ -27,6 +28,10 @@ namespace MemoryVisualizer.Renderer
                 }
             }
             return RowCount * 8;
+        }
+
+        public override void DrawGraphics(Graphics g, Size size, Memory memory, int start)
+        {
         }
     }
 }
