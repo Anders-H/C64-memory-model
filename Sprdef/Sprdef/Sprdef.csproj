@@ -69,6 +69,13 @@
     <Compile Include="ColorPickerCell.cs" />
     <Compile Include="ColorPicker.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="MemoryLocation\RangeMemoryLocation.cs" />
+    <Compile Include="PrgStartAddressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrgStartAddressDialog.Designer.cs">
+      <DependentUpon>PrgStartAddressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExportPngDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,7 +97,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimpleMemoryLocation.cs" />
+    <Compile Include="MemoryLocation\SimpleMemoryLocation.cs" />
     <Compile Include="MessageDisplayer.cs" />
     <Compile Include="OpenMemoryVisualizerDialog.cs">
       <SubType>Form</SubType>
@@ -138,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CbmPrgStudioDialog.resx">
       <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrgStartAddressDialog.resx">
+      <DependentUpon>PrgStartAddressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExportPngDialog.resx">
       <DependentUpon>ExportPngDialog.cs</DependentUpon>

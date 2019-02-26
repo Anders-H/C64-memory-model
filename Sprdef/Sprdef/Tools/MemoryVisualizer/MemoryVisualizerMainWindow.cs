@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
+using Sprdef.MemoryLocation;
 using Sprdef.Tools.MemoryVisualizer.Renderer;
 
 namespace Sprdef.Tools.MemoryVisualizer
@@ -246,7 +247,7 @@ namespace Sprdef.Tools.MemoryVisualizer
 
         private bool SetDisassemblyStartAddress()
         {
-            using (var x = new DialogDisassemblyStartAddress())
+            using (var x = new Sprdef.PrgStartAddressDialog())
             {
                 x.StartAddress = DisassemblyStartAddress.Value;
                 if (x.ShowDialog(this) != DialogResult.OK)

@@ -90,6 +90,18 @@ namespace C64MemoryModel.Mem
         public void Save(string filename) =>
             Save(filename, out _, out _);
 
+        public void SaveRange(string filename, IMemoryLocation addressRange)
+        {
+            var startBytes = BitConverter.GetBytes(addressRange.StartAddress.Value);
+            using (var sw = new FileStream(filename, FileMode.Create))
+            {
+                sw.Write(startBytes, 0, 2);
+                sw.Write(Bytes, addressRange.StartAddress.Value, addressRange.Length);
+                sw.Flush();
+                sw.Close();
+            }
+        }
+
         public void Clear()
         {
             for (var i = 0; i < Bytes.Length; i++)

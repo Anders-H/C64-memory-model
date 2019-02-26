@@ -37,6 +37,9 @@
             this.previousPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.previousByteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextByteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -46,9 +49,6 @@
             this.rawDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disassemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.previousByteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nextByteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +60,7 @@
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -124,6 +124,25 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(232, 6);
             // 
+            // previousByteToolStripMenuItem
+            // 
+            this.previousByteToolStripMenuItem.Name = "previousByteToolStripMenuItem";
+            this.previousByteToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.previousByteToolStripMenuItem.Text = "Previous byte (-)";
+            this.previousByteToolStripMenuItem.Click += new System.EventHandler(this.previousByteToolStripMenuItem_Click);
+            // 
+            // nextByteToolStripMenuItem
+            // 
+            this.nextByteToolStripMenuItem.Name = "nextByteToolStripMenuItem";
+            this.nextByteToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.nextByteToolStripMenuItem.Text = "Next byte (+)";
+            this.nextByteToolStripMenuItem.Click += new System.EventHandler(this.nextByteToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(232, 6);
+            // 
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
@@ -165,63 +184,44 @@
             this.rawHexToolStripMenuItem.Checked = true;
             this.rawHexToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rawHexToolStripMenuItem.Name = "rawHexToolStripMenuItem";
-            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rawHexToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.rawHexToolStripMenuItem.Text = "Raw (Hex)";
             this.rawHexToolStripMenuItem.Click += new System.EventHandler(this.rawHexToolStripMenuItem_Click);
             // 
             // rawDecToolStripMenuItem
             // 
             this.rawDecToolStripMenuItem.Name = "rawDecToolStripMenuItem";
-            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rawDecToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.rawDecToolStripMenuItem.Text = "Raw (Dec)";
             this.rawDecToolStripMenuItem.Click += new System.EventHandler(this.rawDecToolStripMenuItem_Click);
             // 
             // disassemblyToolStripMenuItem
             // 
             this.disassemblyToolStripMenuItem.Name = "disassemblyToolStripMenuItem";
-            this.disassemblyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.disassemblyToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.disassemblyToolStripMenuItem.Text = "Disassembly";
             this.disassemblyToolStripMenuItem.Click += new System.EventHandler(this.disassemblyToolStripMenuItem_Click);
             // 
             // spriteToolStripMenuItem
             // 
             this.spriteToolStripMenuItem.Name = "spriteToolStripMenuItem";
-            this.spriteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spriteToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.spriteToolStripMenuItem.Text = "Sprite";
             this.spriteToolStripMenuItem.Click += new System.EventHandler(this.spriteToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(232, 6);
-            // 
-            // previousByteToolStripMenuItem
-            // 
-            this.previousByteToolStripMenuItem.Name = "previousByteToolStripMenuItem";
-            this.previousByteToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.previousByteToolStripMenuItem.Text = "Previous byte (-)";
-            this.previousByteToolStripMenuItem.Click += new System.EventHandler(this.previousByteToolStripMenuItem_Click);
-            // 
-            // nextByteToolStripMenuItem
-            // 
-            this.nextByteToolStripMenuItem.Name = "nextByteToolStripMenuItem";
-            this.nextByteToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.nextByteToolStripMenuItem.Text = "Next byte (+)";
-            this.nextByteToolStripMenuItem.Click += new System.EventHandler(this.nextByteToolStripMenuItem_Click);
-            // 
-            // MainWindow
+            // MemoryVisualizerMainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(640, 400);
-            this.Name = "MainWindow";
+            this.Name = "MemoryVisualizerMainWindow";
             this.Text = "C64 Memory Visualizer";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);

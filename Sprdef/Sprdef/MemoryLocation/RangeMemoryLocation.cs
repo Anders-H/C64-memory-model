@@ -1,21 +1,21 @@
 ﻿using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
 
-namespace Sprdef
+namespace Sprdef.MemoryLocation
 {
-    public class SimpleMemoryLocation : IMemoryLocation
+    public class RangeMemoryLocation : IMemoryLocation
     {
-        public SimpleMemoryLocation(Address startAddress)
+        public RangeMemoryLocation(Address startAddress, ushort length)
         {
             StartAddress = startAddress;
-            EndAddress = startAddress;
-            Length = 0;
+            EndAddress = new Address((ushort)(startAddress.Value + length));
+            Length = length;
             IsMemoyModel = false;
             IsCustomBookmark = false;
         }
 
         public bool HitTest(Address address) =>
-            StartAddress.Value == address.Value;
+            StartAddress.Value >= address.Value && EndAddress.Value <= address.Value;
 
         public Address StartAddress { get; }
         public Address EndAddress { get; }

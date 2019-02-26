@@ -3,6 +3,9 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using C64MemoryModel.Mem;
+using C64MemoryModel.Types;
+using Sprdef.MemoryLocation;
 
 namespace Sprdef
 {
@@ -974,6 +977,39 @@ namespace Sprdef
                     var m = new Tools.MemoryVisualizer.MemoryVisualizerMainWindow();
                     m.InitializeFromSprites(832, Sprites);
                     m.Show();
+                }
+            }
+        }
+
+        private void exportPRGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new PrgStartAddressDialog())
+            {
+                x.StartAddress = 832;
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                var location = x.StartAddress;
+                var memory = new Memory();
+                var range = new RangeMemoryLocation((Address)location, 504);
+                foreach (var sprite in Sprites)
+                {
+                    memory.SetBytes(range, sprite.GetBytes());
+                    location += 63;
+                }
+                try
+                {
+                    using (var s = new SaveFileDialog())
+                    {
+                        s.Title = @"Export PRG";
+                        s.Filter = @"PRG files (*.prg)|*.prg|All files (*.*)|*.*";
+                        if (s.ShowDialog(this) != DialogResult.OK)
+                            return;
+                        memory.SaveRange(s.FileName, range);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageDisplayer.Fail(exception.Message, "Export failed");
                 }
             }
         }

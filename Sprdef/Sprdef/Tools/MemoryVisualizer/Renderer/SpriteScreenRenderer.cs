@@ -9,7 +9,6 @@ namespace Sprdef.Tools.MemoryVisualizer.Renderer
     {
         public SpriteScreenRenderer(int rowCount, ScreenCharacterMap characters) : base(rowCount, characters)
         {
-
         }
 
         public override int RenderText(ref int displayPointer, Memory memory)
