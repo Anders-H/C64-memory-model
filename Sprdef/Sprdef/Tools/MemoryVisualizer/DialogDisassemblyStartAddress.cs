@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace MemoryVisualizer
+namespace Sprdef.Tools.MemoryVisualizer
 {
     public partial class DialogDisassemblyStartAddress : Form
     {

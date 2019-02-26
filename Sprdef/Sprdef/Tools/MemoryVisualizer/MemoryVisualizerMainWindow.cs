@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
-using MemoryVisualizer.Renderer;
+using Sprdef.Tools.MemoryVisualizer.Renderer;
 
-namespace MemoryVisualizer
+namespace Sprdef.Tools.MemoryVisualizer
 {
-    public partial class MainWindow : Form
+    public partial class MemoryVisualizerMainWindow : Form
     {
         private readonly ScreenPainter _screenPainter = new ScreenPainter();
         private IScreenRenderer _screenRenderer;
@@ -22,7 +22,7 @@ namespace MemoryVisualizer
         private int LastPerformedDisassemblyStepSize { get; set; }
         private Stack<int> DisassemblyStepSize { get; } = new Stack<int>();
 
-        public MainWindow()
+        public MemoryVisualizerMainWindow()
         {
             InitializeComponent();
             _screenRenderer = new HexRawScreenRenderer(ScreenCharacterMap.Rows, Characters);
@@ -34,7 +34,6 @@ namespace MemoryVisualizer
             if (Memory != null && (MemOverview?.NeedsRecreating(Height) ?? false))
                 MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
             Invalidate();
-            System.Diagnostics.Debug.WriteLine($"Width: {Width}, Height: {Height}");
         }
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
@@ -55,6 +54,17 @@ namespace MemoryVisualizer
                 if (x.ShowDialog(this) == DialogResult.OK)
                     LoadFile(x.FileName);
             }
+        }
+
+        public void InitializeFromSprites(ushort location, SpriteArray sprites)
+        {
+            Memory = new Memory();
+            foreach (var sprite in sprites)
+            {
+                Memory.SetBytes(new SimpleMemoryLocation((Address)location), sprite.GetBytes());
+                location += 63;
+            }
+            spriteToolStripMenuItem_Click(null, new EventArgs());
         }
 
         private void LoadFile(string filename)

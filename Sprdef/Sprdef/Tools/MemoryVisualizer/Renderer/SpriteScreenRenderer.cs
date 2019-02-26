@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
 
-namespace MemoryVisualizer.Renderer
+namespace Sprdef.Tools.MemoryVisualizer.Renderer
 {
     public class SpriteScreenRenderer : ScreenRenderer
     {
@@ -66,14 +66,14 @@ namespace MemoryVisualizer.Renderer
 
         private void PlotByte(Bitmap bitmap, Byte b, int x, int y)
         {
-            bitmap.SetPixel(x, y, b.Bit0 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 1, y, b.Bit1 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 2, y, b.Bit2 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 3, y, b.Bit3 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 4, y, b.Bit4 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 5, y, b.Bit5 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 6, y, b.Bit6 ? Color.Black : Color.White);
-            bitmap.SetPixel(x + 7, y, b.Bit7 ? Color.Black : Color.White);
+            bitmap.SetPixel(x, y, b.Bit7 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 1, y, b.Bit6 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 2, y, b.Bit5 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 3, y, b.Bit4 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 4, y, b.Bit3 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 5, y, b.Bit2 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 6, y, b.Bit1 ? Color.Black : Color.White);
+            bitmap.SetPixel(x + 7, y, b.Bit0 ? Color.Black : Color.White);
         }
     }
 }

@@ -90,7 +90,14 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleMemoryLocation.cs" />
     <Compile Include="MessageDisplayer.cs" />
+    <Compile Include="OpenMemoryVisualizerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpenMemoryVisualizerDialog.Designer.cs">
+      <DependentUpon>OpenMemoryVisualizerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaletteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +109,28 @@
     <Compile Include="SpriteArray.cs" />
     <Compile Include="SpriteEditor.cs" />
     <Compile Include="TextDataParser.cs" />
+    <Compile Include="Tools\MemoryVisualizer\DialogDisassemblyStartAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\MemoryVisualizer\DialogDisassemblyStartAddress.Designer.cs">
+      <DependentUpon>DialogDisassemblyStartAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\MemoryVisualizer\DisplayMode.cs" />
+    <Compile Include="Tools\MemoryVisualizer\MemoryVisualizerMainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\MemoryVisualizer\MemoryVisualizerMainWindow.Designer.cs">
+      <DependentUpon>MemoryVisualizerMainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\MemoryVisualizer\MemOverview.cs" />
+    <Compile Include="Tools\MemoryVisualizer\Renderer\DecRawScreenRenderer.cs" />
+    <Compile Include="Tools\MemoryVisualizer\Renderer\DisassemblyScreenRenderer.cs" />
+    <Compile Include="Tools\MemoryVisualizer\Renderer\HexRawScreenRenderer.cs" />
+    <Compile Include="Tools\MemoryVisualizer\Renderer\IScreenRenderer.cs" />
+    <Compile Include="Tools\MemoryVisualizer\Renderer\ScreenRenterer.cs" />
+    <Compile Include="Tools\MemoryVisualizer\Renderer\SpriteScreenRenderer.cs" />
+    <Compile Include="Tools\MemoryVisualizer\ScreenCharacterMap.cs" />
+    <Compile Include="Tools\MemoryVisualizer\ScreenPainter.cs" />
     <Compile Include="UndoBuffer.cs" />
     <Compile Include="WindowPainter.cs" />
     <EmbeddedResource Include="BasicDialog.resx">
@@ -119,6 +148,9 @@
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OpenMemoryVisualizerDialog.resx">
+      <DependentUpon>OpenMemoryVisualizerDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PaletteDialog.resx">
       <DependentUpon>PaletteDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +164,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Tools\MemoryVisualizer\DialogDisassemblyStartAddress.resx">
+      <DependentUpon>DialogDisassemblyStartAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\MemoryVisualizer\MemoryVisualizerMainWindow.resx">
+      <DependentUpon>MemoryVisualizerMainWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

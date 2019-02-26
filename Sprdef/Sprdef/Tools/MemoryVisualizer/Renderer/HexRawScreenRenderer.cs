@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using C64MemoryModel.Mem;
 
-namespace MemoryVisualizer.Renderer
+namespace Sprdef.Tools.MemoryVisualizer.Renderer
 {
     public class HexRawScreenRenderer : ScreenRenderer
     {

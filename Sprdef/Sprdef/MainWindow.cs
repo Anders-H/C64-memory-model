@@ -16,6 +16,7 @@ namespace Sprdef
         private ColorPicker ColorPicker { get; }
         private bool Active { get; set; }
         private string Filename { get; set; }
+        private bool _changed;
 
         public MainWindow()
         {
@@ -33,8 +34,11 @@ namespace Sprdef
                 UndoBuffers[i] = new UndoBuffer();
         }
 
-        private void PushUndoState() =>
+        private void PushUndoState()
+        {
             UndoBuffers[CurrentSpriteIndex].PushState(Sprites[CurrentSpriteIndex]);
+            _changed = true;
+        }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
@@ -482,7 +486,11 @@ namespace Sprdef
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(@"Clear all sprites?", @"New", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+            var message = new StringBuilder();
+            if (_changed)
+                message.Append("You have unsaved changes. ");
+            message.Append("Clear all sprites?");
+            if (!MessageDisplayer.Ask(message, @"New"))
                 return;
             for (var i = 0; i < Sprites.Count; i++)
                 Sprites[i] = new C64Sprite();
@@ -490,6 +498,7 @@ namespace Sprdef
             Filename = "";
             Text = @"SPRDEF";
             Invalidate();
+            _changed = false;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -499,7 +508,10 @@ namespace Sprdef
             else
             {
                 if (SaveSprites(Filename))
+                {
+                    _changed = false;
                     return;
+                }
                 MessageBox.Show($@"Failed to save ""{Filename}"".", @"Save sprites", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -513,7 +525,10 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 if (SaveSprites(x.FileName))
+                {
+                    _changed = false;
                     return;
+                }
                 MessageDisplayer.Fail($@"Failed to save ""{Filename}"".", @"Save sprites");
             }
         }
@@ -603,7 +618,10 @@ namespace Sprdef
                 if (x.ShowDialog(this) != DialogResult.OK)
                     return;
                 if (LoadSprites(x.FileName))
+                {
+                    _changed = false;
                     return;
+                }
                 MessageDisplayer.Fail($@"Failed to load ""{Filename}"".", @"Load sprites");
             }
         }
@@ -893,7 +911,13 @@ namespace Sprdef
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!MessageDisplayer.Ask("Quit?", Text))
+            var message = new StringBuilder();
+            if (_changed)
+                message.Append("You have unsaved changes. ");
+            if (Application.OpenForms.Count > 1)
+                message.Append($"You have opened {Application.OpenForms.Count - 1} other window(s). ");
+            message.Append("Are you sure you want to quit?");
+            if (!MessageDisplayer.Ask(message, Text))
                 e.Cancel = true;
         }
 
@@ -936,5 +960,22 @@ namespace Sprdef
 
         private void btnScrollLeft_Click(object sender, EventArgs e) =>
             leftToolStripMenuItem_Click(sender, e);
+
+        private void memoryVisualizerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new OpenMemoryVisualizerDialog())
+            {
+                if (x.ShowDialog(this) != DialogResult.OK)
+                    return;
+                if (x.OpenEmpty)
+                    new Tools.MemoryVisualizer.MemoryVisualizerMainWindow().Show();
+                else if (x.OpenInitialized)
+                {
+                    var m = new Tools.MemoryVisualizer.MemoryVisualizerMainWindow();
+                    m.InitializeFromSprites(832, Sprites);
+                    m.Show();
+                }
+            }
+        }
     }
 }

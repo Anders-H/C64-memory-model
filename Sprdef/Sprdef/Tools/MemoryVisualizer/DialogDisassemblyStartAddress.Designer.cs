@@ -1,4 +1,4 @@
-﻿namespace MemoryVisualizer
+﻿namespace Sprdef.Tools.MemoryVisualizer
 {
     partial class DialogDisassemblyStartAddress
     {

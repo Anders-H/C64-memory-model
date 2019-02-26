@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using C64MemoryModel.Mem;
 
-namespace MemoryVisualizer
+namespace Sprdef.Tools.MemoryVisualizer
 {
     public class MemOverview
     {

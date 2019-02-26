@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 using C64MemoryModel.Graphics;
 using C64MemoryModel.Mem;
 
-namespace MemoryVisualizer
+namespace Sprdef.Tools.MemoryVisualizer
 {
     public class ScreenPainter
     {
