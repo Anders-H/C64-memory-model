@@ -722,13 +722,24 @@ namespace Sprdef
                 SpriteEditor.SetCursorX(cursorX);
             }
             SpriteEditor.SetCursorX(cursorX);
+            ResetPixels();
+        }
+
+        private void ResetPixels()
+        {
             for (var i = 0; i < SpriteArray.Length; i++)
                 Sprites[i].ResetPixels();
             Invalidate();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) =>
-            MessageBox.Show($@"Sprdef version {System.Reflection.Assembly.GetEntryAssembly().GetName().Version}", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($@"Sprdef version {VersionString}", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        private string VersionString =>
+            System.Reflection.Assembly.GetEntryAssembly()?
+                .GetName()
+                .Version?
+                .ToString() ?? "";
 
         private void exportPNGToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -930,28 +941,28 @@ namespace Sprdef
         {
             PushUndoState();
             SpriteEditor.ScrollUp();
-            Invalidate();
+            ResetPixels();
         }
 
         private void rightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PushUndoState();
             SpriteEditor.ScrollRight();
-            Invalidate();
+            ResetPixels();
         }
 
         private void downToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PushUndoState();
             SpriteEditor.ScrollDown();
-            Invalidate();
+            ResetPixels();
         }
 
         private void leftToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PushUndoState();
             SpriteEditor.ScrollLeft();
-            Invalidate();
+            ResetPixels();
         }
 
         private void btnScrollUp_Click(object sender, EventArgs e) =>
@@ -1020,14 +1031,14 @@ namespace Sprdef
         {
             PushUndoState();
             SpriteEditor.MirrorX();
-            Invalidate();
+            ResetPixels();
         }
 
         private void MirrorYToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PushUndoState();
             SpriteEditor.MirrorY();
-            Invalidate();
+            ResetPixels();
         }
 
         private void BtnMirrorX_Click(object sender, EventArgs e) =>
