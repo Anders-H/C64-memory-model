@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Sprdef
+namespace Sprdef.Rendering
 {
     public interface IScreenThing
     {

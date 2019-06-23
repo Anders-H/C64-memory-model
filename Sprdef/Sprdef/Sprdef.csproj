@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sprdef</RootNamespace>
     <AssemblyName>Sprdef</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,69 +55,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicDialog.cs">
+    <Compile Include="Dialogs\BasicDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BasicDialog.Designer.cs">
+    <Compile Include="Dialogs\BasicDialog.Designer.cs">
       <DependentUpon>BasicDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="C64Sprite.cs" />
-    <Compile Include="CbmPrgStudioDialog.cs">
+    <Compile Include="Model\C64Sprite.cs" />
+    <Compile Include="Dialogs\CbmPrgStudioDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CbmPrgStudioDialog.Designer.cs">
+    <Compile Include="Dialogs\CbmPrgStudioDialog.Designer.cs">
       <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorPickerCell.cs" />
-    <Compile Include="ColorPicker.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="MemoryLocation\RangeMemoryLocation.cs" />
-    <Compile Include="PrgStartAddressDialog.cs">
+    <Compile Include="Rendering\ColorPickerCell.cs" />
+    <Compile Include="Rendering\ColorPicker.cs" />
+    <Compile Include="Utilities\Configuration.cs" />
+    <Compile Include="Dialogs\PrgStartAddressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PrgStartAddressDialog.Designer.cs">
+    <Compile Include="Dialogs\PrgStartAddressDialog.Designer.cs">
       <DependentUpon>PrgStartAddressDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExportPngDialog.cs">
+    <Compile Include="Dialogs\ExportPngDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExportPngDialog.Designer.cs">
+    <Compile Include="Dialogs\ExportPngDialog.Designer.cs">
       <DependentUpon>ExportPngDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="FromCbmPrgStudioDialog.cs">
+    <Compile Include="Dialogs\FromCbmPrgStudioDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FromCbmPrgStudioDialog.Designer.cs">
+    <Compile Include="Dialogs\FromCbmPrgStudioDialog.Designer.cs">
       <DependentUpon>FromCbmPrgStudioDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="InputMethod.cs" />
-    <Compile Include="IScreenThing.cs" />
-    <Compile Include="ISpriteEditorWindow.cs" />
+    <Compile Include="Utilities\InputMethod.cs" />
+    <Compile Include="Rendering\IScreenThing.cs" />
+    <Compile Include="Rendering\ISpriteEditorWindow.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="MemoryLocation\SimpleMemoryLocation.cs" />
-    <Compile Include="MessageDisplayer.cs" />
-    <Compile Include="OpenMemoryVisualizerDialog.cs">
+    <Compile Include="Utilities\MessageDisplayer.cs" />
+    <Compile Include="Dialogs\OpenMemoryVisualizerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OpenMemoryVisualizerDialog.Designer.cs">
+    <Compile Include="Dialogs\OpenMemoryVisualizerDialog.Designer.cs">
       <DependentUpon>OpenMemoryVisualizerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="PaletteDialog.cs">
+    <Compile Include="Dialogs\PaletteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PaletteDialog.Designer.cs">
+    <Compile Include="Dialogs\PaletteDialog.Designer.cs">
       <DependentUpon>PaletteDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpriteArray.cs" />
-    <Compile Include="SpriteEditor.cs" />
-    <Compile Include="TextDataParser.cs" />
+    <Compile Include="Model\SpriteArray.cs" />
+    <Compile Include="Model\SpriteEditor.cs" />
+    <Compile Include="Utilities\TextDataParser.cs" />
     <Compile Include="Tools\MemoryVisualizer\DialogDisassemblyStartAddress.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,30 +138,30 @@
     <Compile Include="Tools\MemoryVisualizer\Renderer\SpriteScreenRenderer.cs" />
     <Compile Include="Tools\MemoryVisualizer\ScreenCharacterMap.cs" />
     <Compile Include="Tools\MemoryVisualizer\ScreenPainter.cs" />
-    <Compile Include="UndoBuffer.cs" />
-    <Compile Include="WindowPainter.cs" />
-    <EmbeddedResource Include="BasicDialog.resx">
+    <Compile Include="Model\UndoBuffer.cs" />
+    <Compile Include="Rendering\WindowPainter.cs" />
+    <EmbeddedResource Include="Dialogs\BasicDialog.resx">
       <DependentUpon>BasicDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CbmPrgStudioDialog.resx">
+    <EmbeddedResource Include="Dialogs\CbmPrgStudioDialog.resx">
       <DependentUpon>CbmPrgStudioDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PrgStartAddressDialog.resx">
+    <EmbeddedResource Include="Dialogs\PrgStartAddressDialog.resx">
       <DependentUpon>PrgStartAddressDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExportPngDialog.resx">
+    <EmbeddedResource Include="Dialogs\ExportPngDialog.resx">
       <DependentUpon>ExportPngDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FromCbmPrgStudioDialog.resx">
+    <EmbeddedResource Include="Dialogs\FromCbmPrgStudioDialog.resx">
       <DependentUpon>FromCbmPrgStudioDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OpenMemoryVisualizerDialog.resx">
+    <EmbeddedResource Include="Dialogs\OpenMemoryVisualizerDialog.resx">
       <DependentUpon>OpenMemoryVisualizerDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaletteDialog.resx">
+    <EmbeddedResource Include="Dialogs\PaletteDialog.resx">
       <DependentUpon>PaletteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

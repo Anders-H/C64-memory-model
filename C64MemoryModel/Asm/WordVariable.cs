@@ -19,7 +19,7 @@ namespace C64MemoryModel.Asm
             Assembler.Lda(low);
             Assembler.Sta(Address);
             Assembler.Lda(high);
-            Assembler.Sta((Address)(Address + 1));
+            Assembler.Sta(Address + 1);
         }
 
         public override void WriteDirect(ushort value)

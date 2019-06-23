@@ -4,8 +4,9 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using C64MemoryModel.Graphics;
+using Sprdef.Rendering;
 
-namespace Sprdef
+namespace Sprdef.Model
 {
     [Serializable]
     public class C64Sprite : IScreenThing

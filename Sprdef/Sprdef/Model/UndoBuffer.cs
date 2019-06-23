@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sprdef
+namespace Sprdef.Model
 {
     public class UndoBuffer
     {

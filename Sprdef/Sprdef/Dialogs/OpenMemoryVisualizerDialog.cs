@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Sprdef
+namespace Sprdef.Dialogs
 {
     public partial class OpenMemoryVisualizerDialog : Form
     {

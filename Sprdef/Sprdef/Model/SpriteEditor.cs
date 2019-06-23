@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using Sprdef.Rendering;
 
-namespace Sprdef
+namespace Sprdef.Model
 {
     public class SpriteEditor : IScreenThing
     {

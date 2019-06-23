@@ -1,4 +1,4 @@
-﻿namespace Sprdef
+﻿namespace Sprdef.Dialogs
 {
     partial class CbmPrgStudioDialog
     {

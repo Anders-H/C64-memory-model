@@ -5,7 +5,9 @@ using System.IO;
 using System.Text;
 using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
-using Sprdef.MemoryLocation;
+using Sprdef.Dialogs;
+using Sprdef.Model;
+using Sprdef.Rendering;
 
 namespace Sprdef
 {
@@ -990,7 +992,7 @@ namespace Sprdef
                     return;
                 var location = x.StartAddress;
                 var memory = new Memory();
-                var range = new RangeMemoryLocation((Address)location, 504);
+                var range = new RangeLocation((Address)location, 504);
                 foreach (var sprite in Sprites)
                 {
                     memory.SetBytes(range, sprite.GetBytes());

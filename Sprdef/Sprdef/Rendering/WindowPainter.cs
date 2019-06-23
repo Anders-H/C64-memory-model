@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using Sprdef.Model;
 
-namespace Sprdef
+namespace Sprdef.Rendering
 {
     public static class WindowPainter
     {
         public static void Paint(Graphics g, bool redrawBackground, Color backColor, int windowWidth, int windowHeight, int extraOffsetY, SpriteEditor spriteEditor, SpriteArray sprites, ColorPicker colorPicker)
         {
-            g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.AssumeLinear;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+            g.CompositingMode = CompositingMode.SourceOver;
+            g.CompositingQuality = CompositingQuality.AssumeLinear;
+            g.SmoothingMode = SmoothingMode.None;
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
 
             if (redrawBackground)
                 g.Clear(backColor);

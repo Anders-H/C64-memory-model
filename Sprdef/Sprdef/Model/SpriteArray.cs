@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Sprdef
+namespace Sprdef.Model
 {
     public class SpriteArray : IEnumerable<C64Sprite>
     {

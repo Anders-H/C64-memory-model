@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using C64MemoryModel.Types;
 
 namespace C64MemoryModel.Mem

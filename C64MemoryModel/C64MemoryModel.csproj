@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>C64MemoryModel</RootNamespace>
     <AssemblyName>C64MemoryModel</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,6 +53,8 @@
     <Compile Include="Graphics\C64Color.cs" />
     <Compile Include="Graphics\C64Palette.cs" />
     <Compile Include="Mem\MemoryModelLocationList.cs" />
+    <Compile Include="Mem\RangeLocation.cs" />
+    <Compile Include="Mem\SimpleLocation.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Types\Address.cs" />
     <Compile Include="Types\Byte.cs" />

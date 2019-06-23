@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using C64MemoryModel.Mem;
 using C64MemoryModel.Types;
-using Sprdef.MemoryLocation;
+using Sprdef.Dialogs;
+using Sprdef.Model;
 using Sprdef.Tools.MemoryVisualizer.Renderer;
 
 namespace Sprdef.Tools.MemoryVisualizer
@@ -62,7 +63,7 @@ namespace Sprdef.Tools.MemoryVisualizer
             Memory = new Memory();
             foreach (var sprite in sprites)
             {
-                Memory.SetBytes(new SimpleMemoryLocation((Address)location), sprite.GetBytes());
+                Memory.SetBytes(new SimpleLocation((Address)location), sprite.GetBytes());
                 location += 63;
             }
             spriteToolStripMenuItem_Click(null, new EventArgs());
@@ -80,12 +81,18 @@ namespace Sprdef.Tools.MemoryVisualizer
                 DisassemblyStartAddress.FromInt(start.Value);
                 DisplayMode = DisplayMode.HexRaw;
                 if (Memory != null)
-                    MemOverview = MemOverview.Create(Memory, Height, DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
+                    MemOverview = MemOverview.Create(
+                        Memory,
+                        Height,
+                        DisplayMode == DisplayMode.Disassembly ? DisassemblyStartAddress.Value : 0);
                 RenderScreen();
             }
-            catch (Exception)
+            catch
             {
-                MessageBox.Show($@"The file ""{filename}"" could not be loaded.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"The file ""{filename}"" could not be loaded.",
+                    Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -247,7 +254,7 @@ namespace Sprdef.Tools.MemoryVisualizer
 
         private bool SetDisassemblyStartAddress()
         {
-            using (var x = new Sprdef.PrgStartAddressDialog())
+            using (var x = new PrgStartAddressDialog())
             {
                 x.StartAddress = DisassemblyStartAddress.Value;
                 if (x.ShowDialog(this) != DialogResult.OK)

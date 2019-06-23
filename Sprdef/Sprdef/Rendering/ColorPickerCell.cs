@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using Sprdef.Model;
 
-namespace Sprdef
+namespace Sprdef.Rendering
 {
     public class ColorPickerCell : IScreenThing
     {

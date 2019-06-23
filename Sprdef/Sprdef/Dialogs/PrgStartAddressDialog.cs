@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace Sprdef
+namespace Sprdef.Dialogs
 {
     public partial class PrgStartAddressDialog : Form
     {
@@ -16,7 +16,10 @@ namespace Sprdef
         private void btnOK_Click(object sender, EventArgs e)
         {
             void InvalidAddress() =>
-                MessageBox.Show($@"Invalid start address. Must be integer (0 to {ushort.MaxValue}).", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($@"Invalid start address. Must be integer (0 to {ushort.MaxValue}).",
+                    Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             if (!int.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var startAddress))
             {
                 InvalidAddress();

@@ -3,8 +3,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Sprdef.Model;
 
-namespace Sprdef
+namespace Sprdef.Dialogs
 {
     public partial class FromCbmPrgStudioDialog : Form
     {

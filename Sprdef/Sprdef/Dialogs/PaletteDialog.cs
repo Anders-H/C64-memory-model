@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Sprdef.Model;
 
-namespace Sprdef
+namespace Sprdef.Dialogs
 {
     public partial class PaletteDialog : Form
     {
+        private Label[] Labels { get; set; }
+        public string Prompt { private get; set; }
+        public int ColorIndex { get; set; }
+
         public PaletteDialog()
         {
             InitializeComponent();
         }
-        public string Prompt { private get; set; }
-        public int ColorIndex { get; set; }
-        private Label[] Labels { get; set; }
+
         private void PaletteDialog_Load(object sender, EventArgs e)
         {
             lblPrompt.Text = Prompt ?? "";
@@ -39,11 +42,13 @@ namespace Sprdef
                 Labels[i].BackColor = C64Sprite.Palette.GetColor(i);
             }
         }
+
         private void PaletteDialog_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(BackColor);
             e.Graphics.DrawRectangle(Pens.Black, Labels[ColorIndex].Left - 2, Labels[ColorIndex].Top - 2, Labels[ColorIndex].Width + 3, Labels[ColorIndex].Height + 3);
         }
+
         private void lblCol_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < 16; i++)
@@ -54,6 +59,8 @@ namespace Sprdef
                 }
             Invalidate();
         }
-        private void btnOK_Click(object sender, EventArgs e) => DialogResult = DialogResult.OK;
+
+        private void btnOK_Click(object sender, EventArgs e) =>
+            DialogResult = DialogResult.OK;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Sprdef
+﻿namespace Sprdef.Rendering
 {
     public interface ISpriteEditorWindow
     {

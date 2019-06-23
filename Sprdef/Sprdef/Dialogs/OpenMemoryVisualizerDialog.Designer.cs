@@ -1,6 +1,6 @@
-﻿namespace Sprdef
+﻿namespace Sprdef.Dialogs
 {
-    partial class ExportPngDialog
+    partial class OpenMemoryVisualizerDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,39 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.chkDoubleWidth = new System.Windows.Forms.CheckBox();
-            this.chkTransparent = new System.Windows.Forms.CheckBox();
+            this.radioInitialized = new System.Windows.Forms.RadioButton();
+            this.radioEmpty = new System.Windows.Forms.RadioButton();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // chkDoubleWidth
+            // radioInitialized
             // 
-            this.chkDoubleWidth.AutoSize = true;
-            this.chkDoubleWidth.Checked = true;
-            this.chkDoubleWidth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkDoubleWidth.Location = new System.Drawing.Point(12, 12);
-            this.chkDoubleWidth.Name = "chkDoubleWidth";
-            this.chkDoubleWidth.Size = new System.Drawing.Size(88, 17);
-            this.chkDoubleWidth.TabIndex = 0;
-            this.chkDoubleWidth.Text = "Double width";
-            this.chkDoubleWidth.UseVisualStyleBackColor = true;
+            this.radioInitialized.AutoSize = true;
+            this.radioInitialized.Checked = true;
+            this.radioInitialized.Location = new System.Drawing.Point(16, 16);
+            this.radioInitialized.Name = "radioInitialized";
+            this.radioInitialized.Size = new System.Drawing.Size(199, 17);
+            this.radioInitialized.TabIndex = 0;
+            this.radioInitialized.TabStop = true;
+            this.radioInitialized.Text = "Initialize visualizer with current sprites";
+            this.radioInitialized.UseVisualStyleBackColor = true;
             // 
-            // chkTransparent
+            // radioEmpty
             // 
-            this.chkTransparent.AutoSize = true;
-            this.chkTransparent.Checked = true;
-            this.chkTransparent.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTransparent.Location = new System.Drawing.Point(12, 32);
-            this.chkTransparent.Name = "chkTransparent";
-            this.chkTransparent.Size = new System.Drawing.Size(143, 17);
-            this.chkTransparent.TabIndex = 1;
-            this.chkTransparent.Text = "Transparent background";
-            this.chkTransparent.UseVisualStyleBackColor = true;
+            this.radioEmpty.AutoSize = true;
+            this.radioEmpty.Location = new System.Drawing.Point(16, 40);
+            this.radioEmpty.Name = "radioEmpty";
+            this.radioEmpty.Size = new System.Drawing.Size(143, 17);
+            this.radioEmpty.TabIndex = 1;
+            this.radioEmpty.Text = "Open an empty visualizer";
+            this.radioEmpty.UseVisualStyleBackColor = true;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(36, 68);
+            this.btnOk.Location = new System.Drawing.Point(132, 76);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -71,32 +69,31 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(116, 68);
+            this.btnCancel.Location = new System.Drawing.Point(220, 76);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // ExportPngDialog
+            // OpenMemoryVisualizerDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(202, 103);
+            this.ClientSize = new System.Drawing.Size(310, 111);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.chkTransparent);
-            this.Controls.Add(this.chkDoubleWidth);
+            this.Controls.Add(this.radioEmpty);
+            this.Controls.Add(this.radioInitialized);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ExportPngDialog";
+            this.Name = "OpenMemoryVisualizerDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Export PNG";
-            this.Load += new System.EventHandler(this.ExportPngDialog_Load);
+            this.Text = "Open memory visualizer";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -104,8 +101,8 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox chkDoubleWidth;
-        private System.Windows.Forms.CheckBox chkTransparent;
+        private System.Windows.Forms.RadioButton radioInitialized;
+        private System.Windows.Forms.RadioButton radioEmpty;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
     }
