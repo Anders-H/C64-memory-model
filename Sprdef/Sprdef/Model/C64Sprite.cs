@@ -11,7 +11,7 @@ namespace Sprdef.Model
     [Serializable]
     public class C64Sprite : IScreenThing
     {
-        private bool[,] SpriteData { get; }
+        private bool[,] SpriteData { get; set; }
         private Bitmap SpritePreviewData { get; }
         public static C64Palette Palette = new C64Palette();
         public static int BackgroundColorIndex { get; set; }
@@ -340,6 +340,25 @@ namespace Sprdef.Model
                 for (var y = 0; y < Height; y++)
                     SetPixel(x + 1, y, GetPixel(x, y));
             SetColumn(0, column);
+        }
+
+        public void MirrorXMulticolor()
+        {
+
+        }
+
+        public void MirrorX()
+        {
+
+        }
+
+        public void MirrorY()
+        {
+            var spriteData = new bool[Width, Height];
+            for (var y = 0; y < Height; y++)
+            for (var x = 0; x < Width; x++)
+                spriteData[x, y] = SpriteData[x, Height - 1 - y];
+            SpriteData = spriteData;
         }
     }
 }

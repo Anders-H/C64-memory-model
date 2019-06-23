@@ -207,5 +207,16 @@ namespace Sprdef.Model
                 Sprite.ScrollRight();
             Multicolor = multicolor;
         }
+
+        public void MirrorX()
+        {
+            if (Multicolor)
+                Sprite.MirrorXMulticolor();
+            else
+                Sprite.MirrorX();
+        }
+
+        public void MirrorY() =>
+            Sprite.MirrorY();
     }
 }

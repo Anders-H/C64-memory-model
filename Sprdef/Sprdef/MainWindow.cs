@@ -1015,5 +1015,25 @@ namespace Sprdef
                 }
             }
         }
+
+        private void MirrorXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PushUndoState();
+            SpriteEditor.MirrorX();
+            Invalidate();
+        }
+
+        private void MirrorYToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PushUndoState();
+            SpriteEditor.MirrorY();
+            Invalidate();
+        }
+
+        private void BtnMirrorX_Click(object sender, EventArgs e) =>
+            MirrorXToolStripMenuItem_Click(sender, e);
+
+        private void BtnMirrorY_Click(object sender, EventArgs e) =>
+            MirrorYToolStripMenuItem_Click(sender, e);
     }
 }

@@ -39,6 +39,7 @@
             this.exportToBASICToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToCBMPrgStudioDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportPNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportPRGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +67,9 @@
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mirrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mirrorXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mirrorYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spritesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sprite2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,8 +104,10 @@
             this.btnScrollRight = new System.Windows.Forms.ToolStripButton();
             this.btnScrollDown = new System.Windows.Forms.ToolStripButton();
             this.btnScrollLeft = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMirrorX = new System.Windows.Forms.ToolStripButton();
+            this.btnMirrorY = new System.Windows.Forms.ToolStripButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.exportPRGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -188,6 +194,13 @@
             this.exportPNGToolStripMenuItem.Text = "Export PNG...";
             this.exportPNGToolStripMenuItem.Click += new System.EventHandler(this.exportPNGToolStripMenuItem_Click);
             // 
+            // exportPRGToolStripMenuItem
+            // 
+            this.exportPRGToolStripMenuItem.Name = "exportPRGToolStripMenuItem";
+            this.exportPRGToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.exportPRGToolStripMenuItem.Text = "Export PRG...";
+            this.exportPRGToolStripMenuItem.Click += new System.EventHandler(this.exportPRGToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
@@ -210,7 +223,8 @@
             this.toolStripMenuItem3,
             this.controlToolStripMenuItem,
             this.toolStripMenuItem6,
-            this.scrollToolStripMenuItem});
+            this.scrollToolStripMenuItem,
+            this.mirrorToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -394,6 +408,31 @@
             this.leftToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.leftToolStripMenuItem.Text = "Left";
             this.leftToolStripMenuItem.Click += new System.EventHandler(this.leftToolStripMenuItem_Click);
+            // 
+            // mirrorToolStripMenuItem
+            // 
+            this.mirrorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mirrorXToolStripMenuItem,
+            this.mirrorYToolStripMenuItem});
+            this.mirrorToolStripMenuItem.Name = "mirrorToolStripMenuItem";
+            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mirrorToolStripMenuItem.Text = "Mirror";
+            // 
+            // mirrorXToolStripMenuItem
+            // 
+            this.mirrorXToolStripMenuItem.Image = global::Sprdef.Properties.Resources.FlipHorizontalHS;
+            this.mirrorXToolStripMenuItem.Name = "mirrorXToolStripMenuItem";
+            this.mirrorXToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mirrorXToolStripMenuItem.Text = "Mirror X";
+            this.mirrorXToolStripMenuItem.Click += new System.EventHandler(this.MirrorXToolStripMenuItem_Click);
+            // 
+            // mirrorYToolStripMenuItem
+            // 
+            this.mirrorYToolStripMenuItem.Image = global::Sprdef.Properties.Resources.FlipVerticalHS;
+            this.mirrorYToolStripMenuItem.Name = "mirrorYToolStripMenuItem";
+            this.mirrorYToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mirrorYToolStripMenuItem.Text = "Mirror Y";
+            this.mirrorYToolStripMenuItem.Click += new System.EventHandler(this.MirrorYToolStripMenuItem_Click);
             // 
             // spritesToolStripMenuItem
             // 
@@ -592,7 +631,10 @@
             this.btnScrollUp,
             this.btnScrollRight,
             this.btnScrollDown,
-            this.btnScrollLeft});
+            this.btnScrollLeft,
+            this.toolStripSeparator3,
+            this.btnMirrorX,
+            this.btnMirrorY});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(717, 25);
@@ -691,17 +733,35 @@
             this.btnScrollLeft.Text = "Scroll left";
             this.btnScrollLeft.Click += new System.EventHandler(this.btnScrollLeft_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnMirrorX
+            // 
+            this.btnMirrorX.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMirrorX.Image = global::Sprdef.Properties.Resources.FlipHorizontalHS;
+            this.btnMirrorX.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMirrorX.Name = "btnMirrorX";
+            this.btnMirrorX.Size = new System.Drawing.Size(23, 22);
+            this.btnMirrorX.Text = "Mirror X";
+            this.btnMirrorX.Click += new System.EventHandler(this.BtnMirrorX_Click);
+            // 
+            // btnMirrorY
+            // 
+            this.btnMirrorY.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMirrorY.Image = global::Sprdef.Properties.Resources.FlipVerticalHS;
+            this.btnMirrorY.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMirrorY.Name = "btnMirrorY";
+            this.btnMirrorY.Size = new System.Drawing.Size(23, 22);
+            this.btnMirrorY.Text = "Mirror Y";
+            this.btnMirrorY.Click += new System.EventHandler(this.BtnMirrorY_Click);
+            // 
             // timer1
             // 
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // exportPRGToolStripMenuItem
-            // 
-            this.exportPRGToolStripMenuItem.Name = "exportPRGToolStripMenuItem";
-            this.exportPRGToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.exportPRGToolStripMenuItem.Text = "Export PRG...";
-            this.exportPRGToolStripMenuItem.Click += new System.EventHandler(this.exportPRGToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -814,6 +874,12 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem memoryVisualizerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportPRGToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton btnMirrorX;
+        private System.Windows.Forms.ToolStripButton btnMirrorY;
+        private System.Windows.Forms.ToolStripMenuItem mirrorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mirrorXToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mirrorYToolStripMenuItem;
     }
 }
 
