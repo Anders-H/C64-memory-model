@@ -344,12 +344,23 @@ namespace Sprdef.Model
 
         public void MirrorXMulticolor()
         {
-
+            var spriteData = new bool[Width, Height];
+            for (var x = 0; x < Width; x += 2)
+            for (var y = 0; y < Height; y++)
+            {
+                spriteData[x, y] = SpriteData[Width - 2 - x, y];
+                spriteData[x + 1, y] = SpriteData[Width - 1 - x, y];
+            }
+            SpriteData = spriteData;
         }
 
         public void MirrorX()
         {
-
+            var spriteData = new bool[Width, Height];
+            for (var x = 0; x < Width; x++)
+            for (var y = 0; y < Height; y++)
+                spriteData[x, y] = SpriteData[Width - 1 - x, y];
+            SpriteData = spriteData;
         }
 
         public void MirrorY()
