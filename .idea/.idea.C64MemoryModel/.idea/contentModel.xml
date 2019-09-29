@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Repos\C64MemModel" t="IncludeFlat">
+      <e p="C64MemoryModel" t="IncludeRecursive">
+        <e p="Asm" t="Include">
+          <e p="Assembler.cs" t="Include" />
+          <e p="ByteVariable.cs" t="Include" />
+          <e p="ExtendedAssembler.cs" t="Include" />
+          <e p="IVariable.cs" t="Include" />
+          <e p="VariableBase.cs" t="Include" />
+          <e p="VariableList.cs" t="Include" />
+          <e p="WordVariable.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="BitValue.cs" t="Include" />
+        <e p="C64MemoryModel.csproj" t="IncludeRecursive" />
+        <e p="Chr" t="Include">
+          <e p="Character.cs" t="Include" />
+          <e p="CharacterSetBase.cs" t="Include" />
+          <e p="CharacterSetList.cs" t="Include" />
+          <e p="PetsciiCode.cs" t="Include" />
+          <e p="SimpleUppercaseCharacterSet.cs" t="Include" />
+        </e>
+        <e p="Disasm" t="Include">
+          <e p="Disassembler.cs" t="Include" />
+        </e>
+        <e p="Graphics" t="Include">
+          <e p="C64Color.cs" t="Include" />
+          <e p="C64Palette.cs" t="Include" />
+        </e>
+        <e p="Mem" t="Include">
+          <e p="IMemoryLocation.cs" t="Include" />
+          <e p="Memory.cs" t="Include" />
+          <e p="MemoryBookmark.cs" t="Include" />
+          <e p="MemoryModelLocation.cs" t="Include" />
+          <e p="MemoryModelLocationList.cs" t="Include" />
+          <e p="MemoryModelLocationName.cs" t="Include" />
+          <e p="RangeLocation.cs" t="Include" />
+          <e p="SimpleLocation.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="TextAdapter.cs" t="Include" />
+        <e p="Types" t="Include">
+          <e p="Address.cs" t="Include" />
+          <e p="Byte.cs" t="Include" />
+          <e p="Word.cs" t="Include" />
+        </e>
+      </e>
+      <e p="C64MemoryModel.sln" t="IncludeFlat" />
+      <e p="C64MemoryModelTestProject" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="C64MemoryModelTestProject.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="TextAdapter.cs" t="Include" />
+        <e p="Types" t="Include">
+          <e p="Address.cs" t="Include" />
+          <e p="Word.cs" t="Include" />
+        </e>
+      </e>
+      <e p="C64MemTestConsole" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="C64MemTestConsole.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive">
+        <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" t="Include" />
+        <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" t="Include" />
+        <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll" t="Include" />
+      </e>
+    </e>
+    <e p="C:\Users\Anders Hesselbom\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Anders Hesselbom\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_C64MemoryModel.-42095358.00" t="ExcludeRecursive" />
+  </component>
+</project>

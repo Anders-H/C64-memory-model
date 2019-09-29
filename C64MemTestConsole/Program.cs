@@ -2,7 +2,7 @@
 using C64MemoryModel;
 using C64MemoryModel.Mem;
 
-namespace C64Mem
+namespace C64MemTestConsole
 {
     internal class Program
     {

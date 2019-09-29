@@ -20,12 +20,12 @@ namespace C64MemoryModel.Chr
             var ret = Characters.FirstOrDefault(x => x.Unicode == input);
             if (ret == null)
                 throw new SystemException($"Unsupported character: ${(int)input:X4}");
-            return ret.Petscii;
+            return ret.PetsciiByte;
         }
         
         protected char TranslateCharacterFromPetsciiToUnicode(byte input)
         {
-            var ret = Characters.FirstOrDefault(x => x.Petscii == input);
+            var ret = Characters.FirstOrDefault(x => x.PetsciiByte == input);
             if (ret == null)
                 throw new SystemException($"Unsupported character: ${input:X2}");
             return ret.Unicode;

@@ -1,6 +1,4 @@
-﻿using C64MemoryModel.Chr;
-
-namespace C64MemoryModel
+﻿namespace C64MemoryModel.Chr
 {
     public class SimpleUppercaseCharacterSet : CharacterSetBase
     {

@@ -50,6 +50,8 @@
     <Compile Include="Asm\VariableList.cs" />
     <Compile Include="Asm\WordVariable.cs" />
     <Compile Include="BitValue.cs" />
+    <Compile Include="Chr\PetsciiCode.cs" />
+    <Compile Include="Chr\SimpleUppercaseCharacterSet.cs" />
     <Compile Include="Graphics\C64Color.cs" />
     <Compile Include="Graphics\C64Palette.cs" />
     <Compile Include="Mem\MemoryModelLocationList.cs" />
@@ -69,7 +71,6 @@
     <Compile Include="Mem\MemoryModelLocation.cs" />
     <Compile Include="Mem\MemoryModelLocationName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleUppercaseCharacterSet.cs" />
     <Compile Include="TextAdapter.cs" />
     <Compile Include="Types\Word.cs" />
   </ItemGroup>

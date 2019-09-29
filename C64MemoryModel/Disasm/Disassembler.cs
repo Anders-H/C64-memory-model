@@ -17,7 +17,7 @@ namespace C64MemoryModel.Disasm
                 s.Append("      ");
             void Write1() =>
                 s.Append($"{b2:X2}    ");
-            byte[] bytes;
+
             void Write2() =>
                 s.Append($"{b2:X2} {b3:X2} ");
 
@@ -98,7 +98,7 @@ namespace C64MemoryModel.Disasm
             {
                 b2 = m.GetByte();
                 var signedByte = b2 >= 128 ? b2 - 256 : b2;
-                bytes = BitConverter.GetBytes((ushort)m.BytePointer + signedByte);
+                var bytes = BitConverter.GetBytes((ushort)m.BytePointer + signedByte);
                 var low = bytes[0];
                 var high = bytes[1];
                 Write1();

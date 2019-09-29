@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C64MemoryModel", "C64MemoryModel\C64MemoryModel.csproj", "{65035B65-AAC3-4C64-92E9-00E5133F6BFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C64Mem", "C64Mem\C64Mem.csproj", "{2A56FB21-C82A-457D-B22B-3ECBC93C6D35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C64MemTestConsole", "C64MemTestConsole\C64MemTestConsole.csproj", "{2A56FB21-C82A-457D-B22B-3ECBC93C6D35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C64MemoryModelTestProject", "C64MemoryModelTestProject\C64MemoryModelTestProject.csproj", "{A9D38AB4-2504-4810-A3B2-4A0D23C0C321}"
 EndProject

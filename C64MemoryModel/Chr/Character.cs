@@ -2,13 +2,22 @@
 {
     public class Character
     {
-        public byte Petscii { get; }
+        public byte PetsciiByte { get; }
         public char Unicode { get; }
-
-        public Character(byte petscii, char unicode)
+        public PetsciiCode PetsciiCode { get; }
+        
+        public Character(byte petsciiByte, char unicode)
         {
-            Petscii = petscii;
+            PetsciiByte = petsciiByte;
             Unicode = unicode;
+            PetsciiCode = (PetsciiCode)petsciiByte;
+        }
+        
+        public Character(PetsciiCode petsciiCode, char unicode)
+        {
+            PetsciiByte = (byte)petsciiCode;
+            Unicode = unicode;
+            PetsciiCode = petsciiCode;
         }
     }
 }

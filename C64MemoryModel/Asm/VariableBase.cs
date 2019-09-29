@@ -17,7 +17,6 @@ namespace C64MemoryModel.Asm
         }
 
         public abstract void WriteAssign(Address address, T value);
-
         public abstract void WriteDirect(T value);
     }
 }
