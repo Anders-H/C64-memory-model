@@ -1,5 +1,6 @@
 [Oo]bj/
 [Bb]in/
+.idea
 .vs/
 TestResults/
 .nuget/

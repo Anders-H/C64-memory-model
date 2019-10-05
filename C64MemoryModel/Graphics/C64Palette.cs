@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace C64MemoryModel.Graphics
 {
-    public class C64Palette
+    public class C64Palette : IEnumerable<Color>
     {
         private Color[] Colors { get; } = new Color[16];
+        
         public C64Palette()
         {
             Colors[0] = Color.FromArgb(0, 0, 0);
@@ -30,5 +33,11 @@ namespace C64MemoryModel.Graphics
 
         public Color GetColor(C64Color color) =>
             Colors[(int)color];
+
+        public IEnumerator<Color> GetEnumerator() =>
+            ((IEnumerable<Color>) Colors).GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() =>
+            GetEnumerator();
     }
 }

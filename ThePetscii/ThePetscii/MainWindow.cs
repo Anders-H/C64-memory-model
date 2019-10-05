@@ -2,11 +2,14 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using C64MemoryModel.Graphics;
 
 namespace ThePetscii
 {
     public partial class MainWindow : Form
     {
+        private float _colorHeight;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +41,24 @@ namespace ThePetscii
         private void PanelScreenContainer_Resize(object sender, EventArgs e)
         {
             panelScreenContainer.Invalidate();
+        }
+
+        private void panelColors_Paint(object sender, PaintEventArgs e)
+        {
+            var y = 0f;
+            var palette = new C64Palette();
+            foreach (var color in palette)
+            {
+                using (var b = new SolidBrush(color))
+                    e.Graphics.FillRectangle(b, 0, y, panelColors.Width, _colorHeight);
+                y += _colorHeight;
+            }
+        }
+
+        private void panelColors_Resize(object sender, EventArgs e)
+        {
+            _colorHeight = (float)(panelColors.Height / 16.0);
+            panelColors.Invalidate();
         }
     }
 }
