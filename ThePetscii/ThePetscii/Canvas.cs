@@ -7,9 +7,21 @@ namespace ThePetscii
 {
     public partial class Canvas : UserControl
     {
+        private bool _gridVisible = true;
+        
         public Canvas()
         {
             InitializeComponent();
+        }
+
+        public bool GridVisible
+        {
+            get => _gridVisible;
+            set
+            {
+                _gridVisible = value;
+                Invalidate();
+            }
         }
 
         private void Canvas_Resize(object sender, EventArgs e)
@@ -24,20 +36,27 @@ namespace ThePetscii
             e.Graphics.CompositingQuality = CompositingQuality.AssumeLinear;
             e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.None;
-            using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
+            if (_gridVisible)
             {
-                var xpos = 0;
-                var ypos = 0;
-                for (var y = 0; y < 400; y += 16)
+                using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
                 {
-                    for (var x = 0; x < 640; x += 16)
+                    var xpos = 0;
+                    var ypos = 0;
+                    var d = false;
+                    for (var y = 0; y < 25; y++)
                     {
-                        e.Graphics.DrawRectangle(Pens.Black, x, y, 16, 16);
-                        xpos += 1;
-                    }
+                        d = !d;
+                        for (var x = 0; x < 40; x++)
+                        {
+                            d = !d;
+                            if (d || x == 0 || y == 0)
+                                e.Graphics.DrawRectangle(darkPen, xpos, ypos, 16, 16);
+                            xpos += 16;
+                        }
 
-                    xpos = 0;
-                    ypos += 1;
+                        xpos = 0;
+                        ypos += 16;
+                    }
                 }
             }
         }

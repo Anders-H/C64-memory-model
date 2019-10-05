@@ -34,8 +34,16 @@ namespace ThePetscii
             e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
             e.Graphics.Clear(panelScreenContainer.BackColor);
-            using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
-                e.Graphics.DrawRectangle(Pens.Black, canvas1.Left, canvas1.Top, canvas1.Width, canvas1.Height);
+            if (canvas1.GridVisible)
+            {
+                using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
+                    e.Graphics.DrawRectangle(darkPen, canvas1.Left, canvas1.Top, canvas1.Width, canvas1.Height);
+            }
+            else
+            {
+                using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
+                    e.Graphics.DrawRectangle(darkPen, canvas1.Left - 1, canvas1.Top - 1, canvas1.Width + 1, canvas1.Height + 1);
+            }
         }
 
         private void PanelScreenContainer_Resize(object sender, EventArgs e)
@@ -59,6 +67,12 @@ namespace ThePetscii
         {
             _colorHeight = (float)(panelColors.Height / 16.0);
             panelColors.Invalidate();
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            canvas1.GridVisible = !canvas1.GridVisible;
+            panelScreenContainer.Invalidate();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Repos\C64MemModel" t="IncludeFlat">
@@ -80,6 +80,27 @@
         <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" t="Include" />
         <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" t="Include" />
         <e p="MSTest.TestAdapter.1.3.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll" t="Include" />
+      </e>
+      <e p="ThePetscii\ThePetscii" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Canvas.cs" t="Include" />
+        <e p="Canvas.Designer.cs" t="Include" />
+        <e p="Canvas.resx" t="Include" />
+        <e p="MainWindow.cs" t="Include" />
+        <e p="MainWindow.Designer.cs" t="Include" />
+        <e p="MainWindow.resx" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="pencil.ico" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="ThePetscii.csproj" t="IncludeRecursive" />
       </e>
     </e>
     <e p="C:\Users\Anders Hesselbom\.Rider2019.2\system\extResources" t="IncludeRecursive" />
