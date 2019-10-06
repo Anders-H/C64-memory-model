@@ -8,6 +8,7 @@ namespace ThePetscii
     public partial class Canvas : UserControl
     {
         private bool _gridVisible = true;
+        public PetsciiImage PetsciiImage { get; set; }
         
         public Canvas()
         {
@@ -36,28 +37,21 @@ namespace ThePetscii
             e.Graphics.CompositingQuality = CompositingQuality.AssumeLinear;
             e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.None;
-            if (_gridVisible)
+            var totalWidth = _gridVisible ? 15 : 16;
+            var xpos = 0;
+            var ypos = 0;
+            for (var y = 0; y < 25; y++)
             {
-                using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
+                for (var x = 0; x < 40; x++)
                 {
-                    var xpos = 0;
-                    var ypos = 0;
-                    var d = false;
-                    for (var y = 0; y < 25; y++)
-                    {
-                        d = !d;
-                        for (var x = 0; x < 40; x++)
-                        {
-                            d = !d;
-                            if (d || x == 0 || y == 0)
-                                e.Graphics.DrawRectangle(darkPen, xpos, ypos, 16, 16);
-                            xpos += 16;
-                        }
-
-                        xpos = 0;
-                        ypos += 16;
-                    }
+                    e.Graphics.FillRectangle(
+                        PetsciiImage.Background.GetBrush(
+                            PetsciiImage.Background.Colors[x, y]
+                            ), xpos, ypos, totalWidth, totalWidth);
+                    xpos += 16;
                 }
+                xpos = 0;
+                ypos += 16;
             }
         }
     }

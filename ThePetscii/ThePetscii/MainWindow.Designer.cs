@@ -65,7 +65,7 @@
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
             this.gridToolStripMenuItem.ShortcutKeys =
                 ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.gridToolStripMenuItem.Text = "Grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
@@ -97,6 +97,7 @@
             this.panelColors.Size = new System.Drawing.Size(42, 484);
             this.panelColors.TabIndex = 4;
             this.panelColors.Paint += new System.Windows.Forms.PaintEventHandler(this.panelColors_Paint);
+            this.panelColors.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelColors_MouseClick);
             this.panelColors.Resize += new System.EventHandler(this.panelColors_Resize);
             // 
             // panelScreenContainer
@@ -116,8 +117,10 @@
             // 
             // canvas1
             // 
+            this.canvas1.GridVisible = true;
             this.canvas1.Location = new System.Drawing.Point(5, 0);
             this.canvas1.Name = "canvas1";
+            this.canvas1.PetsciiImage = null;
             this.canvas1.Size = new System.Drawing.Size(640, 400);
             this.canvas1.TabIndex = 0;
             // 

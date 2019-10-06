@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
 namespace C64MemoryModel.Graphics
 {
-    public class C64Palette : IEnumerable<Color>
+    public class C64Palette : IEnumerable<Color>, IDisposable
     {
         private Color[] Colors { get; } = new Color[16];
+        private IEnumerable<Brush> Brushes { get; } = new Brush[16];
         
         public C64Palette()
         {
@@ -39,5 +41,11 @@ namespace C64MemoryModel.Graphics
 
         IEnumerator IEnumerable.GetEnumerator() =>
             GetEnumerator();
+
+        public void Dispose()
+        {
+            foreach (var brush in Brushes)
+                brush?.Dispose();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace ThePetscii
     public partial class MainWindow : Form
     {
         private float _colorHeight;
+        private C64Color _currentColor = C64Color.LightBlue;
         
         public MainWindow()
         {
@@ -24,6 +25,7 @@ namespace ThePetscii
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            canvas1.PetsciiImage = new PetsciiImage(new C64Palette());
             MainWindow_Resize(sender, e);
         }
 
@@ -32,18 +34,8 @@ namespace ThePetscii
             e.Graphics.SmoothingMode = SmoothingMode.None;
             e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
             e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-
             e.Graphics.Clear(panelScreenContainer.BackColor);
-            if (canvas1.GridVisible)
-            {
-                using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
-                    e.Graphics.DrawRectangle(darkPen, canvas1.Left, canvas1.Top, canvas1.Width, canvas1.Height);
-            }
-            else
-            {
-                using (var darkPen = new Pen(Color.FromArgb(30, 30, 30)))
-                    e.Graphics.DrawRectangle(darkPen, canvas1.Left - 1, canvas1.Top - 1, canvas1.Width + 1, canvas1.Height + 1);
-            }
+            
         }
 
         private void PanelScreenContainer_Resize(object sender, EventArgs e)
@@ -55,11 +47,19 @@ namespace ThePetscii
         {
             var y = 0f;
             var palette = new C64Palette();
+            var index = 0;
             foreach (var color in palette)
             {
                 using (var b = new SolidBrush(color))
                     e.Graphics.FillRectangle(b, 0, y, panelColors.Width, _colorHeight);
+                if (index == (int)_currentColor)
+                {
+                    e.Graphics.DrawRectangle(Pens.Black, 0, y + 0, panelColors.Width - 1, _colorHeight);
+                    e.Graphics.DrawRectangle(Pens.White, 1, y + 1, panelColors.Width - 3, _colorHeight - 2);
+                    e.Graphics.DrawRectangle(Pens.Black, 2, y + 2, panelColors.Width - 5, _colorHeight - 4);
+                }
                 y += _colorHeight;
+                index++;
             }
         }
 
@@ -73,6 +73,16 @@ namespace ThePetscii
         {
             canvas1.GridVisible = !canvas1.GridVisible;
             panelScreenContainer.Invalidate();
+        }
+
+        private void panelColors_MouseClick(object sender, MouseEventArgs e)
+        {
+            var newColor = (int)(e.Y / _colorHeight);
+            newColor = newColor < 0
+                ? 0 : newColor > 15
+                    ? 15 : newColor;
+            _currentColor = (C64Color)newColor;
+            panelColors.Invalidate();
         }
     }
 }
