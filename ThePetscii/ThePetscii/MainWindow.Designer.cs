@@ -38,13 +38,16 @@
             this.panelColors = new System.Windows.Forms.Panel();
             this.panelScreenContainer = new System.Windows.Forms.Panel();
             this.canvas1 = new ThePetscii.Canvas();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelScreenContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.viewToolStripMenuItem});
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[]
+                {this.viewToolStripMenuItem, this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -65,7 +68,7 @@
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
             this.gridToolStripMenuItem.ShortcutKeys =
                 ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gridToolStripMenuItem.Text = "Grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
@@ -111,8 +114,6 @@
             this.panelScreenContainer.Name = "panelScreenContainer";
             this.panelScreenContainer.Size = new System.Drawing.Size(762, 484);
             this.panelScreenContainer.TabIndex = 5;
-            this.panelScreenContainer.Paint +=
-                new System.Windows.Forms.PaintEventHandler(this.PanelScreenContainer_Paint);
             this.panelScreenContainer.Resize += new System.EventHandler(this.PanelScreenContainer_Resize);
             // 
             // canvas1
@@ -123,6 +124,22 @@
             this.canvas1.PetsciiImage = null;
             this.canvas1.Size = new System.Drawing.Size(640, 400);
             this.canvas1.TabIndex = 0;
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
+                {this.setQuartercharToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // setQuartercharToolStripMenuItem
+            // 
+            this.setQuartercharToolStripMenuItem.Checked = true;
+            this.setQuartercharToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.setQuartercharToolStripMenuItem.Name = "setQuartercharToolStripMenuItem";
+            this.setQuartercharToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.setQuartercharToolStripMenuItem.Text = "Set quarter-char";
             // 
             // MainWindow
             // 
@@ -160,6 +177,8 @@
         private ThePetscii.Canvas canvas1;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setQuartercharToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
     }
 }
 

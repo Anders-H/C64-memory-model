@@ -8,6 +8,7 @@ namespace ThePetscii
 {
     public partial class MainWindow : Form
     {
+        private Tool _currentTool = Tool.SetQuarterChar;
         private float _colorHeight;
         private C64Color _currentColor = C64Color.LightBlue;
         
@@ -18,8 +19,6 @@ namespace ThePetscii
 
         private void MainWindow_Resize(object sender, EventArgs e)
         {
-            canvas1.Left = panelScreenContainer.Width / 2 - canvas1.Width / 2;
-            canvas1.Top = panelScreenContainer.Height / 2 - canvas1.Height / 2;
             panelScreenContainer.Invalidate();
         }
 
@@ -29,18 +28,11 @@ namespace ThePetscii
             MainWindow_Resize(sender, e);
         }
 
-        private void PanelScreenContainer_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.SmoothingMode = SmoothingMode.None;
-            e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
-            e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            e.Graphics.Clear(panelScreenContainer.BackColor);
-            
-        }
-
         private void PanelScreenContainer_Resize(object sender, EventArgs e)
         {
-            panelScreenContainer.Invalidate();
+            canvas1.ExtraLarge = panelScreenContainer.Width > 960 && panelScreenContainer.Height > 600;
+            canvas1.Left = panelScreenContainer.Width / 2 - canvas1.Width / 2;
+            canvas1.Top = panelScreenContainer.Height / 2 - canvas1.Height / 2;
         }
 
         private void panelColors_Paint(object sender, PaintEventArgs e)

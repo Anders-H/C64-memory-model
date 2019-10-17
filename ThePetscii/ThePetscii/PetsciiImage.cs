@@ -12,7 +12,7 @@ namespace ThePetscii
         public PetsciiImage(C64Palette palette)
         {
             Background = new ColorMap(palette, C64Color.Blue);
-            Background = new ColorMap(palette, C64Color.LightBlue);
+            Foreground = new ColorMap(palette, C64Color.LightBlue);
             Content = new PetsciiMap();
         }
         

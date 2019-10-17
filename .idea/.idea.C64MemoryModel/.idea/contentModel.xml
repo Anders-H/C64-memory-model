@@ -87,11 +87,14 @@
         <e p="Canvas.cs" t="Include" />
         <e p="Canvas.Designer.cs" t="Include" />
         <e p="Canvas.resx" t="Include" />
+        <e p="ColorMap.cs" t="Include" />
         <e p="MainWindow.cs" t="Include" />
         <e p="MainWindow.Designer.cs" t="Include" />
         <e p="MainWindow.resx" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="pencil.ico" t="Include" />
+        <e p="PetsciiImage.cs" t="Include" />
+        <e p="PetsciiMap.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
@@ -101,6 +104,7 @@
           <e p="Settings.settings" t="Include" />
         </e>
         <e p="ThePetscii.csproj" t="IncludeRecursive" />
+        <e p="Tool.cs" t="Include" />
       </e>
     </e>
     <e p="C:\Users\Anders Hesselbom\.Rider2019.2\system\extResources" t="IncludeRecursive" />

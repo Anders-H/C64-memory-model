@@ -10,7 +10,7 @@ namespace ThePetscii
         private readonly C64Palette _palette;
         public const int Width = 40;
         public const int Height = 25;
-        public C64Color[,] Colors = new C64Color[Width, Height];
+        public readonly C64Color[,] Colors = new C64Color[Width, Height];
         
         public ColorMap(C64Palette palette, C64Color initialColor)
         {

@@ -22,8 +22,8 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -32,14 +32,14 @@
             // 
             // Canvas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "Canvas";
-            this.Size = new System.Drawing.Size(640, 400);
+            this.Size = new System.Drawing.Size(747, 462);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseClick);
             this.Resize += new System.EventHandler(this.Canvas_Resize);
             this.ResumeLayout(false);
-
         }
 
         #endregion
