@@ -76,5 +76,17 @@ namespace ThePetscii
             _currentColor = (C64Color)newColor;
             panelColors.Invalidate();
         }
+        
+        private void Canvas1_CanvasClick(object sender, CanvasModel.CanvasClickEventArgs e)
+        {
+            switch (_currentTool)
+            {
+                case Tool.SetQuarterChar:
+                    
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

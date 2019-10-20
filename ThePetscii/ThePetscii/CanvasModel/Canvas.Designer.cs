@@ -1,4 +1,4 @@
-﻿namespace ThePetscii
+﻿namespace ThePetscii.CanvasModel
 {
     partial class Canvas
     {

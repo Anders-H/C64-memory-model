@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace ThePetscii
+namespace ThePetscii.CanvasModel
 {
     public partial class Canvas : UserControl
     {
@@ -11,6 +11,7 @@ namespace ThePetscii
         private int _totalWidth;
         private int _totalHeight;
         private int _characterSize;
+        public event CanvasClickDelegate CanvasClick;
         
         public PetsciiImage PetsciiImage { get; set; }
         
@@ -85,9 +86,7 @@ namespace ThePetscii
             }
         }
 
-        private void Canvas_MouseClick(object sender, MouseEventArgs e)
-        {
-            
-        }
+        private void Canvas_MouseClick(object sender, MouseEventArgs e) =>
+            CanvasClick?.Invoke(this, new CanvasClickEventArgs(ExtraLarge ? 26 : 16, e.X, e.Y));
     }
 }
