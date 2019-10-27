@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq.Expressions;
-using System.Windows.Forms;
+using System.Configuration;
 using C64MemoryModel.Chr;
 using Byte = C64MemoryModel.Types.Byte;
 
@@ -8,34 +7,55 @@ namespace ThePetscii
 {
     public class PetsciiChar
     {
-        public byte Identity { get; }
-        public PetsciiCode PetsciiCode { get; }
-        public bool ReversedFlag { get; }
+        public byte Identity { get; private set; }
+        public bool ReversedFlag { get; private set; }
 
-        public PetsciiChar(byte identity)
+        public PetsciiChar(byte identity, bool reversedFlag)
         {
-            switch (identity)
-            {
-                case 0b00000000:
-                case 0b00000001:
-                case 0b00000010:
-                case 0b00000011:
-                case 0b00000100:
-                case 0b00000101:
-                case 0b00000110:
-                case 0b00000111:
-                case 0b00001000:
-                case 0b00001001:
-                case 0b00001010:
-                case 0b00001011:
-                case 0b00001100:
-                case 0b00001101:
-                case 0b00001110:
-                case 0b00001111:
-                    break; // TODO Send back Petscii codes
-            }
+            Identity = identity;
+            ReversedFlag = reversedFlag;
         }
 
+        public (PetsciiCode code, bool reversed) GetPetscii()
+        {
+            switch (Identity)
+            {
+                case 0b00000000:                                 // OO
+                    return (PetsciiCode.Petscii032Space, false); // OO
+                case 0b00000001:                                      // XO
+                    return (PetsciiCode.Petscii190, false);           // OO
+                case 0b00000010:                                 // OX
+                    return (PetsciiCode.Petscii188, false);      // OO
+                case 0b00000011:                                      // XX
+                    return (PetsciiCode.Petscii162, true);            // OO
+                case 0b00000100:                                 // OO
+                    return (PetsciiCode.Petscii187, false);      // XO
+                case 0b00000101:                                      // XO
+                    return (PetsciiCode.Petscii161, false);           // XO
+                case 0b00000110:                                 // OX
+                    return (PetsciiCode.Petscii191, true);       // XO
+                case 0b00000111:                                      // XX
+                    return (PetsciiCode.Petscii172, true);            // XO
+                case 0b00001000:                                 // OO
+                    return (PetsciiCode.Petscii172, false);      // OX
+                case 0b00001001:                                      // XO
+                    return (PetsciiCode.Petscii191, false);           // OX
+                case 0b00001010:                                 // OX
+                    return (PetsciiCode.Petscii161, true);       // OX
+                case 0b00001011:                                      // XX
+                    return (PetsciiCode.Petscii187, true);            // OX
+                case 0b00001100:                                 // OO
+                    return (PetsciiCode.Petscii162, false);      // XX
+                case 0b00001101:                                      // XO
+                    return (PetsciiCode.Petscii188, true);            // XX
+                case 0b00001110:                                 // OX
+                    return (PetsciiCode.Petscii190, true);       // XX
+                case 0b00001111:                                      // XX
+                    return (PetsciiCode.Petscii032Space, true);       // XX
+            }
+            throw new ArgumentOutOfRangeException();
+        }
+        
         public bool IsAllSet() =>
             new Byte(Identity)
                 .GetLowNibble()
