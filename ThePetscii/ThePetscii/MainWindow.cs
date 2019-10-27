@@ -37,6 +37,8 @@ namespace ThePetscii
 
         private void panelColors_Paint(object sender, PaintEventArgs e)
         {
+            if (DesignMode)
+                return;
             var y = 0f;
             var palette = new C64Palette();
             var index = 0;

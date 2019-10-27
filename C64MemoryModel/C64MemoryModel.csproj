@@ -72,6 +72,7 @@
     <Compile Include="Mem\MemoryModelLocationName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextAdapter.cs" />
+    <Compile Include="Types\Nibble.cs" />
     <Compile Include="Types\Word.cs" />
   </ItemGroup>
   <ItemGroup />

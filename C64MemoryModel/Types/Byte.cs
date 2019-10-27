@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace C64MemoryModel.Types
@@ -183,7 +184,7 @@ namespace C64MemoryModel.Types
                 b += Bit2 ? 4 : 0;
                 b += Bit1 ? 2 : 0;
                 b += Bit0 ? 1 : 0;
-                return (byte) b;
+                return (byte)b;
             }
         }
 
@@ -198,5 +199,12 @@ namespace C64MemoryModel.Types
 
         protected virtual void OnPropertyChanged(string propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public Nibble GetLowNibble() =>
+            new Nibble(Bit3, Bit2, Bit1, Bit0);
+        
+        public Nibble GetHighNibble() =>
+            new Nibble(Bit7, Bit6, Bit5, Bit4);
+
     }
 }

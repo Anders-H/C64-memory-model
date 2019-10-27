@@ -23,6 +23,12 @@ namespace ThePetscii
             Content = content;
         }
 
+        public bool IsAllSet(int x, int y) =>
+            Content.IsAllSet(x, y);
+
+        public bool IsNoneSet(int x, int y) =>
+            Content.IsNoneSet(x, y);
+        
         public void Dispose()
         {
             Background.Dispose();

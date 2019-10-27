@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
@@ -75,10 +76,24 @@ namespace ThePetscii.CanvasModel
             {
                 for (var x = 0; x < 40; x++)
                 {
-                    e.Graphics.FillRectangle(
-                        PetsciiImage.Background.GetBrush(
-                            PetsciiImage.Background.Colors[x, y]
+                    if (PetsciiImage.IsAllSet(x, y))
+                    {
+                        e.Graphics.FillRectangle(
+                            PetsciiImage.Background.GetBrush(
+                                PetsciiImage.Foreground.Colors[x, y]
                             ), xpos, ypos, totalWidth, totalWidth);
+                    }
+                    else if (PetsciiImage.IsNoneSet(x, y))
+                    {
+                        e.Graphics.FillRectangle(
+                            PetsciiImage.Background.GetBrush(
+                                PetsciiImage.Background.Colors[x, y]
+                            ), xpos, ypos, totalWidth, totalWidth);
+                    }
+                    else
+                    {
+                        e.Graphics.FillRectangle(Brushes.Chartreuse, xpos, ypos, totalWidth, totalWidth);
+                    }
                     xpos += _characterSize;
                 }
                 xpos = 0;

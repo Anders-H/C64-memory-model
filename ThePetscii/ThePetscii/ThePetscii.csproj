@@ -64,6 +64,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="PetsciiChar.cs" />
     <Compile Include="PetsciiImage.cs" />
     <Compile Include="PetsciiMap.cs" />
     <Compile Include="Program.cs" />
