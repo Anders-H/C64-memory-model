@@ -2,17 +2,15 @@
 {
     public class PetsciiMap
     {
-        private PetsciiChar[,] _chars;
+        private readonly PetsciiChar[,] _chars;
 
         public PetsciiMap()
         {
             _chars = new PetsciiChar[40, 25];
         }
 
-        public void SetSubpixel(int charX, int charY, int subX, int subY, bool value)
-        {
-            
-        }
+        public void SetSubpixel(int charX, int charY, int subX, int subY, bool value) =>
+            _chars.Get(charX, charY).SetAt(subX, subY, true);
 
         public bool GetSubpixel(int charX, int charY, int subX, int subY)
         {

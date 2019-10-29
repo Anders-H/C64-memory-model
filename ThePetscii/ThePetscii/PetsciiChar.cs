@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using C64MemoryModel.Chr;
 using Byte = C64MemoryModel.Types.Byte;
 
@@ -66,6 +65,34 @@ namespace ThePetscii
                 .GetLowNibble()
                 .IsNotSet(true, true, true, true);
 
+        public void SetAt(int subX, int subY, bool set)
+        {
+            var b = new Byte(Identity);
+            if (subY == 0)
+            {
+                if (subX == 0)
+                    b.Bit0 = set;
+                else if (subX == 1)
+                    b.Bit1 = set;
+                else
+                    throw new ArgumentOutOfRangeException();
+                Identity = b.Value;
+                return;
+            }
+            if (subY == 1)
+            {
+                if (subX == 0)
+                    b.Bit2 = set;
+                else if (subX == 1)
+                    b.Bit3 = set;
+                else
+                    throw new ArgumentOutOfRangeException();
+                Identity = b.Value;
+                return;
+            }
+            throw new ArgumentOutOfRangeException();
+        }
+        
         public bool IsSetAt(int subX, int subY)
         {
             if (subY == 0)

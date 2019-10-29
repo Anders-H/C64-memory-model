@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using C64MemoryModel.Graphics;
 
@@ -84,11 +83,17 @@ namespace ThePetscii
             switch (_currentTool)
             {
                 case Tool.SetQuarterChar:
-                    
+                    canvas1.PetsciiImage.Content.SetSubpixel(e.CharacterX, e.CharacterY, e.SubCharacterX, e.SubCharacterY, true);
+                    canvas1.Invalidate();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void MainWindow_Shown(object sender, EventArgs e)
+        {
+            Refresh();
         }
     }
 }
