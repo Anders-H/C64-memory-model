@@ -2,6 +2,8 @@
 {
     public enum Tool
     {
-        SetQuarterChar
+        SetQuarterChar,
+        UnsetQuarterChar,
+        ToggleQuarterChar
     }
 }

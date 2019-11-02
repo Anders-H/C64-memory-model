@@ -37,7 +37,7 @@
             this.Name = "Canvas";
             this.Size = new System.Drawing.Size(747, 462);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
             this.Resize += new System.EventHandler(this.Canvas_Resize);
             this.ResumeLayout(false);
         }

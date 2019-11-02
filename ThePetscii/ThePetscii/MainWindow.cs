@@ -86,14 +86,58 @@ namespace ThePetscii
                     canvas1.PetsciiImage.Content.SetSubpixel(e.CharacterX, e.CharacterY, e.SubCharacterX, e.SubCharacterY, true);
                     canvas1.Invalidate();
                     break;
+                case Tool.UnsetQuarterChar:
+                    canvas1.PetsciiImage.Content.SetSubpixel(e.CharacterX, e.CharacterY, e.SubCharacterX, e.SubCharacterY, false);
+                    canvas1.Invalidate();
+                    break;
+                case Tool.ToggleQuarterChar:
+                    canvas1.PetsciiImage.Content.SetSubpixel(
+                        e.CharacterX,
+                        e.CharacterY,
+                        e.SubCharacterX,
+                        e.SubCharacterY,
+                        !canvas1.PetsciiImage.Content.GetSubpixel(
+                            e.CharacterX,
+                            e.CharacterY,
+                            e.SubCharacterX,
+                            e.SubCharacterY)
+                    );
+                    canvas1.Invalidate();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void MainWindow_Shown(object sender, EventArgs e)
-        {
+        private void MainWindow_Shown(object sender, EventArgs e) =>
             Refresh();
+
+        private void UncheckTools()
+        {
+            setQuartercharToolStripMenuItem.Checked = false;
+            unsetQuartercharToolStripMenuItem.Checked = false;
+            toggleQuartercharToolStripMenuItem.Checked = false;
+        }
+        
+        private void setQuartercharToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckTools();
+            setQuartercharToolStripMenuItem.Checked = true;
+            _currentTool = Tool.SetQuarterChar;
+        }
+        
+        private void unsetQuartercharToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckTools();
+            unsetQuartercharToolStripMenuItem.Checked = true;
+            _currentTool = Tool.UnsetQuarterChar;
+        }
+
+        private void toggleQuartercharToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckTools();
+            toggleQuartercharToolStripMenuItem.Checked = true;
+            _currentTool = Tool.ToggleQuarterChar;
         }
     }
 }

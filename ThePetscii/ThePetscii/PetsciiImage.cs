@@ -28,6 +28,9 @@ namespace ThePetscii
 
         public bool IsNoneSet(int x, int y) =>
             Content.IsNoneSet(x, y);
+
+        public PetsciiChar GetChar(int x, int y) =>
+            Content.GetChar(x, y);
         
         public void Dispose()
         {

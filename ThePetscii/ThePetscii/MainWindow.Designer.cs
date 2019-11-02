@@ -35,6 +35,8 @@
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unsetQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panelColors = new System.Windows.Forms.Panel();
@@ -75,7 +77,10 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
-                {this.setQuartercharToolStripMenuItem});
+            {
+                this.setQuartercharToolStripMenuItem, this.unsetQuartercharToolStripMenuItem,
+                this.toggleQuartercharToolStripMenuItem
+            });
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
@@ -85,8 +90,26 @@
             this.setQuartercharToolStripMenuItem.Checked = true;
             this.setQuartercharToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.setQuartercharToolStripMenuItem.Name = "setQuartercharToolStripMenuItem";
-            this.setQuartercharToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.setQuartercharToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.setQuartercharToolStripMenuItem.Text = "Set quarter-char";
+            this.setQuartercharToolStripMenuItem.Click +=
+                new System.EventHandler(this.setQuartercharToolStripMenuItem_Click);
+            // 
+            // unsetQuartercharToolStripMenuItem
+            // 
+            this.unsetQuartercharToolStripMenuItem.Name = "unsetQuartercharToolStripMenuItem";
+            this.unsetQuartercharToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.unsetQuartercharToolStripMenuItem.Text = "Unset quarter-char";
+            this.unsetQuartercharToolStripMenuItem.Click +=
+                new System.EventHandler(this.unsetQuartercharToolStripMenuItem_Click);
+            // 
+            // toggleQuartercharToolStripMenuItem
+            // 
+            this.toggleQuartercharToolStripMenuItem.Name = "toggleQuartercharToolStripMenuItem";
+            this.toggleQuartercharToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.toggleQuartercharToolStripMenuItem.Text = "Toggle quarter-char";
+            this.toggleQuartercharToolStripMenuItem.Click +=
+                new System.EventHandler(this.toggleQuartercharToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -182,6 +205,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setQuartercharToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toggleQuartercharToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unsetQuartercharToolStripMenuItem;
     }
 }
 

@@ -48,6 +48,7 @@
         <e p="Types" t="Include">
           <e p="Address.cs" t="Include" />
           <e p="Byte.cs" t="Include" />
+          <e p="Nibble.cs" t="Include" />
           <e p="Word.cs" t="Include" />
         </e>
       </e>
@@ -84,15 +85,21 @@
       <e p="ThePetscii\ThePetscii" t="IncludeRecursive">
         <e p="App.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Canvas.cs" t="Include" />
-        <e p="Canvas.Designer.cs" t="Include" />
-        <e p="Canvas.resx" t="Include" />
+        <e p="CanvasModel" t="Include">
+          <e p="Canvas.cs" t="Include" />
+          <e p="Canvas.Designer.cs" t="Include" />
+          <e p="Canvas.resx" t="Include" />
+          <e p="CanvasClickDelegate.cs" t="Include" />
+          <e p="CanvasClickEventArgs.cs" t="Include" />
+        </e>
         <e p="ColorMap.cs" t="Include" />
         <e p="MainWindow.cs" t="Include" />
         <e p="MainWindow.Designer.cs" t="Include" />
         <e p="MainWindow.resx" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="pencil.ico" t="Include" />
+        <e p="PetsciiChar.cs" t="Include" />
+        <e p="PetsciiCharExtensions.cs" t="Include" />
         <e p="PetsciiImage.cs" t="Include" />
         <e p="PetsciiMap.cs" t="Include" />
         <e p="Program.cs" t="Include" />
