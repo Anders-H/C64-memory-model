@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml.Linq;
-
-namespace ThePetscii
+﻿namespace ThePetscii
 {
     public class PetsciiMap
     {

@@ -54,6 +54,51 @@ namespace ThePetscii
             }
             throw new ArgumentOutOfRangeException();
         }
+
+        public (byte code, bool reversed) IdentityToByte()
+        {
+            switch (Identity)
+            {
+                case 0b00000000:                                 // OO
+                    return (32, false);                          // OO
+                case 0b00000001:                                      // XO
+                    return (32, false);           // OO
+                case 0b00000010:                                 // OX
+                    return (32, false);      // OO
+                case 0b00000011:                                      // XX
+                    return (32, true);            // OO
+                case 0b00000100:                                 // OO
+                    return (123, false);                         // XO
+                case 0b00000101:                                      // XO
+                    return (32, false);           // XO
+                case 0b00000110:                                 // OX
+                    return (32, true);       // XO
+                case 0b00000111:                                      // XX
+                    return (32, true);            // XO
+                case 0b00001000:                                 // OO
+                    return (32, false);      // OX
+                case 0b00001001:                                      // XO
+                    return (32, false);           // OX
+                case 0b00001010:                                 // OX
+                    return (32, true);       // OX
+                case 0b00001011:                                      // XX
+                    return (32, true);            // OX
+                case 0b00001100:                                 // OO
+                    return (32, false);      // XX
+                case 0b00001101:                                      // XO
+                    return (32, true);            // XX
+                case 0b00001110:                                 // OX
+                    return (32, true);       // XX
+                case 0b00001111:                                      // XX
+                    return (32, true);                                // XX
+            }
+            throw new ArgumentOutOfRangeException();
+        }
+        public byte GetByte()
+        {
+            var (code, reversed) = IdentityToByte();
+            return reversed ? (byte)(code + 128) : code;
+        }
         
         public bool IsAllSet() =>
             new Byte(Identity)

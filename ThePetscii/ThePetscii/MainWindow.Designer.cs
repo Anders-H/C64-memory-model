@@ -31,12 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources =
                 new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToBASICToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unsetQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleQuartercharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setForecolorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panelColors = new System.Windows.Forms.Panel();
@@ -49,13 +52,29 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[]
-                {this.viewToolStripMenuItem, this.toolsToolStripMenuItem});
+                {this.fileToolStripMenuItem, this.viewToolStripMenuItem, this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(804, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
+                {this.exportToBASICToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // exportToBASICToolStripMenuItem
+            // 
+            this.exportToBASICToolStripMenuItem.Name = "exportToBASICToolStripMenuItem";
+            this.exportToBASICToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.exportToBASICToolStripMenuItem.Text = "Export to BASIC...";
+            this.exportToBASICToolStripMenuItem.Click +=
+                new System.EventHandler(this.exportToBASICToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -70,7 +89,7 @@
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
             this.gridToolStripMenuItem.ShortcutKeys =
                 ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gridToolStripMenuItem.Text = "Grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
@@ -79,7 +98,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
             {
                 this.setQuartercharToolStripMenuItem, this.unsetQuartercharToolStripMenuItem,
-                this.toggleQuartercharToolStripMenuItem
+                this.toggleQuartercharToolStripMenuItem, this.setForecolorToolStripMenuItem
             });
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -110,6 +129,14 @@
             this.toggleQuartercharToolStripMenuItem.Text = "Toggle quarter-char";
             this.toggleQuartercharToolStripMenuItem.Click +=
                 new System.EventHandler(this.toggleQuartercharToolStripMenuItem_Click);
+            // 
+            // setForecolorToolStripMenuItem
+            // 
+            this.setForecolorToolStripMenuItem.Name = "setForecolorToolStripMenuItem";
+            this.setForecolorToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.setForecolorToolStripMenuItem.Text = "Set forecolor";
+            this.setForecolorToolStripMenuItem.Click +=
+                new System.EventHandler(this.setForecolorToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -207,6 +234,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleQuartercharToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unsetQuartercharToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setForecolorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToBASICToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
     }
 }
 

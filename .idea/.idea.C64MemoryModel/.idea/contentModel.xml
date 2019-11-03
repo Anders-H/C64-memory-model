@@ -92,7 +92,11 @@
           <e p="CanvasClickDelegate.cs" t="Include" />
           <e p="CanvasClickEventArgs.cs" t="Include" />
         </e>
+        <e p="CodeGenerator.cs" t="Include" />
         <e p="ColorMap.cs" t="Include" />
+        <e p="ExportToBasicDialog.cs" t="Include" />
+        <e p="ExportToBasicDialog.Designer.cs" t="Include" />
+        <e p="ExportToBasicDialog.resx" t="Include" />
         <e p="MainWindow.cs" t="Include" />
         <e p="MainWindow.Designer.cs" t="Include" />
         <e p="MainWindow.resx" t="Include" />

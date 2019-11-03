@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,7 +59,14 @@
     </Compile>
     <Compile Include="CanvasModel\CanvasClickDelegate.cs" />
     <Compile Include="CanvasModel\CanvasClickEventArgs.cs" />
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="ColorMap.cs" />
+    <Compile Include="ExportToBasicDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportToBasicDialog.Designer.cs">
+      <DependentUpon>ExportToBasicDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +82,9 @@
     <Compile Include="Tool.cs" />
     <EmbeddedResource Include="CanvasModel\Canvas.resx">
       <DependentUpon>Canvas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExportToBasicDialog.resx">
+      <DependentUpon>ExportToBasicDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

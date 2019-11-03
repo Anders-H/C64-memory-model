@@ -20,14 +20,15 @@ namespace ThePetscii
                     Colors[x, y] = initialColor;
         }
 
-        public Brush GetBrush(C64Color color)
-        {
-            var index = (int)color;
-            if (_brushes[index] == null)
-                _brushes[index] = new SolidBrush(_palette.GetColor(color));
-            return _brushes[index];
-        }
+        public Brush GetBrush(C64Color color) =>
+            _brushes[(int)color] ?? (_brushes[(int)color] = new SolidBrush(_palette.GetColor(color)));
 
+        public void SetColor(int x, int y, C64Color color) =>
+            Colors[x, y] = color;
+
+        public byte GetColorByte(int x, int y) =>
+            (byte)Colors[x, y];
+        
         public void Dispose()
         {
             _palette.Dispose();

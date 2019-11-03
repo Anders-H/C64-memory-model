@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Drawing;
 using System.Windows.Forms;
 using C64MemoryModel.Graphics;
@@ -104,6 +105,10 @@ namespace ThePetscii
                     );
                     canvas1.Invalidate();
                     break;
+                case Tool.SetForecolor:
+                    canvas1.PetsciiImage.Foreground.SetColor(e.CharacterX, e.CharacterY, _currentColor);
+                    canvas1.Invalidate();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -117,6 +122,7 @@ namespace ThePetscii
             setQuartercharToolStripMenuItem.Checked = false;
             unsetQuartercharToolStripMenuItem.Checked = false;
             toggleQuartercharToolStripMenuItem.Checked = false;
+            setForecolorToolStripMenuItem.Checked = false;
         }
         
         private void setQuartercharToolStripMenuItem_Click(object sender, EventArgs e)
@@ -138,6 +144,21 @@ namespace ThePetscii
             UncheckTools();
             toggleQuartercharToolStripMenuItem.Checked = true;
             _currentTool = Tool.ToggleQuarterChar;
+        }
+
+        private void setForecolorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckTools();
+            setForecolorToolStripMenuItem.Checked = true;
+            _currentTool = Tool.SetForecolor;
+        }
+        
+        private void exportToBASICToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var codeGenerator = new CodeGenerator(canvas1.PetsciiImage);
+            using var x = new ExportToBasicDialog();
+            x.Code = codeGenerator.GetBasic();
+            x.ShowDialog(this);
         }
     }
 }

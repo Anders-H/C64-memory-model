@@ -4,6 +4,7 @@
     {
         SetQuarterChar,
         UnsetQuarterChar,
-        ToggleQuarterChar
+        ToggleQuarterChar,
+        SetForecolor
     }
 }
