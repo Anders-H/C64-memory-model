@@ -160,5 +160,10 @@ namespace ThePetscii
             x.Code = codeGenerator.GetBasic();
             x.ShowDialog(this);
         }
+
+        private void newDocumentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

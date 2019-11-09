@@ -45,6 +45,7 @@
             this.panelColors = new System.Windows.Forms.Panel();
             this.panelScreenContainer = new System.Windows.Forms.Panel();
             this.canvas1 = new ThePetscii.CanvasModel.Canvas();
+            this.newDocumentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelScreenContainer.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +64,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
-                {this.exportToBASICToolStripMenuItem});
+                {this.newDocumentToolStripMenuItem, this.exportToBASICToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -89,7 +90,7 @@
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
             this.gridToolStripMenuItem.ShortcutKeys =
                 ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.gridToolStripMenuItem.Text = "Grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
@@ -193,6 +194,13 @@
             this.canvas1.TabIndex = 0;
             this.canvas1.CanvasClick += new ThePetscii.CanvasModel.CanvasClickDelegate(this.Canvas1_CanvasClick);
             // 
+            // newDocumentToolStripMenuItem
+            // 
+            this.newDocumentToolStripMenuItem.Name = "newDocumentToolStripMenuItem";
+            this.newDocumentToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.newDocumentToolStripMenuItem.Text = "New document";
+            this.newDocumentToolStripMenuItem.Click += new System.EventHandler(this.newDocumentToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -209,7 +217,6 @@
             this.MinimumSize = new System.Drawing.Size(820, 594);
             this.Name = "MainWindow";
             this.Text = "The Petscii";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Shown += new System.EventHandler(this.MainWindow_Shown);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
@@ -237,6 +244,7 @@
         private System.Windows.Forms.ToolStripMenuItem setForecolorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToBASICToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newDocumentToolStripMenuItem;
     }
 }
 

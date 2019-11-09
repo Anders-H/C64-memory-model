@@ -22,33 +22,33 @@ namespace ThePetscii
                 case 0b00000000:                                 // OO
                     return (PetsciiCode.Petscii032Space, false); // OO
                 case 0b00000001:                                      // XO
-                    return (PetsciiCode.Petscii190, false);           // OO
+                    return (PetsciiCode.Petscii126, false);           // OO
                 case 0b00000010:                                 // OX
-                    return (PetsciiCode.Petscii188, false);      // OO
+                    return (PetsciiCode.Petscii124, false);      // OO
                 case 0b00000011:                                      // XX
-                    return (PetsciiCode.Petscii162, true);            // OO
+                    return (PetsciiCode.Petscii098, true);            // OO
                 case 0b00000100:                                 // OO
-                    return (PetsciiCode.Petscii187, false);      // XO
+                    return (PetsciiCode.Petscii123, false);      // XO
                 case 0b00000101:                                      // XO
-                    return (PetsciiCode.Petscii161, false);           // XO
+                    return (PetsciiCode.Petscii097, false);           // XO
                 case 0b00000110:                                 // OX
-                    return (PetsciiCode.Petscii191, true);       // XO
+                    return (PetsciiCode.Petscii127, true);       // XO
                 case 0b00000111:                                      // XX
-                    return (PetsciiCode.Petscii172, true);            // XO
+                    return (PetsciiCode.Petscii108L, true);            // XO
                 case 0b00001000:                                 // OO
-                    return (PetsciiCode.Petscii172, false);      // OX
+                    return (PetsciiCode.Petscii108L, false);      // OX
                 case 0b00001001:                                      // XO
-                    return (PetsciiCode.Petscii191, false);           // OX
+                    return (PetsciiCode.Petscii127, false);           // OX
                 case 0b00001010:                                 // OX
-                    return (PetsciiCode.Petscii161, true);       // OX
+                    return (PetsciiCode.Petscii097, true);       // OX
                 case 0b00001011:                                      // XX
-                    return (PetsciiCode.Petscii187, true);            // OX
+                    return (PetsciiCode.Petscii123, true);            // OX
                 case 0b00001100:                                 // OO
-                    return (PetsciiCode.Petscii162, false);      // XX
+                    return (PetsciiCode.Petscii098, false);      // XX
                 case 0b00001101:                                      // XO
-                    return (PetsciiCode.Petscii188, true);            // XX
+                    return (PetsciiCode.Petscii124, true);            // XX
                 case 0b00001110:                                 // OX
-                    return (PetsciiCode.Petscii190, true);       // XX
+                    return (PetsciiCode.Petscii196, true);       // XX
                 case 0b00001111:                                      // XX
                     return (PetsciiCode.Petscii032Space, true);       // XX
             }
@@ -62,33 +62,33 @@ namespace ThePetscii
                 case 0b00000000:                                 // OO
                     return (32, false);                          // OO
                 case 0b00000001:                                      // XO
-                    return (32, false);           // OO
+                    return (126, false);                              // OO
                 case 0b00000010:                                 // OX
-                    return (32, false);      // OO
+                    return (124, false);                         // OO
                 case 0b00000011:                                      // XX
-                    return (32, true);            // OO
+                    return (98, true);                                // OO
                 case 0b00000100:                                 // OO
                     return (123, false);                         // XO
                 case 0b00000101:                                      // XO
-                    return (32, false);           // XO
+                    return (97, false);                               // XO
                 case 0b00000110:                                 // OX
-                    return (32, true);       // XO
+                    return (127, true);                          // XO
                 case 0b00000111:                                      // XX
-                    return (32, true);            // XO
+                    return (108, true);                               // XO
                 case 0b00001000:                                 // OO
-                    return (32, false);      // OX
+                    return (108, false);                         // OX
                 case 0b00001001:                                      // XO
-                    return (32, false);           // OX
+                    return (127, false);                              // OX
                 case 0b00001010:                                 // OX
-                    return (32, true);       // OX
+                    return (97, true);                           // OX
                 case 0b00001011:                                      // XX
-                    return (32, true);            // OX
+                    return (123, true);                               // OX
                 case 0b00001100:                                 // OO
-                    return (32, false);      // XX
+                    return (98, false);                          // XX
                 case 0b00001101:                                      // XO
-                    return (32, true);            // XX
+                    return (124, true);                               // XX
                 case 0b00001110:                                 // OX
-                    return (32, true);       // XX
+                    return (126, true);                          // XX
                 case 0b00001111:                                      // XX
                     return (32, true);                                // XX
             }
