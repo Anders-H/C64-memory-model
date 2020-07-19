@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C64MemoryModelTestProject",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThePetscii", "ThePetscii\ThePetscii\ThePetscii.csproj", "{965B855F-3CC9-464A-B0AA-D3030FF83E7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitor", "Monitor\Monitor.csproj", "{078325D0-0142-4DA3-B5C6-EEB1426EB3E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{965B855F-3CC9-464A-B0AA-D3030FF83E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{965B855F-3CC9-464A-B0AA-D3030FF83E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{965B855F-3CC9-464A-B0AA-D3030FF83E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078325D0-0142-4DA3-B5C6-EEB1426EB3E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078325D0-0142-4DA3-B5C6-EEB1426EB3E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078325D0-0142-4DA3-B5C6-EEB1426EB3E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078325D0-0142-4DA3-B5C6-EEB1426EB3E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
