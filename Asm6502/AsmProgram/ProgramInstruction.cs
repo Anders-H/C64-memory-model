@@ -15,6 +15,8 @@ namespace Asm6502.AsmProgram
 
         public ushort WordArgument { get; set; }
 
+        public string Comment { get; set; }
+
         public ProgramInstruction() : this(0, OperationCode.Lda, OperationMode.Absolute)
         {
         }

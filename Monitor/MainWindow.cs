@@ -23,6 +23,7 @@ namespace Monitor
         {
             //TEST CODE!!!
             Program.Add(new ProgramInstruction(2048, OperationCode.Lda, OperationMode.Absolute) { ByteArgument = 45 });
+            Program.Add(new ProgramInstruction(64000, OperationCode.Lda, OperationMode.Absolute) { ByteArgument = 45 });
             ProgramListController.RefreshList(Program);
 
         }

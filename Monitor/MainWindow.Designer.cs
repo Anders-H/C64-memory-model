@@ -33,8 +33,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lv = new System.Windows.Forms.ListView();
-            this.colAddressHex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colAddressDec = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colAddress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colOperation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colMode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colParam = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,6 +43,7 @@
             this.numberFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hexaDecimalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decimalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colComment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,37 +77,33 @@
             // lv
             // 
             this.lv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colAddressHex,
-            this.colAddressDec,
+            this.colAddress,
             this.colOperation,
             this.colMode,
             this.colParam,
             this.colAsm,
-            this.colMachineCode});
+            this.colMachineCode,
+            this.colComment});
             this.lv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lv.FullRowSelect = true;
             this.lv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lv.HideSelection = false;
             this.lv.Location = new System.Drawing.Point(0, 49);
+            this.lv.MultiSelect = false;
             this.lv.Name = "lv";
             this.lv.Size = new System.Drawing.Size(974, 526);
             this.lv.TabIndex = 3;
             this.lv.UseCompatibleStateImageBehavior = false;
             this.lv.View = System.Windows.Forms.View.Details;
             // 
-            // colAddressHex
+            // colAddress
             // 
-            this.colAddressHex.Text = "Address (HEX)";
-            this.colAddressHex.Width = 85;
-            // 
-            // colAddressDec
-            // 
-            this.colAddressDec.Text = "Address (DEC)";
-            this.colAddressDec.Width = 85;
+            this.colAddress.Text = "Address";
+            this.colAddress.Width = 90;
             // 
             // colOperation
             // 
             this.colOperation.Text = "Operation";
-            this.colOperation.Width = 85;
             // 
             // colMode
             // 
@@ -162,6 +158,11 @@
             this.decimalToolStripMenuItem.Text = "Decimal";
             this.decimalToolStripMenuItem.Click += new System.EventHandler(this.decimalToolStripMenuItem_Click);
             // 
+            // colComment
+            // 
+            this.colComment.Text = "Comment";
+            this.colComment.Width = 200;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,8 +190,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ListView lv;
-        private System.Windows.Forms.ColumnHeader colAddressHex;
-        private System.Windows.Forms.ColumnHeader colAddressDec;
+        private System.Windows.Forms.ColumnHeader colAddress;
         private System.Windows.Forms.ColumnHeader colOperation;
         private System.Windows.Forms.ColumnHeader colMode;
         private System.Windows.Forms.ColumnHeader colParam;
@@ -200,6 +200,7 @@
         private System.Windows.Forms.ToolStripMenuItem numberFormatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hexaDecimalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decimalToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader colComment;
     }
 }
 
