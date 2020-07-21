@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentAsmProgram.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,7 +57,9 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramListController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewMode.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +87,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Settings %2827%29.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Asm6502\Asm6502.csproj">
+      <Project>{bc14f4a7-2941-40de-b970-a1759007efb1}</Project>
+      <Name>Asm6502</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C64MemoryModel\C64MemoryModel.csproj">
+      <Project>{65035b65-aac3-4c64-92e9-00e5133f6bff}</Project>
+      <Name>C64MemoryModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
