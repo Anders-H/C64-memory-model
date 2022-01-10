@@ -10,7 +10,6 @@ namespace Sprdef.Model
         private int CursorY { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public static bool Multicolor { get; set; }
         public Rectangle Bounds => new Rectangle(X, Y, InnerWidth, InnerHeight);
         public int PixelSize { get; set; } = 10;
         public C64Sprite Sprite { get; set; }
@@ -20,9 +19,11 @@ namespace Sprdef.Model
         public void MoveCursor(int x, int y)
         {
             CursorX += x;
+            
             if (CursorX <= 0)
                 CursorX = 0;
-            if (Multicolor)
+            
+            if (Sprite.Multicolor)
             {
                 if (CursorX >= 22)
                     CursorX = 22;
@@ -32,9 +33,12 @@ namespace Sprdef.Model
                 if (CursorX >= 23)
                     CursorX = 23;
             }
+
             CursorY += y;
+
             if (CursorY <= 0)
                 CursorY = 0;
+            
             if (CursorY >= 20)
                 CursorY = 20;
         }
@@ -56,76 +60,83 @@ namespace Sprdef.Model
 
         public void SavePngMultiColorDoubleWidth(string filename, SpriteArray sprites, bool transparentBackground)
         {
-            using (var b = new Bitmap(SpriteArray.TotalWidth, C64Sprite.Height))
+            using var b = new Bitmap(SpriteArray.TotalWidth, C64Sprite.Height);
+            var x = 0;
+
+            foreach (var sprite in sprites)
             {
-                var x = 0;
-                foreach (var sprite in sprites)
-                {
-                    sprite.ExportMultiColorDoubleWidth(b, x, 0, transparentBackground);
-                    x += C64Sprite.Width;
-                }
-                b.Save(filename, ImageFormat.Png);
+                sprite.ExportMultiColorDoubleWidth(b, x, 0, transparentBackground);
+                x += C64Sprite.Width;
             }
+
+            b.Save(filename, ImageFormat.Png);
         }
 
         public void SavePngMultiColor(string filename, SpriteArray sprites, bool transparentBackground)
         {
             const int w = C64Sprite.Width/2;
-            using (var b = new Bitmap(sprites.TotalMultiColorWidth, C64Sprite.Height))
+            using var b = new Bitmap(sprites.TotalMultiColorWidth, C64Sprite.Height);
+            var x = 0;
+
+            foreach (var sprite in sprites)
             {
-                var x = 0;
-                foreach (var sprite in sprites)
-                {
-                    sprite.ExportMultiColor(b, x, 0, transparentBackground);
-                    x += w;
-                }
-                b.Save(filename, ImageFormat.Png);
+                sprite.ExportMultiColor(b, x, 0, transparentBackground);
+                x += w;
             }
+
+            b.Save(filename, ImageFormat.Png);
         }
 
         public void SavePng(string filename, SpriteArray sprites, bool transparentBackground)
         {
-            using (var b = new Bitmap(SpriteArray.TotalWidth, C64Sprite.Height))
+            using var b = new Bitmap(SpriteArray.TotalWidth, C64Sprite.Height);
+            var x = 0;
+
+            foreach (var sprite in sprites)
             {
-                var x = 0;
-                foreach (var sprite in sprites)
-                {
-                    sprite.Export(b, x, 0, transparentBackground);
-                    x += C64Sprite.Width;
-                }
-                b.Save(filename, ImageFormat.Png);
+                sprite.Export(b, x, 0, transparentBackground);
+                x += C64Sprite.Width;
             }
+
+            b.Save(filename, ImageFormat.Png);
         }
 
         public void Draw(Graphics g)
         {
             if (Sprite == null)
                 return;
+
             var physicalX = X;
             var physicalY = Y;
             var ps = PixelSize - 1;
             var brushes = new SolidBrush[4];
-            brushes[0] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.BackgroundColorIndex));
-            brushes[1] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.ForegroundColorIndex));
+            
+            brushes[0] = new SolidBrush(C64Sprite.Palette.GetColor(Sprite.BackgroundColorIndex));
+            brushes[1] = new SolidBrush(C64Sprite.Palette.GetColor(Sprite.ForegroundColorIndex));
             brushes[2] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.ExtraColor1Index));
             brushes[3] = new SolidBrush(C64Sprite.Palette.GetColor(C64Sprite.ExtraColor2Index));
-            if (Multicolor)
+            
+            if (Sprite.Multicolor)
             {
                 var pwidth = PixelSize * 2;
+
                 for (var sy = 0; sy < C64Sprite.Height; sy++)
                 {
                     for (var sx = 0; sx < C64Sprite.Width; sx++)
                     {
                         if (sx % 2 != 0)
                             continue;
+
                         g.FillRectangle(brushes[Sprite.GetColorIndex(sx, sy)], physicalX, physicalY, pwidth - 1, ps);
                         physicalX += pwidth;
                     }
                     physicalY += PixelSize;
                     physicalX = X;
                 }
+
                 for (var i = 0; i < 4; i++)
                     brushes[i].Dispose();
+
                 g.DrawRectangle(Pens.White, X + (CursorX * PixelSize), Y + (CursorY * PixelSize), pwidth - 2, PixelSize - 2);
                 g.DrawRectangle(Pens.Black, X + (CursorX * PixelSize) + 1, Y + (CursorY * PixelSize) + 1, pwidth - 4, PixelSize - 4);
             }
@@ -141,11 +152,14 @@ namespace Sprdef.Model
                     physicalY += PixelSize;
                     physicalX = X;
                 }
+                
                 for (var i = 0; i < 4; i++)
                     brushes[i].Dispose();
+
                 g.DrawRectangle(Pens.White, X + (CursorX * PixelSize), Y + (CursorY * PixelSize), PixelSize - 2, PixelSize - 2);
                 g.DrawRectangle(Pens.Black, X + (CursorX * PixelSize) + 1, Y + (CursorY * PixelSize) + 1, PixelSize - 4, PixelSize - 4);
             }
+
             brushes[0].Dispose();
             brushes[1].Dispose();
             brushes[2].Dispose();
@@ -153,12 +167,14 @@ namespace Sprdef.Model
         }
 
         public bool HitTest(int x, int y) =>
-            x >= X && x < X + InnerWidth && y >= Y && y < Y + InnerHeight;
+            x >= X && x < X + InnerWidth
+            && y >= Y && y < Y + InnerHeight;
 
         public Point? GetPixelPositionFromPhysicalPosition(bool multicolor, int x, int y)
         {
             x -= X;
             y -= Y;
+
             if (multicolor)
             {
                 x /= (PixelSize * 2);
@@ -166,51 +182,58 @@ namespace Sprdef.Model
             }
             else
                 x /= PixelSize;
+            
             y /= PixelSize;
+            
             if (x >= 0 && x < C64Sprite.Width && y >= 0 && y < C64Sprite.Height)
                 return new Point(x, y);
+            
             return null;
         }
 
         public void ScrollUp()
         {
-            var multicolor = Multicolor;
-            Multicolor = false;
+            var multicolor = Sprite.Multicolor;
+            Sprite.Multicolor = false;
             Sprite.ScrollUp();
-            Multicolor = multicolor;
+            Sprite.Multicolor = multicolor;
         }
 
         public void ScrollDown()
         {
-            var multicolor = Multicolor;
-            Multicolor = false;
+            var multicolor = Sprite.Multicolor;
+            Sprite.Multicolor = false;
             Sprite.ScrollDown();
-            Multicolor = multicolor;
+            Sprite.Multicolor = multicolor;
         }
 
         public void ScrollLeft()
         {
-            var multicolor = Multicolor;
-            Multicolor = false;
+            var multicolor = Sprite.Multicolor;
+            Sprite.Multicolor = false;
             Sprite.ScrollLeft();
+
             if (multicolor)
                 Sprite.ScrollLeft();
-            Multicolor = multicolor;
+
+            Sprite.Multicolor = multicolor;
         }
 
         public void ScrollRight()
         {
-            var multicolor = Multicolor;
-            Multicolor = false;
+            var multicolor = Sprite.Multicolor;
+            Sprite.Multicolor = false;
             Sprite.ScrollRight();
+
             if (multicolor)
                 Sprite.ScrollRight();
-            Multicolor = multicolor;
+
+            Sprite.Multicolor = multicolor;
         }
 
         public void MirrorX()
         {
-            if (Multicolor)
+            if (Sprite.Multicolor)
                 Sprite.MirrorXMulticolor();
             else
                 Sprite.MirrorX();

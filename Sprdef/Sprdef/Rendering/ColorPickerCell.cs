@@ -14,13 +14,13 @@ namespace Sprdef.Rendering
             Size = 20;
         }
 
-        public void Draw(Graphics g, int x, int y, int colorIndex, bool enabled, bool selected)
+        public void Draw(Graphics g, C64Sprite sprite, int x, int y, int colorIndex, bool enabled, bool selected)
         {
             Bounds = new Rectangle(x, y, Size, Size);
-            var paletteIndex = C64Sprite.BackgroundColorIndex;
+            var paletteIndex = sprite.BackgroundColorIndex;
             switch (colorIndex)
             {
-                case 1: paletteIndex = C64Sprite.ForegroundColorIndex; break;
+                case 1: paletteIndex = sprite.ForegroundColorIndex; break;
                 case 2: paletteIndex = C64Sprite.ExtraColor1Index; break;
                 case 3: paletteIndex = C64Sprite.ExtraColor2Index; break;
             }

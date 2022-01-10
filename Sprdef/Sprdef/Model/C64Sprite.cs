@@ -13,9 +13,10 @@ namespace Sprdef.Model
     {
         private bool[,] SpriteData { get; set; }
         private Bitmap SpritePreviewData { get; }
-        public static C64Palette Palette = new C64Palette();
-        public static int BackgroundColorIndex { get; set; }
-        public static int ForegroundColorIndex { get; set; }
+        public static C64Palette Palette;
+        public bool Multicolor { get; set; }
+        public int BackgroundColorIndex { get; set; }
+        public int ForegroundColorIndex { get; set; }
         public static int ExtraColor1Index { get; set; }
         public static int ExtraColor2Index { get; set; }
         public Rectangle Bounds { get; private set; }
@@ -26,29 +27,28 @@ namespace Sprdef.Model
 
         static C64Sprite()
         {
-            BackgroundColorIndex = 0;
-            ForegroundColorIndex = 1;
+            Palette = new C64Palette();
             ExtraColor1Index = 2;
             ExtraColor2Index = 3;
         }
 
         public C64Sprite()
         {
+            BackgroundColorIndex = 0;
+            ForegroundColorIndex = 1;
             SpriteData = new bool[Width, Height];
             SpritePreviewData = new Bitmap(Width, Height);
-            using (var g = Graphics.FromImage(SpritePreviewData))
-                g.FillRectangle(Brushes.Black, 0, 0, Width, Height);
+            using var g = Graphics.FromImage(SpritePreviewData);
+            g.FillRectangle(Brushes.Black, 0, 0, Width, Height);
         }
 
         public C64Sprite Clone()
         {
-            using (var s = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(s, this);
-                s.Position = 0;
-                return (C64Sprite)formatter.Deserialize(s);
-            }
+            using var s = new MemoryStream();
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(s, this);
+            s.Position = 0;
+            return (C64Sprite)formatter.Deserialize(s);
         }
 
         public bool CompareTo(C64Sprite other)
@@ -57,12 +57,13 @@ namespace Sprdef.Model
                 for (var x = 0; x < Width; x++)
                     if (SpriteData[x, y] != other.SpriteData[x, y])
                         return false;
+
             return true;
         }
 
         public void ResetPixels()
         {
-            if (SpriteEditor.Multicolor)
+            if (Multicolor)
                 for (var y = 0; y < Height; y++)
                     for (var x = 0; x < Width - 1; x += 2)
                         SetPixel(x, y, GetColorIndex(x, y));
@@ -76,9 +77,12 @@ namespace Sprdef.Model
         {
             if (bytes == null || bytes.Length != TotalBytes)
                 throw new ArgumentException();
+
             var b = new C64MemoryModel.Types.Byte[TotalBytes];
+            
             for (var i = 0; i < TotalBytes; i++)
                 b[i] = new C64MemoryModel.Types.Byte(bytes[i]);
+            
             SetBytes(b);
         }
 
@@ -86,8 +90,10 @@ namespace Sprdef.Model
         {
             if (bytes == null || bytes.Length != TotalBytes)
                 throw new ArgumentException();
-            var multicolor = SpriteEditor.Multicolor;
-            SpriteEditor.Multicolor = false;
+            
+            var multicolor = Multicolor;
+            Multicolor = false;
+            
             var i = 0;
             for (var y = 0; y < Height; y++)
                 for (var x = 0; x < BytesWidth; x++)
@@ -103,25 +109,30 @@ namespace Sprdef.Model
                     SetPixel(x * 8 + 7, y, b.Bit7 ? 1 : 0);
                     i++;
                 }
-            SpriteEditor.Multicolor = multicolor;
+
+            Multicolor = multicolor;
         }
 
         public int GetColorIndex(int x, int y)
         {
-            if (!SpriteEditor.Multicolor)
+            if (!Multicolor)
                 return SpriteData[x, y] ? 1 : 0;
+
             if (!SpriteData[x, y] && SpriteData[x + 1, y])
                 return 1;
+            
             if (SpriteData[x, y] && !SpriteData[x + 1, y])
                 return 2;
+            
             if (SpriteData[x, y] && SpriteData[x + 1, y])
                 return 3;
+            
             return 0;
         }
 
         public void SetPixel(int x, int y, int colorIndex)
         {
-            if (SpriteEditor.Multicolor)
+            if (Multicolor)
             {
                 int paletteIndex;
                 switch (colorIndex)
@@ -162,16 +173,21 @@ namespace Sprdef.Model
 
         public int GetPixel(int x, int y)
         {
-            if (!SpriteEditor.Multicolor)
+            if (!Multicolor)
                 return SpriteData[x, y] ? 1 : 0;
+            
             if (x % 2 != 0)
                 x -= 1;
+            
             if (!SpriteData[x, y] && SpriteData[x + 1, y])
                 return ForegroundColorIndex;
+            
             if (SpriteData[x, y] && !SpriteData[x + 1, y])
                 return ExtraColor1Index;
+            
             if (SpriteData[x, y] && SpriteData[x + 1, y])
                 return ExtraColor2Index;
+
             return BackgroundColorIndex;
         }
 
@@ -186,9 +202,11 @@ namespace Sprdef.Model
                 Bounds = new Rectangle(x, y, Width * 2, Height * 2);
                 return;
             }
+
             g.DrawImage(SpritePreviewData, x, y);
             Bounds = new Rectangle(x, y, Width, Height);
         }
+
         public void Export(Bitmap b, int offsetX, int offsetY, bool transparentBackground)
         {
             for (var y = 0; y < Height; y++)
@@ -204,10 +222,12 @@ namespace Sprdef.Model
         public void ExportMultiColor(Bitmap b, int offsetX, int offsetY, bool transparentBackground)
         {
             const int w = Width/2;
+
             for (var y = 0; y < Height; y++)
                 for (var x = 0; x < w; x++)
                 {
                     var colorIndex = GetPixel(x*2, y);
+
                     if (colorIndex == BackgroundColorIndex && !transparentBackground)
                         b.SetPixel(x + offsetX, y + offsetY, Palette.GetColor(BackgroundColorIndex));
                     else if (colorIndex != BackgroundColorIndex)
@@ -241,6 +261,7 @@ namespace Sprdef.Model
         {
             var ret = new byte[TotalBytes];
             var i = 0;
+
             for (var y = 0; y < Height; y++)
                 for (var x = 0; x < 3; x++)
                 {
@@ -249,10 +270,12 @@ namespace Sprdef.Model
                     ret[i] = b.Value;
                     i++;
                 }
+            
             return ret;
         }
 
-        private bool IsSet(int x, int y) => SpriteData[x, y];
+        private bool IsSet(int x, int y) =>
+            SpriteData[x, y];
 
         public bool Load(BinaryReader sr)
         {
@@ -261,6 +284,7 @@ namespace Sprdef.Model
             {
                 var b = new C64MemoryModel.Types.Byte(sr.ReadByte());
                 var physicalX = x*8;
+
                 SetPixel(physicalX, y, b.Bit7 ? 1 : 0);
                 SetPixel(physicalX + 1, y, b.Bit6 ? 1 : 0);
                 SetPixel(physicalX + 2, y, b.Bit5 ? 1 : 0);
@@ -270,8 +294,10 @@ namespace Sprdef.Model
                 SetPixel(physicalX + 6, y, b.Bit1 ? 1 : 0);
                 SetPixel(physicalX + 7, y, b.Bit0 ? 1 : 0);
                 x++;
+
                 if (x <= 2)
                     continue;
+                
                 x = 0;
                 y++;
             }
@@ -281,8 +307,10 @@ namespace Sprdef.Model
         private bool[] GetRow(int y)
         {
             var row = new bool[Width];
+
             for (var x = 0; x < Width; x++)
                 row[x] = GetBit(x, y);
+
             return row;
         }
 
@@ -295,8 +323,10 @@ namespace Sprdef.Model
         private bool[] GetColumn(int x)
         {
             var column = new bool[Height];
+
             for (var y = 0; y < Height; y++)
                 column[y] = GetBit(x, y);
+
             return column;
         }
 
@@ -309,66 +339,80 @@ namespace Sprdef.Model
         public void ScrollUp()
         {
             var row = GetRow(0);
+
             for (var y = 1; y < Height; y++)
                 for (var x = 0; x < Width; x++)
                     SetPixel(x, y - 1, GetPixel(x, y));
+
             SetRow(Height - 1, row);
         }
 
         public void ScrollDown()
         {
             var row = GetRow(Height - 1);
+
             for (var y = Height - 2; y >= 0; y--)
                 for (var x = 0; x < Width; x++)
                     SetPixel(x, y + 1, GetPixel(x, y));
+
             SetRow(0, row);
         }
 
         public void ScrollLeft()
         {
             var column = GetColumn(0);
+
             for (var x = 1; x < Width; x++)
                 for (var y = 0; y < Height; y++)
                     SetPixel(x - 1, y, GetPixel(x, y));
+
             SetColumn(Width - 1, column);
         }
 
         public void ScrollRight()
         {
             var column = GetColumn(Width - 1);
+
             for (var x = Width - 2; x >= 0; x--)
                 for (var y = 0; y < Height; y++)
                     SetPixel(x + 1, y, GetPixel(x, y));
+
             SetColumn(0, column);
         }
 
         public void MirrorXMulticolor()
         {
             var spriteData = new bool[Width, Height];
+
             for (var x = 0; x < Width; x += 2)
-            for (var y = 0; y < Height; y++)
-            {
-                spriteData[x, y] = SpriteData[Width - 2 - x, y];
-                spriteData[x + 1, y] = SpriteData[Width - 1 - x, y];
-            }
+                for (var y = 0; y < Height; y++)
+                {
+                    spriteData[x, y] = SpriteData[Width - 2 - x, y];
+                    spriteData[x + 1, y] = SpriteData[Width - 1 - x, y];
+                }
+
             SpriteData = spriteData;
         }
 
         public void MirrorX()
         {
             var spriteData = new bool[Width, Height];
+            
             for (var x = 0; x < Width; x++)
-            for (var y = 0; y < Height; y++)
-                spriteData[x, y] = SpriteData[Width - 1 - x, y];
+                for (var y = 0; y < Height; y++)
+                    spriteData[x, y] = SpriteData[Width - 1 - x, y];
+
             SpriteData = spriteData;
         }
 
         public void MirrorY()
         {
             var spriteData = new bool[Width, Height];
+
             for (var y = 0; y < Height; y++)
-            for (var x = 0; x < Width; x++)
-                spriteData[x, y] = SpriteData[x, Height - 1 - y];
+                for (var x = 0; x < Width; x++)
+                    spriteData[x, y] = SpriteData[x, Height - 1 - y];
+            
             SpriteData = spriteData;
         }
     }

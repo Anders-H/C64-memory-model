@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Sprdef.Model;
+using System.Drawing;
 
 namespace Sprdef.Rendering
 {
@@ -18,10 +19,17 @@ namespace Sprdef.Rendering
         public ColorPickerCell GetColorCell(int index) =>
             _colorCells[index];
 
-        public void Draw(Graphics g, int x, int y, bool multiColor)
+        public void Draw(Graphics g, C64Sprite sprite, int x, int y)
         {
             for (var i = 0; i < 4; i++)
-                GetColorCell(i).Draw(g, x + (i * (ColorPickerCell.Size + 8)), y, i, multiColor | (i < 2), i == SelectedColor);
+                GetColorCell(i).Draw(
+                    g, sprite,
+                    x + (i * (ColorPickerCell.Size + 8)),
+                    y,
+                    i,
+                    sprite.Multicolor | (i < 2),
+                    i == SelectedColor
+                );
         }
 
         public ColorPickerCell HitTest(int x, int y)
