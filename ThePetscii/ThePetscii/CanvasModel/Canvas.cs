@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using C64MemoryModel.Graphics;
@@ -12,9 +14,9 @@ namespace ThePetscii.CanvasModel
         private int _totalWidth;
         private int _totalHeight;
         private int _characterSize;
-        public event CanvasClickDelegate CanvasClick;
+        public event CanvasClickDelegate? CanvasClick;
         
-        public PetsciiImage PetsciiImage { get; set; }
+        public PetsciiImage? PetsciiImage { get; set; }
         
         public Canvas()
         {
@@ -40,7 +42,7 @@ namespace ThePetscii.CanvasModel
                     _totalHeight = 400;
                     _characterSize = 16;
                 }
-                Canvas_Resize(null, null);
+                Canvas_Resize(this, EventArgs.Empty);
                 Invalidate();
             }
         }
@@ -65,68 +67,78 @@ namespace ThePetscii.CanvasModel
         {
             if (DesignMode)
                 return;
+            
             e.Graphics.SmoothingMode = SmoothingMode.None;
             e.Graphics.CompositingQuality = CompositingQuality.AssumeLinear;
             e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.None;
+            
             var totalWidth = _gridVisible ? _characterSize - 1 : _characterSize;
             var halfWidth = totalWidth / 2;
-            var xpos = 0;
-            var ypos = 0;
+            var xPos = 0;
+            var yPos = 0;
+
             for (var y = 0; y < 25; y++)
             {
                 for (var x = 0; x < 40; x++)
                 {
-                    if (PetsciiImage.IsAllSet(x, y))
+                    if (PetsciiImage!.IsAllSet(x, y))
                     {
                         e.Graphics.FillRectangle(
                             PetsciiImage.Foreground.GetBrush(
                                 PetsciiImage.Foreground.Colors[x, y]
-                            ), xpos, ypos, totalWidth, totalWidth);
+                            ), xPos, yPos, totalWidth, totalWidth);
                     }
                     else if (PetsciiImage.IsNoneSet(x, y))
                     {
                         e.Graphics.FillRectangle( //Background...
                             PetsciiImage.Foreground.GetBrush(
                                 C64Color.Blue
-                            ), xpos, ypos, totalWidth, totalWidth);
+                            ), xPos, yPos, totalWidth, totalWidth);
                     }
                     else
                     {
                         e.Graphics.FillRectangle( //Background...
                             PetsciiImage.Foreground.GetBrush(
                                 C64Color.Blue
-                            ), xpos, ypos, totalWidth, totalWidth);
+                            ), xPos, yPos, totalWidth, totalWidth);
+
                         var c = PetsciiImage.GetChar(x, y);
+                        
                         if (c.IsSetAt(0, 0))
                             e.Graphics.FillRectangle(
                                 PetsciiImage.Foreground.GetBrush(
                                     PetsciiImage.Foreground.Colors[x, y]
-                                ), xpos, ypos, halfWidth + 1, halfWidth + 1);
+                                ), xPos, yPos, halfWidth + 1, halfWidth + 1);
+                        
                         if (c.IsSetAt(1, 0))
                             e.Graphics.FillRectangle(
                                 PetsciiImage.Foreground.GetBrush(
                                     PetsciiImage.Foreground.Colors[x, y]
-                                ), xpos + halfWidth + 1, ypos, halfWidth, halfWidth + 1);
+                                ), xPos + halfWidth + 1, yPos, halfWidth, halfWidth + 1);
+                        
                         if (c.IsSetAt(0, 1))
                             e.Graphics.FillRectangle(
                                 PetsciiImage.Foreground.GetBrush(
                                     PetsciiImage.Foreground.Colors[x, y]
-                                ), xpos, ypos + halfWidth + 1, halfWidth + 1, halfWidth);
+                                ), xPos, yPos + halfWidth + 1, halfWidth + 1, halfWidth);
+                        
                         if (c.IsSetAt(1, 1))
                             e.Graphics.FillRectangle(
                                 PetsciiImage.Foreground.GetBrush(
                                     PetsciiImage.Foreground.Colors[x, y]
-                                ), xpos + halfWidth + 1, ypos + halfWidth + 1, halfWidth, halfWidth);
+                                ), xPos + halfWidth + 1, yPos + halfWidth + 1, halfWidth, halfWidth);
                     }
-                    xpos += _characterSize;
+
+                    xPos += _characterSize;
                 }
-                xpos = 0;
-                ypos += _characterSize;
+
+                xPos = 0;
+                yPos += _characterSize;
             }
         }
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e) =>
-            CanvasClick?.Invoke(this, new CanvasClickEventArgs(ExtraLarge ? 24 : 16, e.X, e.Y));
+            CanvasClick!.Invoke(this, new CanvasClickEventArgs(ExtraLarge ? 24 : 16, e.X, e.Y));
     }
 }

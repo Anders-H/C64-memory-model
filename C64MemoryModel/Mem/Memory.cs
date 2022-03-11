@@ -134,7 +134,8 @@ namespace C64MemoryModel.Mem
         public Address GetBytePointer() =>
             BytePointer;
 
-        private void IncreaseBytePointer() => IncreaseBytePointer(1);
+        private void IncreaseBytePointer() =>
+            IncreaseBytePointer(1);
 
         private void IncreaseBytePointer(int count) =>
             SetBytePointer(BytePointer + count);

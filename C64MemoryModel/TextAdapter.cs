@@ -32,6 +32,7 @@ namespace C64MemoryModel
             {
                 if (string.IsNullOrWhiteSpace(input))
                     return "";
+
                 input = Regex.Replace(input, @"\s+", " ").Trim();
 
                 //GetByte
@@ -46,6 +47,7 @@ namespace C64MemoryModel
 
                 //GetByte 4096
                 match = Regex.Match(input, @"^getbyte\s?(\$?[0-9A-F]+)$", RegexOptions.IgnoreCase);
+
                 if (match.Success)
                 {
                     var adrValue = match.Groups[1].Value;
