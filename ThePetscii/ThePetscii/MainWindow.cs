@@ -2,7 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Drawing;
 using System.Windows.Forms;
-using C64MemoryModel.Graphics;
+using C64Color;
 
 namespace ThePetscii
 {
@@ -10,7 +10,7 @@ namespace ThePetscii
     {
         private Tool _currentTool = Tool.SetQuarterChar;
         private float _colorHeight;
-        private C64Color _currentColor = C64Color.LightBlue;
+        private ColorName _currentColor = ColorName.LightBlue;
         
         public MainWindow()
         {
@@ -24,7 +24,7 @@ namespace ThePetscii
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            canvas1.PetsciiImage = new PetsciiImage(new C64Palette());
+            canvas1.PetsciiImage = new PetsciiImage(new ColorMap(ColorName.LightBlue));
             MainWindow_Resize(sender, e);
         }
 
@@ -40,7 +40,7 @@ namespace ThePetscii
             if (DesignMode)
                 return;
             var y = 0f;
-            var palette = new C64Palette();
+            var palette = new Palette();
             var index = 0;
             foreach (var color in palette)
             {
@@ -75,7 +75,7 @@ namespace ThePetscii
             newColor = newColor < 0
                 ? 0 : newColor > 15
                     ? 15 : newColor;
-            _currentColor = (C64Color)newColor;
+            _currentColor = (ColorName)newColor;
             panelColors.Invalidate();
         }
         

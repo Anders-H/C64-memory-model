@@ -1,39 +1,34 @@
 ﻿using System;
 using System.Drawing;
-using C64MemoryModel.Graphics;
+using C64Color;
 
 namespace ThePetscii
 {
     public class ColorMap : IDisposable
     {
-        private readonly Brush[] _brushes = new Brush[16];
-        private readonly C64Palette _palette;
+        private readonly Resources _resources;
         public const int Width = 40;
         public const int Height = 25;
-        public readonly C64Color[,] Colors = new C64Color[Width, Height];
+        public readonly ColorName[,] Colors = new ColorName[Width, Height];
         
-        public ColorMap(C64Palette palette, C64Color initialColor)
+        public ColorMap(ColorName initialColor)
         {
-            _palette = palette;
+            _resources = new Resources();
             for (var y = 0; y < Height; y++)
                 for (var x = 0; x < Width; x++)
                     Colors[x, y] = initialColor;
         }
 
-        public Brush GetBrush(C64Color color) =>
-            _brushes[(int)color] ?? (_brushes[(int)color] = new SolidBrush(_palette.GetColor(color)));
+        public Brush GetBrush(ColorName color) =>
+            _resources.GetColorBrush(color);
 
-        public void SetColor(int x, int y, C64Color color) =>
+        public void SetColor(int x, int y, ColorName color) =>
             Colors[x, y] = color;
 
         public byte GetColorByte(int x, int y) =>
             (byte)Colors[x, y];
         
-        public void Dispose()
-        {
-            _palette.Dispose();
-            for (var i = 0; i < 16; i++)
-                _brushes[i]?.Dispose();
-        }
+        public void Dispose() =>
+            _resources.Dispose();
     }
 }

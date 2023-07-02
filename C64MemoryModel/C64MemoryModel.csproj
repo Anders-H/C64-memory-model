@@ -52,8 +52,6 @@
     <Compile Include="BitValue.cs" />
     <Compile Include="Chr\PetsciiCode.cs" />
     <Compile Include="Chr\SimpleUppercaseCharacterSet.cs" />
-    <Compile Include="Graphics\C64Color.cs" />
-    <Compile Include="Graphics\C64Palette.cs" />
     <Compile Include="Mem\MemoryModelLocationList.cs" />
     <Compile Include="Mem\RangeLocation.cs" />
     <Compile Include="Mem\SimpleLocation.cs" />

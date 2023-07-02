@@ -1,5 +1,4 @@
 ﻿using System;
-using C64MemoryModel.Graphics;
 
 namespace ThePetscii
 {
@@ -8,9 +7,9 @@ namespace ThePetscii
         public ColorMap Foreground { get; }
         public PetsciiMap Content { get; }
 
-        public PetsciiImage(C64Palette palette)
+        public PetsciiImage(ColorMap foreground)
         {
-            Foreground = new ColorMap(palette, C64Color.LightBlue);
+            Foreground = foreground;
             Content = new PetsciiMap();
         }
         

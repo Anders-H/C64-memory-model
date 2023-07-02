@@ -1,9 +1,7 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using C64MemoryModel.Graphics;
+using C64Color;
 
 namespace ThePetscii.CanvasModel
 {
@@ -93,14 +91,14 @@ namespace ThePetscii.CanvasModel
                     {
                         e.Graphics.FillRectangle( //Background...
                             PetsciiImage.Foreground.GetBrush(
-                                C64Color.Blue
+                                ColorName.Blue
                             ), xPos, yPos, totalWidth, totalWidth);
                     }
                     else
                     {
                         e.Graphics.FillRectangle( //Background...
                             PetsciiImage.Foreground.GetBrush(
-                                C64Color.Blue
+                                ColorName.Blue
                             ), xPos, yPos, totalWidth, totalWidth);
 
                         var c = PetsciiImage.GetChar(x, y);
